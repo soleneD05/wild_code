@@ -1,22 +1,13 @@
 [tool.poetry]
-name = "projet-restaurant"
+name = "froodies"
 version = "0.1.0"
 description = ""
 authors = ["soleneD05 <solene.degrutere@orange.fr>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-folio = "^0.4"
-folium = "^0.19.4"
-streamlit-folium = "^0.24.0"
-plotly = "^6.0.0"
-pandas = "^2.2.3"
-faker = "^37.0.0"
-scikit-learn = "^1.6.1"
+python = "^3.9"
 
-[tool.poetry.package-mode]
-package-mode = false
 
 [build-system]
 requires = ["poetry-core"]
