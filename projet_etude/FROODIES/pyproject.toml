@@ -8,6 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+pandas = "^2.2.3"
+faker = "^37.1.0"
 
 
 [build-system]

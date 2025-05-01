@@ -15,10 +15,10 @@ np.random.seed(42)
 # Constantes
 ARRONDISSEMENTS = [f"750{i:02d}" for i in range(1, 21)]  # 75001 à 75020
 
-NATIONALITE_CUISINE = [
+CUISINE_DU_MONDE = [
     "Français", "Italien", "Japonais", "Chinois", "Indien", "Libanais", "Marocain", 
     "Espagnol", "Américain", "Mexicain", "Thaïlandais", "Vietnamien", "Coréen", 
-    "Grecque", "Brésilien", "Méditerranéen", "Africain", "Caribéen"
+    "Grecque", "Brésilien", "Africain", "Caribéen"
 ]
 
 TYPES_CUISINE = [
@@ -140,6 +140,19 @@ PHRASES_CONCLUSION_NEGATIVES = [
     "Trop cher pour ce que c'est.", "Une déception."
 ]
 
+# Domaines communs pour les sites web de restaurants
+DOMAINES_WEB = [
+    "restaurantparis.fr", "bistro-paris.com", "restaurant-paris.fr", "mangerparis.fr", 
+    "parisrestaurant.com", "labonnetable.fr", "restoparis.fr", "delicesparis.com", 
+    "goutsdeparis.fr", "manger-paris.com", "saveursdeparis.fr"
+]
+
+# Constantes pour les attributs professionnels
+NIVEAU_BRUIT = ["Calme", "Modéré", "Animé"]
+CAPACITE_GROUPE = [0, 6, 8, 10, 15, 20, 30, 50]  # 0 signifie pas de grands groupes
+DUREE_REPAS_AFFAIRES = ["Rapide (moins d'1h)", "Standard (1h-1h30)", "Long (plus d'1h30)"]
+TYPE_ESPACE_PRIVE = ["Salon séparé", "Espace semi-privatif", "Étage entier", "Salle à part"]
+
 # Fonction pour générer un nom de restaurant
 def generer_nom_restaurant():
     # Différents formats de noms
@@ -184,11 +197,27 @@ def generer_note():
     # Distribution biaisée vers les bonnes notes pour plus de réalisme
     return round(random.uniform(3.0, 5.0), 1)
 
-# Fonction pour générer un numéro de téléphone français (format parisien)
+# Fonction pour générer un numéro de téléphone français mobile (06 ou 07 + 8 chiffres)
 def generer_telephone():
-    return f"01{random.randint(10, 99)}{random.randint(10, 99)}{random.randint(10, 99)}{random.randint(10, 99)}"
+    prefixe = random.choice(["06", "07"])
+    return f"{prefixe}{random.randint(10000000, 99999999)}"
 
-# Nouvelles fonctions pour les colonnes ajoutées
+# Fonction pour générer un site web
+def generer_site_web(nom_restaurant):
+    # Simplifier le nom pour le site web
+    nom_simple = nom_restaurant.lower().replace(' ', '').replace("'", "").replace("-", "")
+    # Tronquer si trop long
+    if len(nom_simple) > 15:
+        nom_simple = nom_simple[:15]
+    # Ajouter un domaine
+    domaine = random.choice(DOMAINES_WEB)
+    return f"https://www.{nom_simple}.{domaine}"
+
+# Fonction pour générer un lien vers la carte
+def generer_lien_carte(site_web):
+    suffixes = ["menu", "carte", "notre-carte", "la-carte", "nos-plats"]
+    suffixe = random.choice(suffixes)
+    return f"{site_web}/{suffixe}"
 
 # Fonction pour générer des jours d'ouverture
 def generer_jours_ouverture():
@@ -207,11 +236,8 @@ def generer_jours_ouverture():
 def formater_heure(h, m):
     return f"{h:02d}:{m:02d}"
 
-# Fonction pour générer des horaires d'ouverture (midi et soir)
-def generer_horaires_ouverture():
-    # Horaires typiques des restaurants parisiens
-    # Midi: environ 12h-14h30, Soir: environ 19h-22h30
-    jours_ouverture = generer_jours_ouverture()
+# Fonction pour générer des horaires d'ouverture (midi et soir) en fonction des jours d'ouverture
+def generer_horaires_ouverture(jours_ouverture):
     horaires = {}
     
     for jour in JOURS_SEMAINE:
@@ -272,8 +298,8 @@ def generer_avis(note_moyenne, nb_avis, ambiance, type_cuisine, specialite=""):
         paragraphes = []
         
         # Premier paragraphe - impression générale
-        cuisine_mention = type_cuisine.lower()
-        if specialite:
+        cuisine_mention = type_cuisine.lower() if type_cuisine else "variée"
+        if specialite and type_cuisine:
             cuisine_mention = f"{type_cuisine.lower()} {specialite.lower()}"
             
         if ton_positif:
@@ -485,129 +511,314 @@ def generer_reconnaissances(categorie_prix, note_moyenne):
     
     return reconnaissances
 
-# Génération du dataset
-restaurants = []
-noms_utilises = set()  # Pour éviter les doublons
+# Ajout de la fonction pour générer le code postal à partir de l'arrondissement
+def generer_code_postal(arrondissement):
+    """
+    Génère un code postal à partir du code d'arrondissement.
+    Par exemple, 75001 pour le 1er arrondissement.
+    
+    Args:
+        arrondissement (str): Le code d'arrondissement (ex: "75001").
+    
+    Returns:
+        str: Le code postal correspondant.
+    """
+    return arrondissement
 
-for _ in range(500):  # Réduit à 500 pour l'exemple, ajustez selon vos besoins
-    # Génération d'un nom unique
-    nom = generer_nom_restaurant()
-    while nom in noms_utilises:
+# Fonction pour générer les attributs professionnels
+def generer_attributs_professionnels(ambiance, categorie_prix):
+    """
+    Génère des attributs spécifiques pour les repas professionnels.
+    
+    Args:
+        ambiance (str): L'ambiance du restaurant, qui influence certains attributs.
+        categorie_prix (str): La catégorie de prix, qui influence certains attributs.
+    
+    Returns:
+        dict: Un dictionnaire contenant les attributs professionnels générés.
+         """
+    # La probabilité d'être adapté aux repas d'affaires dépend de l'ambiance et du prix
+    prob_adapte = 0.3  # Probabilité de base
+    
+    # Les restaurants calmes, élégants ou modernes ont plus de chances d'être adaptés
+    if ambiance in ["Calme", "Élégant", "Moderne", "Intime", "Traditionnel"]:
+        prob_adapte += 0.3
+    
+    # Les restaurants bruyants ou festifs ont moins de chances d'être adaptés
+    if ambiance in ["Animé", "Festif", "Branché"]:
+        prob_adapte -= 0.1
+    
+    # Les restaurants haut de gamme ont plus de chances d'être adaptés
+    if categorie_prix == "Haut de gamme":
+        prob_adapte += 0.2
+    
+    # Générer les attributs professionnels
+    adapte_repas_affaires = random.random() < prob_adapte
+    
+    # Niveau de bruit corrélé avec l'ambiance
+    if ambiance in ["Calme", "Intime", "Élégant"]:
+        niveau_bruit_probs = [0.7, 0.25, 0.05]  # Calme, Modéré, Animé
+    elif ambiance in ["Festif", "Animé", "Branché"]:
+        niveau_bruit_probs = [0.05, 0.25, 0.7]  # Calme, Modéré, Animé
+    else:
+        niveau_bruit_probs = [0.25, 0.5, 0.25]  # Calme, Modéré, Animé
+    
+    niveau_bruit = random.choices(NIVEAU_BRUIT, weights=niveau_bruit_probs)[0]
+    
+    # Espace privé plus probable dans les restaurants haut de gamme
+    espace_prive_prob = 0.1  # Probabilité de base
+    if categorie_prix == "Haut de gamme":
+        espace_prive_prob += 0.4
+    elif categorie_prix == "Moyenne gamme":
+        espace_prive_prob += 0.2
+    
+    espace_prive = random.random() < espace_prive_prob
+    
+    # WiFi et prises électriques
+    wifi = random.random() < 0.7  # 70% des restaurants ont le WiFi
+    prise_electrique = random.random() < 0.5  # 50% ont des prises accessibles
+    
+    # Capacité de groupe - plus élevée pour certaines ambiances
+    if ambiance in ["Familial", "Convivial", "Traditionnel", "Décontracté"]:
+        capacite_groupe_probs = [0.05, 0.1, 0.15, 0.2, 0.2, 0.15, 0.1, 0.05]  # Plus de chances d'avoir des capacités importantes
+    elif ambiance in ["Intime", "Romantique"]:
+        capacite_groupe_probs = [0.3, 0.3, 0.2, 0.1, 0.05, 0.03, 0.01, 0.01]  # Plus axé sur les petits groupes
+    else:
+        capacite_groupe_probs = [0.1, 0.15, 0.2, 0.2, 0.15, 0.1, 0.05, 0.05]  # Distribution équilibrée
+    
+    capacite_groupe = random.choices(CAPACITE_GROUPE, weights=capacite_groupe_probs)[0]
+    
+    # Équipement de présentation - surtout dans les restaurants adaptés aux repas d'affaires
+    equipement_presentation_prob = 0.05  # Probabilité de base
+    if adapte_repas_affaires:
+        equipement_presentation_prob += 0.2
+    if categorie_prix == "Haut de gamme":
+        equipement_presentation_prob += 0.1
+    
+    equipement_presentation = random.random() < equipement_presentation_prob
+    
+    # Type d'espace privé (si disponible)
+    type_espace_prive = None
+    if espace_prive:
+        type_espace_prive = random.choice(TYPE_ESPACE_PRIVE)
+    
+    # Durée typique recommandée pour repas d'affaires
+    if adapte_repas_affaires:
+        if ambiance in ["Calme", "Élégant"] and categorie_prix == "Haut de gamme":
+            duree_repas_affaires = random.choices(DUREE_REPAS_AFFAIRES, weights=[0.1, 0.3, 0.6])[0]
+        elif ambiance in ["Décontracté", "Branché"]:
+            duree_repas_affaires = random.choices(DUREE_REPAS_AFFAIRES, weights=[0.5, 0.4, 0.1])[0]
+        else:
+            duree_repas_affaires = random.choices(DUREE_REPAS_AFFAIRES, weights=[0.3, 0.5, 0.2])[0]
+    else:
+        duree_repas_affaires = None
+    
+    # Services business spécifiques
+    service_facturation_entreprise = random.random() < 0.4  # 40% proposent de la facturation pour entreprises
+    reservation_derniere_minute = random.random() < 0.3  # 30% acceptent les réservations de dernière minute pour groupes
+    
+    # Retourner un dictionnaire avec tous les attributs professionnels
+    return {
+        "adapte_repas_affaires": adapte_repas_affaires,
+        "niveau_bruit": niveau_bruit,
+        "espace_prive": espace_prive,
+        "type_espace_prive": type_espace_prive,
+        "wifi": wifi,
+        "prise_electrique": prise_electrique,
+        "capacite_groupe": capacite_groupe,
+        "equipement_presentation": equipement_presentation,
+        "duree_repas_affaires": duree_repas_affaires,
+        "service_facturation_entreprise": service_facturation_entreprise,
+        "reservation_derniere_minute": reservation_derniere_minute
+    }
+
+# Génération du dataset complet
+def generer_dataset_restaurants(nombre_restaurants=500):
+    """
+    Génère un dataset complet de restaurants parisiens avec toutes les caractéristiques.
+    
+    Args:
+        nombre_restaurants (int): Le nombre de restaurants à générer. Par défaut 500.
+        
+    Returns:
+        pandas.DataFrame: Un DataFrame contenant tous les restaurants générés.
+    """
+    restaurants = []
+    noms_utilises = set()  # Pour éviter les doublons
+
+    for _ in range(nombre_restaurants):
+        # Génération d'un nom unique
         nom = generer_nom_restaurant()
-    noms_utilises.add(nom)
+        while nom in noms_utilises:
+            nom = generer_nom_restaurant()
+        noms_utilises.add(nom)
+        
+        adresse = generer_adresse()
+        arrondissement = adresse.split(',')[1].strip().split()[0]
+        code_postal = generer_code_postal(arrondissement)
+        
+        # Type de cuisine est maintenant toujours une nationalité (CUISINE_DU_MONDE)
+        cuisine_du_monde = random.choice(CUISINE_DU_MONDE)
+        
+        # Spécialité est maintenant toujours un type de cuisine (TYPES_CUISINE)
+        # 70% de chance d'avoir une spécialité
+        if random.random() < 0.7:
+            type_cuisine = random.choice(TYPES_CUISINE)
+        else:
+            type_cuisine = ""
+        
+        # Prix
+        prix_fourchette = random.choice(PRIX_FOURCHETTE)
+        categorie_prix = PRIX_TO_CATEGORIE[prix_fourchette]
+        
+        note_moyenne = generer_note()
+        nb_avis = random.randint(10, 1000)
+        
+        # Ambiance
+        ambiance = random.choice(AMBIANCES)
+        
+        # Téléphone (maintenant mobile 06 ou 07)
+        telephone = generer_telephone()
+        
+        # Site web et lien vers la carte
+        site_web = generer_site_web(nom)
+        lien_carte = generer_lien_carte(site_web)
+        
+        # Options supplémentaires
+        reservation_recommandee = random.random() < 0.5  # 50% de chance que la réservation soit recommandée
+        
+        # Coordonnées géographiques approximatives pour Paris
+        latitude = round(48.8 + random.uniform(0, 0.17), 6)
+        longitude = round(2.25 + random.uniform(0, 0.17), 6)
+        
+        # Jours d'ouverture et horaires cohérents
+        jours_ouverture = generer_jours_ouverture()
+        horaires_ouverture = generer_horaires_ouverture(jours_ouverture)
+        
+        # Nouvelles données
+        avis = generer_avis(note_moyenne, nb_avis, ambiance, cuisine_du_monde, type_cuisine)
+        qualite_nourriture = generer_qualite_nourriture()
+        reconnaissances = generer_reconnaissances(categorie_prix, note_moyenne)
+        
+        # Attributs professionnels
+        attributs_pro = generer_attributs_professionnels(ambiance, categorie_prix)
+        
+        # Construction du dictionnaire restaurant
+        restaurant = {
+            "nom": nom,
+            "adresse": adresse,
+            "arrondissement": arrondissement,
+            "code_postal": code_postal,
+            "latitude": latitude,
+            "longitude": longitude,
+            "cuisine_du_monde": cuisine_du_monde,
+            "type_cuisine": type_cuisine,
+            "prix_fourchette": prix_fourchette,
+            "categorie_prix": categorie_prix,
+            "note_moyenne": note_moyenne,
+            "nb_avis": nb_avis,
+            "ambiance": ambiance,
+            "telephone": telephone,
+            "site_web": site_web,
+            "lien_carte": lien_carte,
+            "reservation_recommandee": str(reservation_recommandee).lower(),
+            "jours_ouverture": jours_ouverture,
+            "horaires_ouverture": json.dumps(horaires_ouverture, ensure_ascii=False),
+            "avis": json.dumps(avis, ensure_ascii=False),
+            "qualite_nourriture": qualite_nourriture,
+            "reconnaissances": json.dumps(reconnaissances, ensure_ascii=False)
+        }
+        
+        # Ajout des attributs professionnels
+        for key, value in attributs_pro.items():
+            restaurant[key] = value
+        
+        restaurants.append(restaurant)
+
+    # Création du DataFrame
+    df = pd.DataFrame(restaurants)
     
-    adresse = generer_adresse()
-    arrondissement = adresse.split(',')[1].strip().split()[0]
+    return df
+
+# Fonction principale qui orchestre la génération du dataset et l'exportation
+def main():
+    """
+    Fonction principale qui génère le dataset et l'exporte au format CSV.
+    Affiche également quelques statistiques sur le dataset.
+    """
+    print("Début de la génération du dataset des restaurants parisiens...")
     
-    # Choix de la cuisine: soit une nationalité, soit un type
-    if random.random() < 0.7:  # 70% de chance d'avoir une nationalité
-        type_cuisine = random.choice(NATIONALITE_CUISINE)
-    else:
-        type_cuisine = random.choice(TYPES_CUISINE)
+    # Génération du dataset complet
+    nb_restaurants = 500  # Vous pouvez ajuster ce nombre selon vos besoins
+    df = generer_dataset_restaurants(nb_restaurants)
     
-    # Spécialité (peut être vide si on a déjà un type_cuisine spécifique)
-    if type_cuisine in NATIONALITE_CUISINE and random.random() < 0.7:
-        specialite = random.choice(TYPES_CUISINE)
-    elif type_cuisine in TYPES_CUISINE and random.random() < 0.7:
-        specialite = random.choice(NATIONALITE_CUISINE)
-    else:
-        specialite = ""
+    print(f"Dataset généré avec succès : {len(df)} restaurants.")
     
-    # Prix
-    prix_fourchette = random.choice(PRIX_FOURCHETTE)
-    categorie_prix = PRIX_TO_CATEGORIE[prix_fourchette]
+    # Export en CSV
+    fichier_csv = "paris_restaurants_enrichi.csv"
+    df.to_csv(fichier_csv, index=False, encoding='utf-8')
+    print(f"Dataset exporté avec succès dans le fichier : {fichier_csv}")
     
-    note_moyenne = generer_note()
-    nb_avis = random.randint(10, 1000)
+    # Affichage des premières lignes pour vérification
+    print("\nAperçu des premières lignes :")
+    print(df[["nom", "adresse", "cuisine_du_monde", "type_cuisine", "prix_fourchette", "note_moyenne", "site_web"]].head())
     
-    # Ambiance
-    ambiance = random.choice(AMBIANCES)
+    # Statistiques sur le dataset
+    print("\nStatistiques sur le dataset :")
     
-    # Téléphone
-    telephone = generer_telephone()
+    # Répartition par arrondissement
+    repartition_arr = df['arrondissement'].value_counts()
+    print(f"Nombre d'arrondissements représentés : {len(repartition_arr)}")
     
-    # Options supplémentaires
-    reservation_recommandee = random.random() < 0.5  # 50% de chance que la réservation soit recommandée
+    # Répartition par type de cuisine
+    print("\nRépartition par cuisine du monde :")
+    print(df['cuisine_du_monde'].value_counts().head(5))
     
-    # Coordonnées géographiques approximatives pour Paris
-    latitude = round(48.8 + random.uniform(0, 0.17), 6)
-    longitude = round(2.25 + random.uniform(0, 0.17), 6)
+    # Répartition par spécialité
+    if 'type_cuisine' in df.columns:
+        print("\nRépartition par type de cuisine (spécialité) :")
+        print(df['type_cuisine'].value_counts().head(5))
     
-    # Nouvelles données
-    jours_ouverture = generer_jours_ouverture()
-    horaires_ouverture = generer_horaires_ouverture()
-    avis = generer_avis(note_moyenne, nb_avis, ambiance, type_cuisine, specialite)
-    qualite_nourriture = generer_qualite_nourriture()
-    reconnaissances = generer_reconnaissances(categorie_prix, note_moyenne)
+    # Répartition par catégorie de prix
+    print("\nRépartition par catégorie de prix :")
+    print(df['categorie_prix'].value_counts())
     
-    restaurants.append({
-        "nom": nom,
-        "adresse": adresse,
-        "arrondissement": arrondissement,
-        "latitude": latitude,
-        "longitude": longitude,
-        "type_cuisine": type_cuisine,
-        "specialite": specialite,
-        "prix_fourchette": prix_fourchette,
-        "categorie_prix": categorie_prix,
-        "note_moyenne": note_moyenne,
-        "nb_avis": nb_avis,
-        "ambiance": ambiance,
-        "telephone": telephone,
-        "reservation_recommandee": str(reservation_recommandee).lower(),
-        "jours_ouverture": jours_ouverture,
-        "horaires_ouverture": json.dumps(horaires_ouverture, ensure_ascii=False),
-        "avis": json.dumps(avis, ensure_ascii=False),
-        "qualite_nourriture": qualite_nourriture,
-        "reconnaissances": json.dumps(reconnaissances, ensure_ascii=False)
-    })
+    # Répartition par ambiance
+    print("\nRépartition par ambiance :")
+    print(df['ambiance'].value_counts().head(5))
+    
+    # Statistiques sur les notes
+    print(f"\nNote moyenne globale : {df['note_moyenne'].mean():.2f}")
+    print(f"Note médiane : {df['note_moyenne'].median():.2f}")
+    print(f"Note minimale : {df['note_moyenne'].min()}")
+    print(f"Note maximale : {df['note_moyenne'].max()}")
+    
+    # Vérifier le pourcentage de restaurants avec des reconnaissances
+    restaurants_avec_reconnaissances = df[df["reconnaissances"] != "[]"].shape[0]
+    pourcentage = (restaurants_avec_reconnaissances / len(df)) * 100
+    print(f"\nPourcentage de restaurants avec reconnaissances: {pourcentage:.1f}%")
+    
+    # Distribution des guides
+    guides_distribution = {}
+    for i, reconnaissances in enumerate(df["reconnaissances"]):
+        reco_list = json.loads(reconnaissances) if reconnaissances != "[]" else []
+        for reco in reco_list:
+            guide = reco.get("guide")
+            if guide not in guides_distribution:
+                guides_distribution[guide] = 0
+            guides_distribution[guide] += 1
+    
+    if guides_distribution:
+        print("\nDistribution des reconnaissances par guide:")
+        for guide, count in sorted(guides_distribution.items(), key=lambda x: x[1], reverse=True):
+            print(f"- {guide}: {count} restaurants")
+    
+    # Export d'un échantillon au format JSON pour plus de lisibilité
+    sample_json = df.head(3).to_json(orient='records', force_ascii=False, indent=4)
+    with open('sample_restaurants.json', 'w', encoding='utf-8') as f:
+        f.write(sample_json)
+    print("\nÉchantillon de 3 restaurants exporté au format JSON dans le fichier 'sample_restaurants.json'")
 
-# Création du DataFrame
-df = pd.DataFrame(restaurants)
-
-# Export en CSV
-df.to_csv("paris_restaurants_enrichi.csv", index=False, encoding='utf-8')
-
-# Affichage des premières lignes pour vérification
-print(df[["nom", "adresse", "type_cuisine", "prix_fourchette", "note_moyenne"]].head())
-
-# Export d'un échantillon au format CSV
-df_sample = df.head(5)
-print("\nVoici un échantillon du fichier CSV enrichi (5 premières lignes) :")
-print(df_sample.to_csv(index=False))
-
-# Pour vérifier le format des nouvelles colonnes
-print("\nExemple de jours d'ouverture :")
-print(df["jours_ouverture"].iloc[0])
-
-print("\nExemple d'horaires d'ouverture :")
-print(df["horaires_ouverture"].iloc[0])
-
-print("\nExemple d'avis :")
-print(df["avis"].iloc[0])
-
-print("\nExemple de qualité nourriture :")
-print(df["qualite_nourriture"].iloc[0])
-
-print("\nExemple de reconnaissances :")
-print(df["reconnaissances"].iloc[0])
-
-# Vérifier le pourcentage de restaurants avec des reconnaissances
-restaurants_avec_reconnaissances = df[df["reconnaissances"] != "[]"].shape[0]
-pourcentage = (restaurants_avec_reconnaissances / len(df)) * 100
-print(f"\nPourcentage de restaurants avec reconnaissances: {pourcentage:.1f}%")
-
-# Distribution des guides
-guides_distribution = {}
-for i, reconnaissances in enumerate(df["reconnaissances"]):
-    reco_list = json.loads(reconnaissances) if reconnaissances != "[]" else []
-    for reco in reco_list:
-        guide = reco.get("guide")
-        if guide not in guides_distribution:
-            guides_distribution[guide] = 0
-        guides_distribution[guide] += 1
-
-if guides_distribution:
-    print("\nDistribution des reconnaissances par guide:")
-    for guide, count in guides_distribution.items():
-        print(f"- {guide}: {count} restaurants")
+# Point d'entrée pour l'exécution du script
+if __name__ == "__main__":
+    main()

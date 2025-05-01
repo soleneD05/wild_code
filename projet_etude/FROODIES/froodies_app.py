@@ -6,8 +6,6 @@ from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
 import plotly.express as px
 import plotly.graph_objects as go
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import json
 import os
 from datetime import datetime
@@ -25,7 +23,7 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     """
-    Charge les données des restaurants depuis le fichier CSV et gère les erreurs potentielles.
+    Charge les données des restaurants depuis le fichier CSV.
     
     Returns:
         DataFrame: Un DataFrame pandas contenant les données des restaurants.
@@ -36,10 +34,14 @@ def load_data():
         
         # Assurer que toutes les colonnes nécessaires existent
         required_columns = [
-            'nom', 'adresse', 'prix_fourchette', 'type_cuisine', 'specialite',
+            'nom', 'adresse', 'prix_fourchette', 'cuisine_du_monde', 'type_cuisine',
             'ambiance', 'arrondissement', 'note_moyenne', 'nb_avis', 
             'latitude', 'longitude', 'jours_ouverture', 'horaires_ouverture',
-            'avis', 'qualite_nourriture', 'reconnaissances'
+            'avis', 'qualite_nourriture', 'reconnaissances',
+            # Colonnes pour l'aspect professionnel
+            'adapte_repas_affaires', 'niveau_bruit', 'espace_prive', 'type_espace_prive',
+            'wifi', 'prise_electrique', 'capacite_groupe', 'equipement_presentation',
+            'duree_repas_affaires', 'service_facturation_entreprise', 'reservation_derniere_minute'
         ]
         
         # Vérifier et créer des colonnes manquantes avec des valeurs par défaut
@@ -55,6 +57,29 @@ def load_data():
                     df[col] = df.apply(lambda x: [], axis=1)
                 elif col == 'reconnaissances':
                     df[col] = df.apply(lambda x: json.dumps([]), axis=1)
+                # Colonnes professionnelles
+                elif col == 'adapte_repas_affaires':
+                    df[col] = False
+                elif col == 'niveau_bruit':
+                    df[col] = "Modéré"
+                elif col == 'espace_prive':
+                    df[col] = False
+                elif col == 'type_espace_prive':
+                    df[col] = None
+                elif col == 'wifi':
+                    df[col] = False
+                elif col == 'prise_electrique':
+                    df[col] = False
+                elif col == 'capacite_groupe':
+                    df[col] = 0
+                elif col == 'equipement_presentation':
+                    df[col] = False
+                elif col == 'duree_repas_affaires':
+                    df[col] = None
+                elif col == 'service_facturation_entreprise':
+                    df[col] = False
+                elif col == 'reservation_derniere_minute':
+                    df[col] = False
                 else:
                     df[col] = "Non spécifié"
         
@@ -80,7 +105,7 @@ def load_data():
         # Retourner un DataFrame vide avec les colonnes requises
         return pd.DataFrame(columns=required_columns)
 
-# Fonction pour charger les données utilisateur (historique, préférences, filtres personnalisés)
+# Fonction pour charger les données utilisateur
 @st.cache_data
 def load_user_data():
     """
@@ -90,7 +115,6 @@ def load_user_data():
         dict: Les données utilisateur incluant l'historique, les favoris et les filtres personnalisés.
     """
     # Dans une vraie app, ceci viendrait d'une base de données
-    # Pour ce prototype, nous utilisons un fichier JSON local
     if os.path.exists("user_data.json"):
         with open("user_data.json", "r") as f:
             return json.load(f)
@@ -117,6 +141,17 @@ def load_user_data():
                         "ambiance": ["Décontracté"],
                         "prix_fourchette": ["10-20", "20-30"],
                         "jours_ouverture": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "Repas d'affaires",
+                    "conditions": {
+                        "adapte_repas_affaires": True,
+                        "niveau_bruit": "Calme",
+                        "espace_prive": True,
+                        "prix_fourchette": ["30-50", "50-100"],
+                        "note_moyenne": 4.2
                     }
                 }
             ]
@@ -151,42 +186,6 @@ def save_search(filters):
         user_data["search_history"] = user_data["search_history"][-20:]
     save_user_data(user_data)
 
-# Fonction pour calculer les filtres les plus utilisés
-def get_most_used_filters():
-    """
-    Analyse l'historique de recherche pour déterminer les filtres les plus utilisés.
-    
-    Returns:
-        list: Liste triée des filtres avec leur fréquence d'utilisation.
-    """
-    user_data = load_user_data()
-    
-    # Comptage des filtres utilisés
-    filter_counts = {}
-    for search in user_data["search_history"]:
-        for filter_name, filter_value in search["filters"].items():
-            if filter_name not in filter_counts:
-                filter_counts[filter_name] = {"count": 0, "values": {}}
-            
-            filter_counts[filter_name]["count"] += 1
-            
-            # Pour les valeurs des filtres (multi ou single)
-            if isinstance(filter_value, list):
-                for val in filter_value:
-                    if val not in filter_counts[filter_name]["values"]:
-                        filter_counts[filter_name]["values"][val] = 0
-                    filter_counts[filter_name]["values"][val] += 1
-            else:
-                val = filter_value
-                if val not in filter_counts[filter_name]["values"]:
-                    filter_counts[filter_name]["values"][val] = 0
-                filter_counts[filter_name]["values"][val] += 1
-    
-    # Tri par nombre d'utilisations
-    sorted_filters = sorted(filter_counts.items(), key=lambda x: x[1]["count"], reverse=True)
-    
-    return sorted_filters
-
 # Fonction pour suivre les restaurants consultés
 def track_restaurant_view(restaurant_id, restaurant_name, user_data):
     """
@@ -213,74 +212,26 @@ def track_restaurant_view(restaurant_id, restaurant_name, user_data):
         
     return user_data
 
-# Système de recommandation basé sur le contenu
-def content_based_recommendations(df, restaurant_id=None, user_preferences=None, top_n=5):
+# Fonction pour extraire les avis les plus pertinents
+def get_relevant_reviews(reviews, n=3):
     """
-    Génère des recommandations de restaurants basées sur la similarité.
+    Sélectionne les n avis les plus pertinents d'un restaurant.
     
     Args:
-        df (DataFrame): Le dataset complet des restaurants.
-        restaurant_id (int, optional): ID d'un restaurant spécifique pour recommandations similaires.
-        user_preferences (dict, optional): Préférences utilisateur pour générer des recommandations.
-        top_n (int): Nombre de recommandations à retourner.
+        reviews (list): Liste des avis du restaurant.
+        n (int): Nombre d'avis à sélectionner.
         
     Returns:
-        DataFrame: Les restaurants recommandés.
+        list: Les n avis les plus pertinents.
     """
-    # Enrichir les caractéristiques des restaurants
-    df['features'] = (
-        df['type_cuisine'] + ' ' + 
-        df['specialite'].fillna('') + ' ' + 
-        df['ambiance'] + ' ' + 
-        df['arrondissement'] + ' ' + 
-        df['prix_fourchette'] + ' ' + 
-        df['qualite_nourriture'].apply(lambda x: ' '.join(x) if isinstance(x, list) else '')
-    )
-    
-    # Vectorisation
-    tfidf = TfidfVectorizer(stop_words='french')
-    tfidf_matrix = tfidf.fit_transform(df['features'])
-    
-    # Matrice de similarité
-    cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-    
-    if restaurant_id is not None:
-        # Recommandations basées sur un restaurant
-        idx = df.index[df['id'] == restaurant_id].tolist()[0]
-        sim_scores = list(enumerate(cosine_sim[idx]))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:top_n+1]  # Exclut le restaurant lui-même
-        restaurant_indices = [i[0] for i in sim_scores]
-        return df.iloc[restaurant_indices]
-    
-    elif user_preferences is not None:
-        # Création d'un "restaurant virtuel" basé sur les préférences
-        virtual_features = ' '.join([
-            user_preferences.get('type_cuisine', ''),
-            user_preferences.get('specialite', ''),
-            user_preferences.get('ambiance', ''),
-            user_preferences.get('arrondissement', ''),
-            user_preferences.get('prix_fourchette', ''),
-            ' '.join(user_preferences.get('qualite_nourriture', []))
-        ])
+    if not reviews or not isinstance(reviews, list):
+        return []
         
-        # Vectoriser ce "restaurant virtuel"
-        virtual_vec = tfidf.transform([virtual_features])
-        
-        # Calculer la similarité avec tous les restaurants
-        sim_scores = cosine_similarity(virtual_vec, tfidf_matrix).flatten()
-        
-        # Trier par similarité
-        sim_scores_with_idx = list(enumerate(sim_scores))
-        sim_scores_with_idx = sorted(sim_scores_with_idx, key=lambda x: x[1], reverse=True)
-        sim_scores_with_idx = sim_scores_with_idx[:top_n]
-        restaurant_indices = [i[0] for i in sim_scores_with_idx]
-        
-        return df.iloc[restaurant_indices]
+    # Trier par note (privilégier les avis extrêmes, très positifs ou très négatifs)
+    # puis les plus récents
+    relevant = sorted(reviews, key=lambda x: (abs(x.get('note', 3) - 3), x.get('date', '')), reverse=True)
     
-    else:
-        # Si aucun paramètre n'est fourni, retourner les restaurants les mieux notés
-        return df.sort_values('note_moyenne', ascending=False).head(top_n)
+    return relevant[:n]
 
 # Fonction pour créer la carte des restaurants
 def create_restaurant_map(df_filtered):
@@ -325,16 +276,35 @@ def create_restaurant_map(df_filtered):
         if isinstance(row.get('qualite_nourriture'), list) and row['qualite_nourriture']:
             qualite_html = f"<p><b>Qualité:</b> {', '.join(row['qualite_nourriture'][:3])}</p>"
         
+        # Informations professionnelles
+        pro_html = ""
+        if st.session_state.mode == "professionnel":
+            adapte = "Oui" if row.get('adapte_repas_affaires') else "Non"
+            pro_html = f"""
+                <p><b>Adapté aux repas d'affaires:</b> {adapte}</p>
+                <p><b>Niveau sonore:</b> {row.get('niveau_bruit', 'Non spécifié')}</p>
+            """
+            
+            if row.get('espace_prive'):
+                pro_html += f"<p><b>Espace privé:</b> {row.get('type_espace_prive', 'Disponible')}</p>"
+                
+            if row.get('capacite_groupe', 0) > 0:
+                pro_html += f"<p><b>Capacité de groupe:</b> jusqu'à {row.get('capacite_groupe')} personnes</p>"
+                
+            if row.get('duree_repas_affaires'):
+                pro_html += f"<p><b>Durée typique:</b> {row.get('duree_repas_affaires')}</p>"
+        
         html = f"""
             <div style='width: 250px'>
                 <h4>{row['nom']}</h4>
-                <p><b>Cuisine:</b> {row['type_cuisine']}</p>
+                <p><b>Cuisine:</b> {row['cuisine_du_monde']}, {row['type_cuisine']}</p>
                 <p><b>Prix:</b> {row['prix_fourchette']}</p>
                 <p><b>Note:</b> {row['note_moyenne']}/5 ({row['nb_avis']} avis)</p>
                 <p><b>Adresse:</b> {row['adresse']}</p>
                 <p><b>Aujourd'hui:</b> {horaires_auj}</p>
                 {qualite_html}
                 {reconnaissances_html}
+                {pro_html}
             </div>
         """
         
@@ -346,6 +316,10 @@ def create_restaurant_map(df_filtered):
         elif isinstance(row.get('reconnaissances'), list) and row['reconnaissances']:
             marker_color = 'red'
             
+        # Pour mode professionnel, changer la couleur pour les restaurants adaptés
+        if st.session_state.mode == "professionnel" and row.get('adapte_repas_affaires'):
+            marker_color = 'green'
+            
         folium.Marker(
             location=[row['latitude'], row['longitude']],
             popup=folium.Popup(html, max_width=300),
@@ -355,151 +329,7 @@ def create_restaurant_map(df_filtered):
     
     return m
 
-# Fonction pour suggérer des filtres personnalisés basés sur l'historique
-def suggest_custom_filters(df):
-    """
-    Analyse l'historique de recherche pour suggérer des filtres personnalisés.
-    
-    Args:
-        df (DataFrame): Le dataset des restaurants.
-        
-    Returns:
-        list: Suggestions de filtres personnalisés.
-    """
-    user_data = load_user_data()
-    search_history = user_data["search_history"]
-    
-    if len(search_history) < 3:
-        return []  # Pas assez d'historique pour faire des suggestions
-    
-    # Compter les combinaisons de filtres
-    filter_combos = {}
-    for search in search_history:
-        # Créer une signature de cette recherche (combinaison de filtres)
-        combo_key = []
-        for k, v in search["filters"].items():
-            if isinstance(v, list):
-                combo_key.append(f"{k}:{','.join(sorted(v))}")
-            else:
-                combo_key.append(f"{k}:{v}")
-        
-        combo_key = "||".join(sorted(combo_key))
-        
-        if combo_key not in filter_combos:
-            filter_combos[combo_key] = {
-                "count": 0,
-                "filters": search["filters"]
-            }
-        
-        filter_combos[combo_key]["count"] += 1
-    
-    # Trouver les combinaisons fréquentes qui ne sont pas déjà des filtres personnalisés
-    existing_filter_names = [f["name"].lower() for f in user_data["custom_filters"]]
-    suggestions = []
-    
-    for combo, data in filter_combos.items():
-        if data["count"] >= 3:  # Utilisé au moins 3 fois
-            # Générer un nom pour ce filtre
-            filter_name = generate_filter_name(data["filters"], df)
-            
-            if filter_name.lower() not in existing_filter_names:
-                suggestions.append({
-                    "name": filter_name,
-                    "conditions": data["filters"],
-                    "usage_count": data["count"],
-                    "confidence": min(data["count"] * 10, 95)  # Score de confiance basé sur la fréquence
-                })
-    
-    # Trier par fréquence d'utilisation
-    suggestions = sorted(suggestions, key=lambda x: x["usage_count"], reverse=True)
-    
-    return suggestions[:3]  # Limiter à 3 suggestions
-
-# Fonction pour générer un nom de filtre basé sur ses conditions
-def generate_filter_name(filter_conditions, df):
-    """
-    Génère un nom descriptif pour un filtre basé sur ses conditions.
-    
-    Args:
-        filter_conditions (dict): Les conditions du filtre.
-        df (DataFrame): Le dataset des restaurants.
-        
-    Returns:
-        str: Un nom descriptif pour le filtre.
-    """
-    name_parts = []
-    
-    # Vérifier les principales conditions
-    if "type_cuisine" in filter_conditions:
-        cuisines = filter_conditions["type_cuisine"]
-        if isinstance(cuisines, list) and len(cuisines) == 1:
-            name_parts.append(f"Cuisine {cuisines[0]}")
-        elif isinstance(cuisines, str):
-            name_parts.append(f"Cuisine {cuisines}")
-    
-    if "prix_fourchette" in filter_conditions:
-        prix = filter_conditions["prix_fourchette"]
-        if isinstance(prix, list) and len(prix) == 1:
-            if "10-20" in prix:
-                name_parts.append("Bon marché")
-            elif "50-100" in prix or "100+" in prix:
-                name_parts.append("Gastronomique")
-        elif isinstance(prix, str):
-            if "10-20" == prix:
-                name_parts.append("Bon marché")
-            elif "50-100" == prix or "100+" == prix:
-                name_parts.append("Gastronomique")
-    
-    if "ambiance" in filter_conditions:
-        ambiance = filter_conditions["ambiance"]
-        if isinstance(ambiance, list) and len(ambiance) == 1:
-            name_parts.append(f"{ambiance[0]}")
-        elif isinstance(ambiance, str):
-            name_parts.append(f"{ambiance}")
-    
-    if "arrondissement" in filter_conditions:
-        arr = filter_conditions["arrondissement"]
-        if isinstance(arr, list) and len(arr) == 1:
-            name_parts.append(f"dans le {arr[0]}")
-        elif isinstance(arr, str):
-            name_parts.append(f"dans le {arr}")
-            
-    if "qualite_nourriture" in filter_conditions:
-        qualite = filter_conditions["qualite_nourriture"]
-        if isinstance(qualite, list) and len(qualite) == 1:
-            name_parts.append(f"{qualite[0]}")
-        elif isinstance(qualite, str):
-            name_parts.append(f"{qualite}")
-    
-    # Si nous avons des parties de nom, les assembler
-    if name_parts:
-        return " ".join(name_parts)
-    else:
-        # Nom par défaut
-        return f"Mes préférences ({len(filter_conditions)} critères)"
-
-# Fonction pour extraire les avis les plus pertinents
-def get_relevant_reviews(reviews, n=3):
-    """
-    Sélectionne les n avis les plus pertinents d'un restaurant.
-    
-    Args:
-        reviews (list): Liste des avis du restaurant.
-        n (int): Nombre d'avis à sélectionner.
-        
-    Returns:
-        list: Les n avis les plus pertinents.
-    """
-    if not reviews or not isinstance(reviews, list):
-        return []
-        
-    # Trier par note (privilégier les avis extrêmes, très positifs ou très négatifs)
-    # puis les plus récents
-    relevant = sorted(reviews, key=lambda x: (abs(x.get('note', 3) - 3), x.get('date', '')), reverse=True)
-    
-    return relevant[:n]
-
-# Fonction d'interface chatbot pour la recherche
+# Fonction d'interface chatbot pour la recherche conversationnelle
 def chatbot_interface(df):
     """
     Interface de chat pour rechercher des restaurants de façon conversationnelle.
@@ -515,7 +345,7 @@ def chatbot_interface(df):
     # Initialiser l'historique du chat s'il n'existe pas
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = [
-            {"role": "assistant", "content": "Bonjour ! Je suis FROODIES, votre assistant pour trouver le restaurant parfait à Paris. Que recherchez-vous aujourd'hui ?"}
+            {"role": "assistant", "content": f"Bonjour ! Je suis FROODIES, votre assistant pour trouver le restaurant parfait à Paris. Je vous aiderai en mode {st.session_state.mode}. Que recherchez-vous aujourd'hui ?"}
         ]
     
     # Afficher l'historique du chat
@@ -535,8 +365,7 @@ def chatbot_interface(df):
         # Afficher le message de l'utilisateur
         st.chat_message("user").write(user_input)
         
-        # Simuler une analyse de la requête
-        # Dans une vraie implémentation, cela utiliserait NLP ou une IA
+        # Analyse de la requête pour détecter les filtres
         filters = {}
         
         # Mots-clés à rechercher
@@ -601,21 +430,37 @@ def chatbot_interface(df):
             "aujourd'hui": datetime.now().strftime("%A")
         }
         
+        # Mots-clés spécifiques au mode professionnel
+        if st.session_state.mode == "professionnel":
+            professionnel_keywords = {
+                "affaires": "adapte_repas_affaires", "business": "adapte_repas_affaires",
+                "professionnel": "adapte_repas_affaires", "travail": "adapte_repas_affaires",
+                "réunion": "adapte_repas_affaires", "client": "adapte_repas_affaires",
+                "calme": "niveau_bruit", "silencieux": "niveau_bruit", "tranquille": "niveau_bruit",
+                "privé": "espace_prive", "salon": "espace_prive", "confidentiel": "espace_prive",
+                "groupe": "capacite_groupe", "équipe": "capacite_groupe", "collaborateurs": "capacite_groupe",
+                "wifi": "wifi", "connexion": "wifi", "internet": "wifi",
+                "prises": "prise_electrique", "électrique": "prise_electrique",
+                "présentation": "equipement_presentation", "projeter": "equipement_presentation", 
+                "facturation": "service_facturation_entreprise", "entreprise": "service_facturation_entreprise",
+                "dernière minute": "reservation_derniere_minute", "urgence": "reservation_derniere_minute"
+            }
+        
         user_input_lower = user_input.lower()
         
         # Détection de type de cuisine
         for keyword, value in cuisine_keywords.items():
             if keyword in user_input_lower:
-                if "type_cuisine" not in filters:
-                    filters["type_cuisine"] = []
-                filters["type_cuisine"].append(value)
+                if "cuisine_du_monde" not in filters:
+                    filters["cuisine_du_monde"] = []
+                filters["cuisine_du_monde"].append(value)
         
         # Détection de type spécifique
         for keyword, value in type_keywords.items():
             if keyword in user_input_lower:
-                if "specialite" not in filters:
-                    filters["specialite"] = []
-                filters["specialite"].append(value)
+                if "type_cuisine" not in filters:
+                    filters["type_cuisine"] = []
+                filters["type_cuisine"].append(value)
         
         # Détection de prix
         for keyword, value in prix_keywords.items():
@@ -660,8 +505,7 @@ def chatbot_interface(df):
         # Détection de reconnaissance
         for keyword, value in reconnaissance_keywords.items():
             if keyword in user_input_lower:
-                if "reconnaissances" not in filters:
-                    filters["reconnaissances"] = True  # Flag pour filtrer sur la présence de reconnaissances
+                filters["reconnaissances"] = True  # Flag pour filtrer sur la présence de reconnaissances
                     
         # Détection de jours d'ouverture
         for keyword, value in jours_keywords.items():
@@ -673,16 +517,40 @@ def chatbot_interface(df):
                 else:
                     filters["jours_ouverture"].append(value)
         
+        # Détection de critères professionnels spécifiques 
+        if st.session_state.mode == "professionnel":
+            for keyword, field in professionnel_keywords.items():
+                if keyword in user_input_lower:
+                    if field == "niveau_bruit":
+                        filters[field] = "Calme"
+                    elif field == "capacite_groupe":
+                        # Essayer de détecter un nombre de personnes
+                        import re
+                        numbers = re.findall(r'\d+', user_input_lower)
+                        if numbers:
+                            for num in numbers:
+                                if 5 <= int(num) <= 50:  # Si un nombre entre 5 et 50 est mentionné
+                                    filters[field] = int(num)
+                                    break
+                            else:
+                                filters[field] = 10  # Valeur par défaut si nombre détecté hors limites
+                        else:
+                            filters[field] = 10  # Valeur par défaut si aucun nombre détecté
+                    elif field in ["adapte_repas_affaires", "espace_prive", "wifi", 
+                                "prise_electrique", "equipement_presentation", 
+                                "service_facturation_entreprise", "reservation_derniere_minute"]:
+                        filters[field] = True
+        
         # Réponse du chatbot
         if filters:
             response = "D'après ce que je comprends, vous cherchez "
             parts = []
             
-            if "type_cuisine" in filters:
-                parts.append(f"un restaurant {', '.join(filters['type_cuisine'])}")
+            if "cuisine_du_monde" in filters:
+                parts.append(f"un restaurant {', '.join(filters['cuisine_du_monde'])}")
             
-            if "specialite" in filters:
-                parts.append(f"spécialisé en {', '.join(filters['specialite'])}")
+            if "type_cuisine" in filters:
+                parts.append(f"spécialisé en {', '.join(filters['type_cuisine'])}")
             
             if "prix_fourchette" in filters:
                 prix_labels = []
@@ -711,6 +579,35 @@ def chatbot_interface(df):
                 
             if "jours_ouverture" in filters:
                 parts.append(f"ouvert le(s) {', '.join(filters['jours_ouverture'])}")
+            
+            # Parties spécifiques au mode professionnel
+            if st.session_state.mode == "professionnel":
+                if "adapte_repas_affaires" in filters and filters["adapte_repas_affaires"]:
+                    parts.append("adapté aux repas d'affaires")
+                    
+                if "niveau_bruit" in filters:
+                    parts.append(f"avec une ambiance {filters['niveau_bruit'].lower()}")
+                    
+                if "espace_prive" in filters and filters["espace_prive"]:
+                    parts.append("disposant d'un espace privé")
+                    
+                if "capacite_groupe" in filters:
+                    parts.append(f"pouvant accueillir un groupe de {filters['capacite_groupe']} personnes")
+                    
+                if "wifi" in filters and filters["wifi"]:
+                    parts.append("avec accès WiFi")
+                    
+                if "prise_electrique" in filters and filters["prise_electrique"]:
+                    parts.append("équipé de prises électriques")
+                    
+                if "equipement_presentation" in filters and filters["equipement_presentation"]:
+                    parts.append("avec équipement pour présentation")
+                    
+                if "service_facturation_entreprise" in filters and filters["service_facturation_entreprise"]:
+                    parts.append("proposant un service de facturation pour entreprise")
+                    
+                if "reservation_derniere_minute" in filters and filters["reservation_derniere_minute"]:
+                    parts.append("acceptant les réservations de dernière minute")
             
             if parts:
                 response += " " + ", ".join(parts) + "."
@@ -767,6 +664,10 @@ def main():
     if 'chat_filters' not in st.session_state:
         st.session_state.chat_filters = {}
     
+    # Initialiser le mode (personnel ou professionnel)
+    if 'mode' not in st.session_state:
+        st.session_state.mode = "personnel"
+    
     # Chargement des données
     df = load_data()
     user_data = load_user_data()
@@ -774,6 +675,34 @@ def main():
     # En-tête principal
     st.title("🍕 FROODIES")
     st.markdown("### Trouvez votre restaurant idéal à Paris !")
+    
+    # Choix du mode (personnel ou professionnel)
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🍽️ Mode personnel", 
+                    type="primary" if st.session_state.mode == "personnel" else "secondary"):
+            st.session_state.mode = "personnel"
+            # Réinitialiser le chat quand on change de mode
+            st.session_state.chat_history = [
+                {"role": "assistant", "content": "Bonjour ! Je suis FROODIES, votre assistant pour trouver le restaurant parfait à Paris pour vos sorties personnelles. Que recherchez-vous aujourd'hui ?"}
+            ]
+            st.rerun()
+            
+    with col2:
+        if st.button("💼 Mode professionnel", 
+                    type="primary" if st.session_state.mode == "professionnel" else "secondary"):
+            st.session_state.mode = "professionnel"
+            # Réinitialiser le chat quand on change de mode
+            st.session_state.chat_history = [
+                {"role": "assistant", "content": "Bonjour ! Je suis FROODIES, votre assistant pour trouver le restaurant parfait à Paris pour vos repas d'affaires et rencontres professionnelles. Que recherchez-vous aujourd'hui ?"}
+            ]
+            st.rerun()
+    
+    # Légende de l'interface selon le mode
+    if st.session_state.mode == "personnel":
+        st.info("🍽️ **Mode personnel** - Recherchez des restaurants pour vos sorties en famille, entre amis ou en couple.")
+    else:
+        st.info("💼 **Mode professionnel** - Recherchez des restaurants adaptés pour vos repas d'affaires, rencontres clients ou réunions d'équipe.")
     
     # SIDEBAR: Filtres
     st.sidebar.title("🔍 Filtres de recherche")
@@ -783,22 +712,22 @@ def main():
     
     # Filtres standards
     with sidebar_tab1:
-        # Filtres standards
+        # Filtres standards communs
         price_filter = st.multiselect(
             "Budget",
             options=sorted(df['prix_fourchette'].unique()),
             default=[]
         )
         
-        cuisine_filter = st.multiselect(
-            "Type de cuisine",
-            options=sorted(df['type_cuisine'].unique()),
+        cuisine_monde_filter = st.multiselect(
+            "Cuisine du monde",
+            options=sorted(df['cuisine_du_monde'].unique()),
             default=[]
         )
         
-        specialite_filter = st.multiselect(
-            "Spécialité",
-            options=sorted([s for s in df['specialite'].unique() if pd.notna(s) and s != '']),
+        cuisine_filter = st.multiselect(
+            "Type de cuisine",
+            options=sorted([str(x) for x in df['type_cuisine'].unique() if pd.notna(x)]),
             default=[]
         )
         
@@ -814,7 +743,7 @@ def main():
             default=[]
         )
         
-        # Nouveaux filtres
+        # Nouveaux filtres communs
         qualite_options = []
         for qual_list in df['qualite_nourriture']:
             if isinstance(qual_list, list):
@@ -845,218 +774,214 @@ def main():
             step=0.1
         )
         
-        # Séparateur
-        st.sidebar.divider()
+        # Filtres spécifiques au mode professionnel
+        if st.session_state.mode == "professionnel":
+            st.divider()
+            st.subheader("Filtres professionnels")
+            
+            adapte_affaires = st.checkbox("Adapté aux repas d'affaires", value=False)
+            
+            niveau_bruit = st.radio(
+                "Niveau sonore",
+                options=["Tous", "Calme", "Modéré"],
+                horizontal=True
+            )
+            
+            espace_prive = st.checkbox("Avec espace privé", value=False)
+            
+            capacite_min = st.slider(
+                "Capacité de groupe minimum",
+                min_value=0,
+                max_value=30,
+                value=0,
+                step=5
+            )
+            
+            wifi = st.checkbox("Avec WiFi", value=False)
+            
+            equipement_presentation = st.checkbox("Équipement pour présentation", value=False)
+            
+            facturation_entreprise = st.checkbox("Facturation entreprise", value=False)
+            
+            reservation_derniere_minute = st.checkbox("Réservation dernière minute", value=False)
         
-        # Affichage des filtres les plus utilisés
-        st.sidebar.subheader("💡 Vos filtres fréquents")
-        most_used_filters = get_most_used_filters()
+        # Filtrage des données
+        mask = df['note_moyenne'] >= note_min
         
-        if most_used_filters:
-            for filter_name, filter_data in most_used_filters[:3]:  # Top 3
-                with st.sidebar.expander(f"{filter_name} ({filter_data['count']} utilisations)"):
-                    # Afficher les valeurs les plus utilisées
-                    top_values = sorted(filter_data["values"].items(), key=lambda x: x[1], reverse=True)[:3]
-                    for value, count in top_values:
-                        st.write(f"- {value}: {count} fois")
-                        if st.button(f"Appliquer '{value}'", key=f"apply_{filter_name}_{value}"):
-                            # Appliquer ce filtre
-                            if filter_name == "prix_fourchette":
-                                price_filter = [value]
-                            elif filter_name == "type_cuisine":
-                                cuisine_filter = [value]
-                            elif filter_name == "specialite":
-                                specialite_filter = [value]
-                            elif filter_name == "arrondissement":
-                                arrond_filter = [value]
-                            elif filter_name == "ambiance":
-                                ambiance_filter = [value]
-                            elif filter_name == "qualite_nourriture":
-                                qualite_filter = [value]
-                            st.rerun()
-        else:
-            st.sidebar.info("Utilisez les filtres pour voir vos préférences fréquentes ici.")
+        if price_filter:
+            mask &= df['prix_fourchette'].isin(price_filter)
+        if cuisine_monde_filter:
+            mask &= df['cuisine_du_monde'].isin(cuisine_monde_filter)
+        if cuisine_filter:
+            mask &= df['type_cuisine'].isin(cuisine_filter)
+        if arrond_filter:
+            mask &= df['arrondissement'].isin(arrond_filter)
+        if ambiance_filter:
+            mask &= df['ambiance'].isin(ambiance_filter)
+            
+        # Filtrage sur les nouvelles colonnes
+        if qualite_filter:
+            # Filtrer les restaurants dont la liste de qualité contient au moins un des éléments recherchés
+            mask &= df['qualite_nourriture'].apply(lambda x: isinstance(x, list) and any(q in x for q in qualite_filter))
+            
+        if jours_filter:
+            # Filtrer les restaurants ouverts les jours demandés
+            mask &= df['jours_ouverture'].apply(lambda x: isinstance(x, list) and all(jour in x for jour in jours_filter))
+            
+        if has_recognition:
+            # Filtrer pour ne garder que les restaurants avec des reconnaissances
+            mask &= df['reconnaissances'].apply(lambda x: isinstance(x, list) and len(x) > 0)
+        
+        # Filtres spécifiques au mode professionnel
+        if st.session_state.mode == "professionnel":
+            if adapte_affaires:
+                mask &= df['adapte_repas_affaires'] == True
+                
+            if niveau_bruit != "Tous":
+                mask &= df['niveau_bruit'] == niveau_bruit
+                
+            if espace_prive:
+                mask &= df['espace_prive'] == True
+                
+            if capacite_min > 0:
+                mask &= df['capacite_groupe'] >= capacite_min
+                
+            if wifi:
+                mask &= df['wifi'] == True
+                
+            if equipement_presentation:
+                mask &= df['equipement_presentation'] == True
+                
+            if facturation_entreprise:
+                mask &= df['service_facturation_entreprise'] == True
+                
+            if reservation_derniere_minute:
+                mask &= df['reservation_derniere_minute'] == True
+        
+        df_filtered = df[mask]
+        
+        # Enregistrer cette recherche dans l'historique utilisateur
+        current_filters = {}
+        if price_filter:
+            current_filters["prix_fourchette"] = price_filter
+        if cuisine_monde_filter:
+            current_filters["cuisine_du_monde"] = cuisine_monde_filter
+        if cuisine_filter:
+            current_filters["type_cuisine"] = cuisine_filter
+        if arrond_filter:
+            current_filters["arrondissement"] = arrond_filter
+        if ambiance_filter:
+            current_filters["ambiance"] = ambiance_filter
+        if qualite_filter:
+            current_filters["qualite_nourriture"] = qualite_filter
+        if jours_filter:
+            current_filters["jours_ouverture"] = jours_filter
+        if has_recognition:
+            current_filters["reconnaissances"] = True
+        if note_min > 4.0:  # Seulement si modifié par rapport à la valeur par défaut
+            current_filters["note_moyenne"] = note_min
+            
+        # Filtres professionnels dans l'historique
+        if st.session_state.mode == "professionnel":
+            if adapte_affaires:
+                current_filters["adapte_repas_affaires"] = True
+            if niveau_bruit != "Tous":
+                current_filters["niveau_bruit"] = niveau_bruit
+            if espace_prive:
+                current_filters["espace_prive"] = True
+            if capacite_min > 0:
+                current_filters["capacite_groupe"] = capacite_min
+            if wifi:
+                current_filters["wifi"] = True
+            if equipement_presentation:
+                current_filters["equipement_presentation"] = True
+            if facturation_entreprise:
+                current_filters["service_facturation_entreprise"] = True
+            if reservation_derniere_minute:
+                current_filters["reservation_derniere_minute"] = True
+        
+        if current_filters:
+            save_search(current_filters)
     
     # Filtres personnalisés
     with sidebar_tab2:
-        # Interface pour créer un nouveau filtre personnalisé
-        st.sidebar.subheader("Créer un filtre personnalisé")
+        st.subheader("Mes filtres personnalisés")
         
-        filter_name = st.sidebar.text_input("Nom du filtre")
+        # Afficher les filtres personnalisés enregistrés
+        for custom_filter in user_data.get("custom_filters", []):
+            if (st.session_state.mode == "professionnel" and "adapte_repas_affaires" in custom_filter.get("conditions", {})) or \
+               (st.session_state.mode == "personnel" and "adapte_repas_affaires" not in custom_filter.get("conditions", {})):
+                if st.button(f"📌 {custom_filter['name']}", key=f"custom_{custom_filter['id']}"):
+                    # Appliquer ce filtre personnalisé
+                    conditions = custom_filter.get("conditions", {})
+                    st.session_state.chat_filters = conditions
+                    st.session_state.show_results = True
+                    st.rerun()
+                st.caption(f"_{', '.join([f'{k}: {v}' for k, v in custom_filter.get('conditions', {}).items() if k not in ['id', 'name']][:3])}_")
+                st.divider()
         
-        st.sidebar.write("Sélectionnez les conditions:")
-        save_price = st.sidebar.checkbox("Budget")
-        save_cuisine = st.sidebar.checkbox("Type de cuisine")
-        save_specialite = st.sidebar.checkbox("Spécialité")
-        save_arrond = st.sidebar.checkbox("Arrondissement")
-        save_ambiance = st.sidebar.checkbox("Ambiance")
-        save_qualite = st.sidebar.checkbox("Qualité")
-        save_jours = st.sidebar.checkbox("Jours d'ouverture")
-        save_recognition = st.sidebar.checkbox("Récompenses")
-        save_note = st.sidebar.checkbox("Note minimale")
-        
-        col1, col2 = st.sidebar.columns(2)
-        with col1:
-            if st.button("Annuler"):
-                st.sidebar.success("Création annulée")
-        
-        with col2:
-            if st.button("Enregistrer"):
-                # Vérifier que le nom n'est pas vide
-                if not filter_name:
-                    st.sidebar.error("Le nom du filtre ne peut pas être vide")
-                else:
-                    # Créer le filtre personnalisé
-                    conditions = {}
+        # Option pour créer un nouveau filtre personnalisé
+        with st.expander("✨ Créer un nouveau filtre personnalisé"):
+            filter_name = st.text_input("Nom du filtre")
+            
+            # Afficher les filtres actuellement appliqués
+            st.markdown("**Filtres actuels :**")
+            applied_filters = []
+            
+            if price_filter:
+                applied_filters.append(f"Budget: {', '.join(price_filter)}")
+            if cuisine_monde_filter:
+                applied_filters.append(f"Cuisine: {', '.join(cuisine_monde_filter)}")
+            if cuisine_filter:
+                applied_filters.append(f"Type: {', '.join(cuisine_filter)}")
+            if arrond_filter:
+                applied_filters.append(f"Arrondissement: {', '.join(arrond_filter)}")
+            if ambiance_filter:
+                applied_filters.append(f"Ambiance: {', '.join(ambiance_filter)}")
+            if qualite_filter:
+                applied_filters.append(f"Qualité: {', '.join(qualite_filter)}")
+            if has_recognition:
+                applied_filters.append("Restaurants récompensés")
+                
+            # Filtres professionnels le cas échéant
+            if st.session_state.mode == "professionnel":
+                if adapte_affaires:
+                    applied_filters.append("Adapté aux repas d'affaires")
+                if niveau_bruit != "Tous":
+                    applied_filters.append(f"Niveau sonore: {niveau_bruit}")
+                if espace_prive:
+                    applied_filters.append("Avec espace privé")
+                if capacite_min > 0:
+                    applied_filters.append(f"Capacité min: {capacite_min}")
+                if wifi:
+                    applied_filters.append("Avec WiFi")
+                if equipement_presentation:
+                    applied_filters.append("Avec équipement présentation")
+                if facturation_entreprise:
+                    applied_filters.append("Facturation entreprise")
+                if reservation_derniere_minute:
+                    applied_filters.append("Réservation dernière minute")
+            
+            if applied_filters:
+                for f in applied_filters:
+                    st.markdown(f"- {f}")
+            else:
+                st.markdown("_Aucun filtre appliqué actuellement_")
+                
+            if filter_name and applied_filters and st.button("Enregistrer ce filtre"):
+                new_filter = {
+                    "id": len(user_data.get("custom_filters", [])) + 1,
+                    "name": filter_name,
+                    "conditions": current_filters
+                }
+                
+                if "custom_filters" not in user_data:
+                    user_data["custom_filters"] = []
                     
-                    if save_price and price_filter:
-                        conditions["prix_fourchette"] = price_filter
-                    
-                    if save_cuisine and cuisine_filter:
-                        conditions["type_cuisine"] = cuisine_filter
-                        
-                    if save_specialite and specialite_filter:
-                        conditions["specialite"] = specialite_filter
-                    
-                    if save_arrond and arrond_filter:
-                        conditions["arrondissement"] = arrond_filter
-                    
-                    if save_ambiance and ambiance_filter:
-                        conditions["ambiance"] = ambiance_filter
-                        
-                    if save_qualite and qualite_filter:
-                        conditions["qualite_nourriture"] = qualite_filter
-                        
-                    if save_jours and jours_filter:
-                        conditions["jours_ouverture"] = jours_filter
-                        
-                    if save_recognition and has_recognition:
-                        conditions["reconnaissances"] = True
-                    
-                    if save_note:
-                        conditions["note_moyenne"] = note_min
-                    
-                    # Si des conditions ont été sélectionnées
-                    if conditions:
-                        user_data["custom_filters"].append({
-                            "id": len(user_data["custom_filters"]) + 1,
-                            "name": filter_name,
-                            "conditions": conditions
-                        })
-                        save_user_data(user_data)
-                        st.sidebar.success(f"Filtre '{filter_name}' créé avec succès!")
-                    else:
-                        st.sidebar.error("Veuillez sélectionner au moins une condition")
-        
-        # Séparateur
-        st.sidebar.divider()
-        
-        # Affichage des filtres personnalisés existants
-        st.sidebar.subheader("Vos filtres personnalisés")
-        
-        if user_data["custom_filters"]:
-            for custom_filter in user_data["custom_filters"]:
-                with st.sidebar.expander(f"🔖 {custom_filter['name']}"):
-                    # Afficher les conditions du filtre
-                    for condition_name, condition_value in custom_filter["conditions"].items():
-                        if isinstance(condition_value, list):
-                            st.write(f"- {condition_name}: {', '.join(condition_value)}")
-                        else:
-                            st.write(f"- {condition_name}: {condition_value}")
-                    
-                    # Bouton pour appliquer ce filtre
-                    if st.button(f"Appliquer", key=f"apply_custom_{custom_filter['id']}"):
-                        # Appliquer les conditions de ce filtre
-                        if "prix_fourchette" in custom_filter["conditions"]:
-                            price_filter = custom_filter["conditions"]["prix_fourchette"] if isinstance(custom_filter["conditions"]["prix_fourchette"], list) else [custom_filter["conditions"]["prix_fourchette"]]
-                        
-                        if "type_cuisine" in custom_filter["conditions"]:
-                            cuisine_filter = custom_filter["conditions"]["type_cuisine"] if isinstance(custom_filter["conditions"]["type_cuisine"], list) else [custom_filter["conditions"]["type_cuisine"]]
-                            
-                        if "specialite" in custom_filter["conditions"]:
-                            specialite_filter = custom_filter["conditions"]["specialite"] if isinstance(custom_filter["conditions"]["specialite"], list) else [custom_filter["conditions"]["specialite"]]
-                        
-                        if "arrondissement" in custom_filter["conditions"]:
-                            arrond_filter = custom_filter["conditions"]["arrondissement"] if isinstance(custom_filter["conditions"]["arrondissement"], list) else [custom_filter["conditions"]["arrondissement"]]
-                        
-                        if "ambiance" in custom_filter["conditions"]:
-                            ambiance_filter = custom_filter["conditions"]["ambiance"] if isinstance(custom_filter["conditions"]["ambiance"], list) else [custom_filter["conditions"]["ambiance"]]
-                            
-                        if "qualite_nourriture" in custom_filter["conditions"]:
-                            qualite_filter = custom_filter["conditions"]["qualite_nourriture"] if isinstance(custom_filter["conditions"]["qualite_nourriture"], list) else [custom_filter["conditions"]["qualite_nourriture"]]
-                            
-                        if "jours_ouverture" in custom_filter["conditions"]:
-                            jours_filter = custom_filter["conditions"]["jours_ouverture"] if isinstance(custom_filter["conditions"]["jours_ouverture"], list) else [custom_filter["conditions"]["jours_ouverture"]]
-                            
-                        if "reconnaissances" in custom_filter["conditions"]:
-                            has_recognition = True
-                        
-                        if "note_moyenne" in custom_filter["conditions"]:
-                            note_min = float(custom_filter["conditions"]["note_moyenne"])
-                        
-                        st.rerun()
-                    
-                    # Bouton pour supprimer ce filtre
-                    if st.button(f"Supprimer", key=f"delete_custom_{custom_filter['id']}"):
-                        user_data["custom_filters"] = [f for f in user_data["custom_filters"] if f["id"] != custom_filter["id"]]
-                        save_user_data(user_data)
-                        st.success(f"Filtre '{custom_filter['name']}' supprimé.")
-                        st.rerun()
-        else:
-            st.sidebar.info("Vous n'avez pas encore de filtres personnalisés. Créez-en un en haut de cette section.")
-    
-    # Filtrage des données
-    mask = df['note_moyenne'] >= note_min
-    
-    if price_filter:
-        mask &= df['prix_fourchette'].isin(price_filter)
-    if cuisine_filter:
-        mask &= df['type_cuisine'].isin(cuisine_filter)
-    if specialite_filter:
-        mask &= df['specialite'].isin(specialite_filter)
-    if arrond_filter:
-        mask &= df['arrondissement'].isin(arrond_filter)
-    if ambiance_filter:
-        mask &= df['ambiance'].isin(ambiance_filter)
-        
-    # Filtrage sur les nouvelles colonnes
-    if qualite_filter:
-        # Filtrer les restaurants dont la liste de qualité contient au moins un des éléments recherchés
-        mask &= df['qualite_nourriture'].apply(lambda x: isinstance(x, list) and any(q in x for q in qualite_filter))
-        
-    if jours_filter:
-        # Filtrer les restaurants ouverts les jours demandés
-        mask &= df['jours_ouverture'].apply(lambda x: isinstance(x, list) and all(jour in x for jour in jours_filter))
-        
-    if has_recognition:
-        # Filtrer pour ne garder que les restaurants avec des reconnaissances
-        mask &= df['reconnaissances'].apply(lambda x: isinstance(x, list) and len(x) > 0)
-    
-    df_filtered = df[mask]
-    
-    # Enregistrer cette recherche dans l'historique utilisateur
-    current_filters = {}
-    if price_filter:
-        current_filters["prix_fourchette"] = price_filter
-    if cuisine_filter:
-        current_filters["type_cuisine"] = cuisine_filter
-    if specialite_filter:
-        current_filters["specialite"] = specialite_filter
-    if arrond_filter:
-        current_filters["arrondissement"] = arrond_filter
-    if ambiance_filter:
-        current_filters["ambiance"] = ambiance_filter
-    if qualite_filter:
-        current_filters["qualite_nourriture"] = qualite_filter
-    if jours_filter:
-        current_filters["jours_ouverture"] = jours_filter
-    if has_recognition:
-        current_filters["reconnaissances"] = True
-    if note_min > 4.0:  # Seulement si modifié par rapport à la valeur par défaut
-        current_filters["note_moyenne"] = note_min
-    
-    if current_filters:
-        save_search(current_filters)
+                user_data["custom_filters"].append(new_filter)
+                save_user_data(user_data)
+                st.success(f"Filtre '{filter_name}' enregistré avec succès !")
+                st.rerun()
     
     # Interface principale
     # Interface chatbot
@@ -1067,8 +992,15 @@ def main():
         st.session_state.chat_filters = filters_from_chat
     
     # Vérifier si des filtres manuels sont activés (à partir de la sidebar)
-    has_manual_filters = any([price_filter, cuisine_filter, specialite_filter, arrond_filter, ambiance_filter, 
-                             qualite_filter, jours_filter, has_recognition]) or note_min > 4.0
+    has_manual_filters = any([price_filter, cuisine_monde_filter, cuisine_filter, arrond_filter, ambiance_filter, 
+                            qualite_filter, jours_filter, has_recognition]) or note_min > 4.0
+                            
+    # Filtres professionnels
+    if st.session_state.mode == "professionnel":
+        has_manual_filters = has_manual_filters or any([
+            adapte_affaires, niveau_bruit != "Tous", espace_prive, capacite_min > 0,
+            wifi, equipement_presentation, facturation_entreprise, reservation_derniere_minute
+        ])
     
     # Si des filtres sont appliqués via le chatbot OU des filtres manuels
     if (st.session_state.chat_filters and st.session_state.show_results) or has_manual_filters:
@@ -1084,11 +1016,11 @@ def main():
             if "prix_fourchette" in st.session_state.chat_filters:
                 chat_mask &= df['prix_fourchette'].isin(st.session_state.chat_filters["prix_fourchette"])
             
+            if "cuisine_du_monde" in st.session_state.chat_filters:
+                chat_mask &= df['cuisine_du_monde'].isin(st.session_state.chat_filters["cuisine_du_monde"])
+                
             if "type_cuisine" in st.session_state.chat_filters:
                 chat_mask &= df['type_cuisine'].isin(st.session_state.chat_filters["type_cuisine"])
-            
-            if "specialite" in st.session_state.chat_filters:
-                chat_mask &= df['specialite'].isin(st.session_state.chat_filters["specialite"])
             
             if "arrondissement" in st.session_state.chat_filters:
                 chat_mask &= df['arrondissement'].isin(st.session_state.chat_filters["arrondissement"])
@@ -1107,6 +1039,35 @@ def main():
             if "reconnaissances" in st.session_state.chat_filters:
                 chat_mask &= df['reconnaissances'].apply(lambda x: isinstance(x, list) and len(x) > 0)
             
+            # Filtres professionnels depuis le chatbot
+            if st.session_state.mode == "professionnel":
+                if "adapte_repas_affaires" in st.session_state.chat_filters:
+                    chat_mask &= df['adapte_repas_affaires'] == st.session_state.chat_filters["adapte_repas_affaires"]
+                
+                if "niveau_bruit" in st.session_state.chat_filters:
+                    chat_mask &= df['niveau_bruit'] == st.session_state.chat_filters["niveau_bruit"]
+                
+                if "espace_prive" in st.session_state.chat_filters:
+                    chat_mask &= df['espace_prive'] == st.session_state.chat_filters["espace_prive"]
+                
+                if "capacite_groupe" in st.session_state.chat_filters:
+                    chat_mask &= df['capacite_groupe'] >= st.session_state.chat_filters["capacite_groupe"]
+                
+                if "wifi" in st.session_state.chat_filters:
+                    chat_mask &= df['wifi'] == st.session_state.chat_filters["wifi"]
+                
+                if "prise_electrique" in st.session_state.chat_filters:
+                    chat_mask &= df['prise_electrique'] == st.session_state.chat_filters["prise_electrique"]
+                
+                if "equipement_presentation" in st.session_state.chat_filters:
+                    chat_mask &= df['equipement_presentation'] == st.session_state.chat_filters["equipement_presentation"]
+                
+                if "service_facturation_entreprise" in st.session_state.chat_filters:
+                    chat_mask &= df['service_facturation_entreprise'] == st.session_state.chat_filters["service_facturation_entreprise"]
+                
+                if "reservation_derniere_minute" in st.session_state.chat_filters:
+                    chat_mask &= df['reservation_derniere_minute'] == st.session_state.chat_filters["reservation_derniere_minute"]
+            
             filtered_data = df[chat_mask]
             filter_source = "chatbot"
         
@@ -1122,467 +1083,403 @@ def main():
         with col3:
             st.metric("Prix moyen", filtered_data['prix_fourchette'].mode()[0] if not filtered_data.empty else "N/A")
         with col4:
-            st.metric("Cuisines différentes", filtered_data['type_cuisine'].nunique() if not filtered_data.empty else "N/A")
+            if st.session_state.mode == "professionnel":
+                pct_adapte = (filtered_data['adapte_repas_affaires'] == True).sum() / len(filtered_data) * 100 if not filtered_data.empty else 0
+                st.metric("% Adapté affaires", f"{pct_adapte:.0f}%")
+            else:
+                st.metric("Cuisines différentes", filtered_data['cuisine_du_monde'].nunique() if not filtered_data.empty else "N/A")
         
         # Onglets pour différentes vues
-        tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Carte", "📊 Statistiques", "📋 Liste", "⭐ Distinctions"])
+        if st.session_state.mode == "professionnel":
+            tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Carte", "📊 Statistiques pro", "📋 Liste", "⭐ Distinctions"])
+        else:
+            tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Carte", "📊 Statistiques", "📋 Liste", "⭐ Distinctions"])
         
         # Onglet Carte
         with tab1:
             if not filtered_data.empty:
                 map_fig = create_restaurant_map(filtered_data)
                 folium_static(map_fig, width=1000, height=600)
+                
+                if st.session_state.mode == "professionnel":
+                    st.info("🟢 Vert = Adapté aux repas d'affaires | 🔴 Rouge = Récompenses gastronomiques | 🟠 Orange = Favoris")
             else:
                 st.warning("Aucun restaurant ne correspond à vos critères")
         
         # Onglet Statistiques
         with tab2:
             if not filtered_data.empty:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    # Distribution des types de cuisine
-                    counts_cuisine = filtered_data['type_cuisine'].value_counts().reset_index()
-                    counts_cuisine.columns = ['type_cuisine', 'count']  # Renommer explicitement les colonnes
+                if st.session_state.mode == "professionnel":
+                    # Statistiques spécifiques au mode professionnel
+                    col1, col2 = st.columns(2)
                     
-                    fig_cuisine = px.pie(
-                        counts_cuisine,
-                        values='count',
-                        names='type_cuisine',
-                        title='Répartition des types de cuisine'
-                    )
-                    st.plotly_chart(fig_cuisine)
-                
-                with col2:
-                    # Distribution des prix
-                    counts_prix = filtered_data['prix_fourchette'].value_counts().reset_index()
-                    counts_prix.columns = ['prix_fourchette', 'count']
-                    
-                    fig_prix = px.bar(
-                        counts_prix,
-                        x='prix_fourchette',
-                        y='count',
-                        title='Distribution des fourchettes de prix'
-                    )
-                    st.plotly_chart(fig_prix)
-                    
-                # Nouvelle statistique: qualité de la nourriture
-                qualite_counts = {}
-                for idx, row in filtered_data.iterrows():
-                    if isinstance(row['qualite_nourriture'], list):
-                        for q in row['qualite_nourriture']:
-                            if q not in qualite_counts:
-                                qualite_counts[q] = 0
-                            qualite_counts[q] += 1
-                
-                if qualite_counts:
-                    # Convertir en DataFrame pour plotly
-                    qualite_df = pd.DataFrame({
-                        'qualite': list(qualite_counts.keys()),
-                        'count': list(qualite_counts.values())
-                    })
-                    qualite_df = qualite_df.sort_values('count', ascending=False)
-                    
-                    fig_qualite = px.bar(
-                        qualite_df,
-                        x='qualite',
-                        y='count',
-                        title='Caractéristiques de qualité les plus présentes'
-                    )
-                    st.plotly_chart(fig_qualite)
-                    
-                # Notes moyennes par type de cuisine
-                fig_notes = px.box(
-                    filtered_data,
-                    x='type_cuisine',
-                    y='note_moyenne',
-                    title='Distribution des notes par type de cuisine'
-                )
-                st.plotly_chart(fig_notes)
+                    with col1:
+                        # Distribution des niveaux de bruit
+                        fig_bruit = px.pie(
+                            filtered_data, 
+                            names='niveau_bruit', 
+                            title="Répartition par niveau sonore",
+                            color_discrete_sequence=px.colors.qualitative.Pastel
+                        )
+                        st.plotly_chart(fig_corr, use_container_width=True)
             else:
-                st.warning("Aucun restaurant ne correspond à vos critères")
+                st.warning("Aucun restaurant ne correspond à vos critères pour générer des statistiques")
         
         # Onglet Liste
         with tab3:
             if not filtered_data.empty:
-                for idx, resto in filtered_data.iterrows():
-                    with st.expander(f"🍽️ {resto['nom']} - {resto['type_cuisine']} ({resto['prix_fourchette']})"):
-                        cols = st.columns([2, 1])
+                # Filtres d'affichage
+                sort_options = ["Note (décroissant)", "Prix (croissant)", "Prix (décroissant)", "Nombre d'avis"]
+                if st.session_state.mode == "professionnel":
+                    sort_options.append("Capacité groupe (décroissant)")
+                
+                sort_by = st.selectbox("Trier par", options=sort_options)
+                
+                # Appliquer le tri
+                if sort_by == "Note (décroissant)":
+                    filtered_data = filtered_data.sort_values(by='note_moyenne', ascending=False)
+                elif sort_by == "Prix (croissant)":
+                    # Définir un ordre personnalisé pour les fourchettes de prix
+                    prix_order = {"10-20": 1, "20-30": 2, "30-50": 3, "50-100": 4, "100+": 5}
+                    filtered_data['prix_ordre'] = filtered_data['prix_fourchette'].map(prix_order)
+                    filtered_data = filtered_data.sort_values(by='prix_ordre')
+                    filtered_data = filtered_data.drop('prix_ordre', axis=1)
+                elif sort_by == "Prix (décroissant)":
+                    prix_order = {"10-20": 1, "20-30": 2, "30-50": 3, "50-100": 4, "100+": 5}
+                    filtered_data['prix_ordre'] = filtered_data['prix_fourchette'].map(prix_order)
+                    filtered_data = filtered_data.sort_values(by='prix_ordre', ascending=False)
+                    filtered_data = filtered_data.drop('prix_ordre', axis=1)
+                elif sort_by == "Nombre d'avis":
+                    filtered_data = filtered_data.sort_values(by='nb_avis', ascending=False)
+                elif sort_by == "Capacité groupe (décroissant)":
+                    filtered_data = filtered_data.sort_values(by='capacite_groupe', ascending=False)
+                
+                # Pagination
+                items_per_page = 10
+                total_pages = (len(filtered_data) + items_per_page - 1) // items_per_page
+                
+                if 'current_page' not in st.session_state:
+                    st.session_state.current_page = 1
+                
+                # Boutons pagination
+                col1, col2, col3 = st.columns([1, 3, 1])
+                with col1:
+                    if st.button("⬅️ Précédent") and st.session_state.current_page > 1:
+                        st.session_state.current_page -= 1
+                        st.rerun()
+                
+                with col2:
+                    st.markdown(f"**Page {st.session_state.current_page}/{total_pages}**")
+                
+                with col3:
+                    if st.button("Suivant ➡️") and st.session_state.current_page < total_pages:
+                        st.session_state.current_page += 1
+                        st.rerun()
+                
+                # Calculer l'index de début et de fin pour la pagination
+                start_idx = (st.session_state.current_page - 1) * items_per_page
+                end_idx = min(start_idx + items_per_page, len(filtered_data))
+                
+                # Afficher les restaurants pour la page courante
+                for idx, resto in filtered_data.iloc[start_idx:end_idx].iterrows():
+                    with st.container():
+                        col1, col2 = st.columns([2, 1])
                         
-                        with cols[0]:
-                            st.markdown(f"**Adresse:** {resto['adresse']}")
+                        with col1:
+                            st.subheader(resto['nom'])
+                            st.markdown(f"_{resto['cuisine_du_monde']}, {resto['type_cuisine']} • {resto['prix_fourchette']}_")
+                            st.markdown(f"⭐ {resto['note_moyenne']}/5 ({resto['nb_avis']} avis)")
                             
-                            if 'specialite' in resto and pd.notna(resto['specialite']) and resto['specialite'] != '':
-                                st.markdown(f"**Spécialité:** {resto['specialite']}")
-                                
-                            st.markdown(f"**Ambiance:** {resto['ambiance']}")
-                            
-                            # Afficher les jours d'ouverture
-                            jours_ouv = "Non disponible"
-                            if isinstance(resto.get('jours_ouverture'), list):
-                                jours_ouv = ", ".join(resto['jours_ouverture'])
-                            st.markdown(f"**Jours d'ouverture:** {jours_ouv}")
-                            
-                            # Qualité de la nourriture
-                            if isinstance(resto.get('qualite_nourriture'), list) and resto['qualite_nourriture']:
-                                st.markdown(f"**Qualité:** {', '.join(resto['qualite_nourriture'])}")
-                                
-                            # Reconnaissances/distinctions 
+                            # Afficher les distinctions si présentes
                             if isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
-                                st.markdown("**Distinctions:**")
-                                for reco in resto['reconnaissances']:
-                                    st.markdown(f"- {reco['guide']} {reco['annee']} - {reco['distinction']}")
+                                reco_texts = []
+                                for reco in resto['reconnaissances'][:2]:  # Limiter à 2 pour la clarté
+                                    reco_texts.append(f"{reco['guide']} {reco['annee']} - {reco['distinction']}")
+                                st.markdown(f"🏆 {' | '.join(reco_texts)}")
                             
-                            # Afficher quelques avis représentatifs
-                            if isinstance(resto.get('avis'), list) and resto['avis']:
-                                with st.expander("Voir les avis clients"):
-                                    relevant_reviews = get_relevant_reviews(resto['avis'], 3)
-                                    for review in relevant_reviews:
-                                        st.markdown(f"**{review['note']}/5** - {review['auteur']} - {review['date']}")
-                                        st.markdown(f"_{review['commentaire']}_")
-                                        st.divider()
+                            # Informations sur la qualité de la nourriture
+                            if isinstance(resto.get('qualite_nourriture'), list) and resto['qualite_nourriture']:
+                                st.markdown(f"✨ {', '.join(resto['qualite_nourriture'][:3])}")
+                                
+                            st.markdown(f"📍 {resto['adresse']}")
                             
-                        with cols[1]:
-                            st.metric("Note", f"{resto['note_moyenne']}/5")
-                            st.metric("Nombre d'avis", resto['nb_avis'])
+                            # Informations spécifiques au mode professionnel
+                            if st.session_state.mode == "professionnel":
+                                pro_infos = []
+                                
+                                if resto.get('adapte_repas_affaires'):
+                                    pro_infos.append("✅ Adapté aux repas d'affaires")
+                                
+                                pro_infos.append(f"🔊 Niveau sonore: {resto.get('niveau_bruit', 'Non spécifié')}")
+                                
+                                if resto.get('espace_prive'):
+                                    pro_infos.append(f"🚪 Espace privé: {resto.get('type_espace_prive', 'Disponible')}")
+                                
+                                if resto.get('capacite_groupe', 0) > 0:
+                                    pro_infos.append(f"👥 Capacité groupe: {resto.get('capacite_groupe')} personnes")
+                                
+                                if resto.get('wifi'):
+                                    pro_infos.append("📶 WiFi disponible")
+                                
+                                if resto.get('equipement_presentation'):
+                                    pro_infos.append("📊 Équipement présentation disponible")
+                                
+                                if pro_infos:
+                                    st.markdown(' | '.join(pro_infos[:3]))  # Limiter pour éviter de surcharger
+                                    
+                                    if len(pro_infos) > 3:
+                                        st.markdown(' | '.join(pro_infos[3:]))
+                        
+                        with col2:
+                            # Favoris et détails
+                            col_a, col_b = st.columns(2)
                             
-                            # Horaires d'aujourd'hui
-                            today = datetime.now().strftime("%A")
-                            today_fr = {"Monday": "Lundi", "Tuesday": "Mardi", "Wednesday": "Mercredi", 
-                                      "Thursday": "Jeudi", "Friday": "Vendredi", "Saturday": "Samedi", 
-                                      "Sunday": "Dimanche"}[today]
+                            with col_a:
+                                # Vérifie si ce restaurant est dans les favoris
+                                is_favorite = resto['nom'] in st.session_state.favorites
+                                
+                                # Bouton pour ajouter/retirer des favoris
+                                if is_favorite:
+                                    if st.button("❤️ Retirer", key=f"fav_{idx}"):
+                                        st.session_state.favorites.remove(resto['nom'])
+                                        st.rerun()
+                                else:
+                                    if st.button("🤍 Favori", key=f"fav_{idx}"):
+                                        st.session_state.favorites.append(resto['nom'])
+                                        st.rerun()
                             
-                            horaires_auj = "Non disponible"
-                            if isinstance(resto.get('horaires_ouverture'), dict) and today_fr in resto['horaires_ouverture']:
-                                horaires_auj = ", ".join(resto['horaires_ouverture'][today_fr])
-                            
-                            st.metric("Horaires aujourd'hui", horaires_auj)
-                            
-                            # Bouton pour ajouter aux favoris
-                            if resto['nom'] in st.session_state.favorites:
-                                if st.button("❤️ Retirer des favoris", key=f"unfav_{idx}"):
-                                    st.session_state.favorites.remove(resto['nom'])
-                                    # Mettre à jour les favoris dans les données utilisateur
-                                    user_data["favorite_restaurants"] = st.session_state.favorites
+                            with col_b:
+                                # Bouton pour voir plus de détails
+                                if st.button("Détails", key=f"details_{idx}"):
+                                    st.session_state.selected_restaurant = resto['id']
+                                    user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
                                     save_user_data(user_data)
                                     st.rerun()
-                            else:
-                                if st.button("🤍 Ajouter aux favoris", key=f"fav_{idx}"):
-                                    st.session_state.favorites.append(resto['nom'])
-                                    # Mettre à jour les favoris dans les données utilisateur
-                                    user_data["favorite_restaurants"] = st.session_state.favorites
-                                    save_user_data(user_data)
-                                    st.rerun()
+                        
+                        st.divider()
+                
+                # Rappel des boutons de pagination en bas de page
+                col1, col2, col3 = st.columns([1, 3, 1])
+                with col1:
+                    if st.button("⬅️ Précédent", key="prev_bot") and st.session_state.current_page > 1:
+                        st.session_state.current_page -= 1
+                        st.rerun()
+                
+                with col2:
+                    st.markdown(f"**Page {st.session_state.current_page}/{total_pages}**")
+                
+                with col3:
+                    if st.button("Suivant ➡️", key="next_bot") and st.session_state.current_page < total_pages:
+                        st.session_state.current_page += 1
+                        st.rerun()
             else:
                 st.warning("Aucun restaurant ne correspond à vos critères")
         
-        # Onglet Distinctions (nouveau)
+        # Onglet Distinctions
         with tab4:
             if not filtered_data.empty:
-                # Filtrer les restaurants qui ont des distinctions
-                restaurants_avec_distinctions = filtered_data[filtered_data['reconnaissances'].apply(
+                # Filtrer les restaurants avec distinctions
+                restaurants_with_distinctions = filtered_data[filtered_data['reconnaissances'].apply(
                     lambda x: isinstance(x, list) and len(x) > 0)]
                 
-                if not restaurants_avec_distinctions.empty:
-                    st.subheader(f"Restaurants récompensés ({len(restaurants_avec_distinctions)})")
-                    
-                    # Compter les distinctions par guide
-                    guides_count = {}
-                    for idx, resto in restaurants_avec_distinctions.iterrows():
-                        for reco in resto['reconnaissances']:
-                            guide = reco['guide']
-                            if guide not in guides_count:
-                                guides_count[guide] = 0
-                            guides_count[guide] += 1
-                    
-                    # Afficher un graphique des guides
-                    if guides_count:
-                        guide_df = pd.DataFrame({
-                            'guide': list(guides_count.keys()),
-                            'count': list(guides_count.values())
-                        }).sort_values('count', ascending=False)
-                        
-                        fig_guides = px.bar(
-                            guide_df,
-                            x='guide',
-                            y='count',
-                            title='Répartition des distinctions par guide gastronomique'
-                        )
-                        st.plotly_chart(fig_guides)
-                    
-                    # Afficher les restaurants par guide
-                    guides_uniques = set()
-                    for idx, resto in restaurants_avec_distinctions.iterrows():
-                        for reco in resto['reconnaissances']:
-                            guides_uniques.add(reco['guide'])
-                    
-                    guide_tabs = st.tabs(list(guides_uniques))
-                    
-                    for i, guide in enumerate(guides_uniques):
-                        with guide_tabs[i]:
-                            # Filtrer les restaurants ayant des distinctions de ce guide
-                            restos_du_guide = []
-                            for idx, resto in restaurants_avec_distinctions.iterrows():
-                                for reco in resto['reconnaissances']:
-                                    if reco['guide'] == guide:
-                                        restos_du_guide.append({
-                                            "id": resto['id'],
-                                            "nom": resto['nom'],
-                                            "distinction": reco['distinction'],
-                                            "annee": reco['annee'],
-                                            "type_cuisine": resto['type_cuisine'],
-                                            "adresse": resto['adresse'],
-                                            "note_moyenne": resto['note_moyenne']
-                                        })
+                if not restaurants_with_distinctions.empty:
+                    # Tri par prestigieusité des reconnaissances (priorité aux étoilés Michelin)
+                    def prestige_score(reconnaissances):
+                        score = 0
+                        if not isinstance(reconnaissances, list):
+                            return 0
+                        for r in reconnaissances:
+                            guide = r.get('guide', '')
+                            distinction = r.get('distinction', '')
                             
-                            # Afficher les restaurants de ce guide
-                            if restos_du_guide:
-                                for resto in restos_du_guide:
-                                    with st.expander(f"{resto['nom']} - {resto['distinction']} ({resto['annee']})"):
-                                        st.markdown(f"**Type de cuisine :** {resto['type_cuisine']}")
-                                        st.markdown(f"**Adresse :** {resto['adresse']}")
-                                        st.markdown(f"**Note :** {resto['note_moyenne']}/5")
-                                        
-                                        if st.button("Voir détails", key=f"guide_resto_{guide}_{resto['id']}"):
-                                            st.session_state.selected_restaurant = resto['id']
-                                            user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
-                                            save_user_data(user_data)
-                                            st.rerun()
+                            if guide == 'Guide Michelin' and distinction == 'Étoilé':
+                                score += 100
+                            elif guide == 'Guide Michelin' and distinction == 'Bib Gourmand':
+                                score += 70
+                            elif guide == 'Guide Michelin':
+                                score += 50
+                            elif guide == 'Gault & Millau' and 'Toques' in distinction:
+                                # Extraire le nombre de toques si spécifié
+                                try:
+                                    toques = int(distinction.split()[0])
+                                    score += 40 + toques * 5
+                                except:
+                                    score += 40
+                            elif guide == 'Gault & Millau':
+                                score += 30
+                            elif guide == '50 Best':
+                                score += 45
+                            else:
+                                score += 20
+                        return score
+                    
+                    restaurants_with_distinctions['prestige_score'] = restaurants_with_distinctions['reconnaissances'].apply(prestige_score)
+                    restaurants_with_distinctions = restaurants_with_distinctions.sort_values(by='prestige_score', ascending=False)
+                    
+                    # Organisation par guide gastronomique
+                    guides = {}
+                    for idx, resto in restaurants_with_distinctions.iterrows():
+                        for reco in resto['reconnaissances']:
+                            guide = reco.get('guide', 'Autre')
+                            if guide not in guides:
+                                guides[guide] = []
+                            
+                            guides[guide].append({
+                                'restaurant': resto,
+                                'distinction': reco.get('distinction', ''),
+                                'annee': reco.get('annee', '')
+                            })
+                    
+                    # Affichage par guide
+                    for guide, restaurants in guides.items():
+                        st.subheader(f"🏆 {guide}")
+                        
+                        # Nombre de restaurants par distinction dans ce guide
+                        distinctions_count = {}
+                        for r in restaurants:
+                            distinction = r['distinction']
+                            if distinction not in distinctions_count:
+                                distinctions_count[distinction] = 0
+                            distinctions_count[distinction] += 1
+                        
+                        # Afficher les compteurs de distinctions
+                        distinction_text = ", ".join([f"{count} {distinction}" for distinction, count in distinctions_count.items()])
+                        st.markdown(f"_{distinction_text}_")
+                        
+                        # Afficher les restaurants pour ce guide
+                        for item in restaurants:
+                            resto = item['restaurant']
+                            distinction = item['distinction']
+                            annee = item['annee']
+                            
+                            with st.container():
+                                col1, col2 = st.columns([3, 1])
+                                
+                                with col1:
+                                    st.markdown(f"**{resto['nom']}** - _{distinction} ({annee})_")
+                                    st.markdown(f"_{resto['cuisine_du_monde']}, {resto['type_cuisine']} • {resto['prix_fourchette']}_")
+                                    st.markdown(f"⭐ {resto['note_moyenne']}/5 ({resto['nb_avis']} avis)")
+                                    st.markdown(f"📍 {resto['adresse']}")
+                                
+                                with col2:
+                                    if st.button("Voir détails", key=f"reco_{resto['id']}_{annee}"):
+                                        st.session_state.selected_restaurant = resto['id']
+                                        user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
+                                        save_user_data(user_data)
+                                        st.rerun()
+                            
+                            st.divider()
                 else:
-                    st.info("Aucun restaurant avec des distinctions ne correspond à vos critères.")
+                    st.info("Aucun restaurant récompensé ne correspond à vos critères de recherche.")
+            else:
+                st.warning("Aucun restaurant ne correspond à vos critères")
     else:
         # Section Recommandations (visible uniquement si pas de filtres actifs)
         st.divider()
         st.subheader("✨ Recommandations pour vous")
-    
-    # Génération de recommandations
-    if st.session_state.favorites:
-        # Recommandations basées sur les favoris
-        st.markdown("### Basé sur vos favoris")
         
-        # Récupérer les IDs des restaurants favoris
-        favorite_restaurants = df[df['nom'].isin(st.session_state.favorites)]
+        # Restaurants populaires (toujours affichés)
+        if st.session_state.mode == "professionnel":
+            st.markdown("### Les plus adaptés aux repas d'affaires")
+            business_df = df[df['adapte_repas_affaires'] == True].sort_values(by=['note_moyenne'], ascending=False).head(3)
+        else:
+            st.markdown("### Les plus populaires à Paris")
+            business_df = df.sort_values(by=['note_moyenne', 'nb_avis'], ascending=False).head(3)
         
-        if not favorite_restaurants.empty:
-            favorite_id = favorite_restaurants.iloc[0]['id']  # Prendre le premier favori
-            recommendations = content_based_recommendations(df, restaurant_id=favorite_id, top_n=3)
-            
-            if not recommendations.empty:
-                cols = st.columns(3)
-                for i, (idx, resto) in enumerate(recommendations.iterrows()):
-                    with cols[i]:
-                        st.markdown(f"**{resto['nom']}**")
-                        st.markdown(f"_{resto['type_cuisine']} • {resto['prix_fourchette']}_")
-                        st.markdown(f"⭐ {resto['note_moyenne']}/5")
-                        
-                        # Afficher les reconnaissances s'il y en a
-                        if isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
-                            for reco in resto['reconnaissances'][:1]:  # Limiter à 1 pour la compacité
-                                st.markdown(f"🏆 {reco['guide']} - {reco['distinction']}")
-                        
-                        st.markdown(f"🏙️ {resto['arrondissement']}")
-                        
-                        # Bouton pour voir plus de détails
-                        if st.button("Voir plus", key=f"fav_rec_{idx}"):
-                            st.session_state.selected_restaurant = resto['id']
-                            user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
-                            save_user_data(user_data)
-                            st.rerun()
-    
-    # Restaurants populaires (toujours affichés)
-    st.markdown("### Les plus populaires à Paris")
-    popular_df = df.sort_values(by=['note_moyenne', 'nb_avis'], ascending=False).head(3)
-    
-    if not popular_df.empty:
-        cols = st.columns(3)
-        for i, (idx, resto) in enumerate(popular_df.iterrows()):
-            with cols[i]:
-                st.markdown(f"**{resto['nom']}**")
-                st.markdown(f"_{resto['type_cuisine']} • {resto['prix_fourchette']}_")
-                st.markdown(f"⭐ {resto['note_moyenne']}/5 ({resto['nb_avis']} avis)")
-                
-                # Afficher les reconnaissances s'il y en a
-                if isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
-                    for reco in resto['reconnaissances'][:1]:  # Limiter à 1 pour la compacité
-                        st.markdown(f"🏆 {reco['guide']} - {reco['distinction']}")
-                
-                st.markdown(f"🏙️ {resto['arrondissement']}")
-                
-                # Bouton pour voir plus de détails
-                if st.button("Voir plus", key=f"pop_{idx}"):
-                    st.session_state.selected_restaurant = resto['id']
-                    user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
-                    save_user_data(user_data)
-                    st.rerun()
-    
-    # Restaurants avec reconnaissances (si pas déjà filtré par reconnaissances)
-    if not has_recognition:
-        st.markdown("### Restaurants récompensés")
-        awarded_df = df[df['reconnaissances'].apply(lambda x: isinstance(x, list) and len(x) > 0)].head(3)
-        
-        if not awarded_df.empty:
+        if not business_df.empty:
             cols = st.columns(3)
-            for i, (idx, resto) in enumerate(awarded_df.iterrows()):
+            for i, (idx, resto) in enumerate(business_df.iterrows()):
                 with cols[i]:
                     st.markdown(f"**{resto['nom']}**")
-                    st.markdown(f"_{resto['type_cuisine']} • {resto['prix_fourchette']}_")
+                    st.markdown(f"_{resto['cuisine_du_monde']}, {resto['type_cuisine']} • {resto['prix_fourchette']}_")
+                    st.markdown(f"⭐ {resto['note_moyenne']}/5 ({resto['nb_avis']} avis)")
                     
-                    # Afficher les reconnaissances
-                    reconnaissances_text = []
-                    for reco in resto['reconnaissances'][:2]:  # Limiter à 2
-                        reconnaissances_text.append(f"{reco['guide']} {reco['annee']} - {reco['distinction']}")
+                    # Afficher les reconnaissances s'il y en a
+                    if isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
+                        for reco in resto['reconnaissances'][:1]:  # Limiter à 1 pour la compacité
+                            st.markdown(f"🏆 {reco['guide']} - {reco['distinction']}")
                     
-                    st.markdown(f"🏆 {' | '.join(reconnaissances_text)}")
-                    st.markdown(f"⭐ {resto['note_moyenne']}/5")
+                    st.markdown(f"🏙️ {resto['arrondissement']}")
+                    
+                    # En mode professionnel, afficher des infos supplémentaires
+                    if st.session_state.mode == "professionnel":
+                        pro_infos = []
+                        if resto.get('espace_prive'):
+                            pro_infos.append(f"🚪 Espace privé")
+                        if resto.get('wifi'):
+                            pro_infos.append("📶 WiFi")
+                        if resto.get('niveau_bruit') == "Calme":
+                            pro_infos.append("🔊 Calme")
+                        
+                        if pro_infos:
+                            st.markdown(' | '.join(pro_infos))
                     
                     # Bouton pour voir plus de détails
-                    if st.button("Voir plus", key=f"award_{idx}"):
+                    if st.button("Voir plus", key=f"pop_{idx}"):
                         st.session_state.selected_restaurant = resto['id']
                         user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
                         save_user_data(user_data)
                         st.rerun()
-    
-    # Si un restaurant spécifique est sélectionné
-    if 'selected_restaurant' in st.session_state:
-        selected_resto = df[df['id'] == st.session_state.selected_restaurant]
         
-        if not selected_resto.empty:
-            resto = selected_resto.iloc[0]
+        # Restaurants avec reconnaissances (si pas déjà filtré par reconnaissances)
+        if not has_recognition:
+            st.markdown("### Restaurants récompensés")
+            awarded_df = df[df['reconnaissances'].apply(lambda x: isinstance(x, list) and len(x) > 0)].head(3)
             
-            st.divider()
-            st.subheader(f"🍽️ {resto['nom']}")
-            
-            col1, col2 = st.columns([2, 1])
-            
-            with col1:
-                st.markdown(f"**Type de cuisine:** {resto['type_cuisine']}")
-                if pd.notna(resto.get('specialite')) and resto['specialite']:
-                    st.markdown(f"**Spécialité:** {resto['specialite']}")
-                st.markdown(f"**Adresse:** {resto['adresse']}")
-                st.markdown(f"**Arrondissement:** {resto['arrondissement']}")
-                st.markdown(f"**Ambiance:** {resto['ambiance']}")
-                
-                # Afficher la qualité de la nourriture
-                if isinstance(resto.get('qualite_nourriture'), list) and resto['qualite_nourriture']:
-                    st.markdown(f"**Qualité:** {', '.join(resto['qualite_nourriture'])}")
-                
-                # Afficher les distinctions/reconnaissances
-                if isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
-                    st.markdown("**Distinctions:**")
-                    for reco in resto['reconnaissances']:
-                        st.markdown(f"- {reco['guide']} {reco['annee']} - {reco['distinction']}")
-            
-            with col2:
-                st.metric("Note", f"{resto['note_moyenne']}/5")
-                st.metric("Nombre d'avis", resto['nb_avis'])
-                st.markdown(f"**Prix:** {resto['prix_fourchette']}")
-                
-                # Jours d'ouverture
-                jours_ouv = "Non disponible"
-                if isinstance(resto.get('jours_ouverture'), list):
-                    jours_ouv = ", ".join(resto['jours_ouverture'])
-                st.markdown(f"**Jours d'ouverture:** {jours_ouv}")
-                
-                # Horaires aujourd'hui
-                today = datetime.now().strftime("%A")
-                today_fr = {"Monday": "Lundi", "Tuesday": "Mardi", "Wednesday": "Mercredi", 
-                          "Thursday": "Jeudi", "Friday": "Vendredi", "Saturday": "Samedi", 
-                          "Sunday": "Dimanche"}[today]
-                
-                horaires_auj = "Non disponible"
-                if isinstance(resto.get('horaires_ouverture'), dict) and today_fr in resto['horaires_ouverture']:
-                    horaires_auj = ", ".join(resto['horaires_ouverture'][today_fr])
-                
-                st.markdown(f"**Horaires aujourd'hui:** {horaires_auj}")
-                
-                # Bouton pour ajouter/retirer des favoris
-                if resto['nom'] in st.session_state.favorites:
-                    if st.button("❤️ Retirer des favoris"):
-                        st.session_state.favorites.remove(resto['nom'])
-                        user_data["favorite_restaurants"] = st.session_state.favorites
-                        save_user_data(user_data)
-                        st.rerun()
-                else:
-                    if st.button("🤍 Ajouter aux favoris"):
-                        st.session_state.favorites.append(resto['nom'])
-                        user_data["favorite_restaurants"] = st.session_state.favorites
-                        save_user_data(user_data)
-                        st.rerun()
-            
-            # Afficher les avis
-            if isinstance(resto.get('avis'), list) and resto['avis']:
-                st.subheader("💬 Avis des clients")
-                best_review = next((r for r in sorted(resto['avis'], key=lambda x: x.get('note', 0), reverse=True)), None)
-                worst_review = next((r for r in sorted(resto['avis'], key=lambda x: x.get('note', 5))), None)
-                
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    if best_review:
-                        st.markdown("#### Avis positif")
-                        st.markdown(f"**{best_review['note']}/5** - {best_review['auteur']} - {best_review['date']}")
-                        st.markdown(f"_{best_review['commentaire']}_")
-                
-                with col2:
-                    if worst_review and worst_review['note'] < 4:  # Seulement si vraiment négatif
-                        st.markdown("#### Avis critique")
-                        st.markdown(f"**{worst_review['note']}/5** - {worst_review['auteur']} - {worst_review['date']}")
-                        st.markdown(f"_{worst_review['commentaire']}_")
-                
-                # Voir tous les avis
-                with st.expander("Voir tous les avis"):
-                    for i, avis in enumerate(resto['avis']):
-                        st.markdown(f"**{avis['note']}/5** - {avis['auteur']} - {avis['date']}")
-                        st.markdown(f"_{avis['commentaire']}_")
-                        
-                        # Afficher les plats mentionnés s'il y en a
-                        if 'plats_mentionnes' in avis and avis['plats_mentionnes']:
-                            st.markdown(f"**Plats mentionnés:** {', '.join(avis['plats_mentionnes'])}")
-                            
-                        if i < len(resto['avis']) - 1:
-                            st.divider()
-            
-            # Mini-carte pour voir l'emplacement du restaurant
-            st.subheader("📍 Localisation")
-            m = folium.Map(location=[resto['latitude'], resto['longitude']], zoom_start=15)
-            
-            # Déterminer couleur du marqueur
-            marker_color = 'blue'
-            if resto['nom'] in st.session_state.favorites:
-                marker_color = 'orange'
-            elif isinstance(resto.get('reconnaissances'), list) and resto['reconnaissances']:
-                marker_color = 'red'
-                
-            folium.Marker(
-                location=[resto['latitude'], resto['longitude']],
-                popup=resto['nom'],
-                tooltip=resto['nom'],
-                icon=folium.Icon(color=marker_color)
-            ).add_to(m)
-            folium_static(m, width=700, height=300)
-            
-            # Restaurants similaires
-            st.subheader("📋 Restaurants similaires")
-            similar_restos = content_based_recommendations(df, restaurant_id=resto['id'], top_n=3)
-            
-            if not similar_restos.empty:
+            if not awarded_df.empty:
                 cols = st.columns(3)
-                for i, (idx, sim_resto) in enumerate(similar_restos.iterrows()):
+                for i, (idx, resto) in enumerate(awarded_df.iterrows()):
                     with cols[i]:
-                        st.markdown(f"**{sim_resto['nom']}**")
-                        st.markdown(f"_{sim_resto['type_cuisine']} • {sim_resto['prix_fourchette']}_")
-                        st.markdown(f"⭐ {sim_resto['note_moyenne']}/5")
+                        st.markdown(f"**{resto['nom']}**")
+                        st.markdown(f"_{resto['cuisine_du_monde']}, {resto['type_cuisine']} • {resto['prix_fourchette']}_")
                         
-                        # Afficher les distinctions si présentes
-                        if isinstance(sim_resto.get('reconnaissances'), list) and sim_resto['reconnaissances']:
-                            for reco in sim_resto['reconnaissances'][:1]:
-                                st.markdown(f"🏆 {reco['guide']} - {reco['distinction']}")
+                        # Afficher les reconnaissances
+                        reconnaissances_text = []
+                        for reco in resto['reconnaissances'][:2]:  # Limiter à 2
+                            reconnaissances_text.append(f"{reco['guide']} {reco['annee']} - {reco['distinction']}")
                         
-                        if st.button("Voir plus", key=f"similar_{idx}"):
-                            st.session_state.selected_restaurant = sim_resto['id']
-                            user_data = track_restaurant_view(sim_resto['id'], sim_resto['nom'], user_data)
+                        st.markdown(f"🏆 {' | '.join(reconnaissances_text)}")
+                        st.markdown(f"⭐ {resto['note_moyenne']}/5")
+                        
+                        # Bouton pour voir plus de détails
+                        if st.button("Voir plus", key=f"award_{idx}"):
+                            st.session_state.selected_restaurant = resto['id']
+                            user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
                             save_user_data(user_data)
                             st.rerun()
+        
+        # Section spécifique au mode professionnel
+        if st.session_state.mode == "professionnel":
+            st.markdown("### Idéal pour des présentations")
+            presentation_df = df[(df['equipement_presentation'] == True) & (df['wifi'] == True)].sort_values(by=['note_moyenne'], ascending=False).head(3)
+            
+            if not presentation_df.empty:
+                cols = st.columns(3)
+                for i, (idx, resto) in enumerate(presentation_df.iterrows()):
+                    with cols[i]:
+                        st.markdown(f"**{resto['nom']}**")
+                        st.markdown(f"_{resto['cuisine_du_monde']}, {resto['type_cuisine']} • {resto['prix_fourchette']}_")
+                        st.markdown(f"⭐ {resto['note_moyenne']}/5")
+                        
+                        # Infos professionnelles
+                        pro_infos = []
+                        pro_infos.append("📊 Équipement présentation")
+                        pro_infos.append("📶 WiFi disponible")
+                        if resto.get('prise_electrique'):
+                            pro_infos.append("🔌 Prises électriques")
+                        
+                        st.markdown(' | '.join(pro_infos[:3]))
+                        
+                        if resto.get('capacite_groupe', 0) > 0:
+                            st.markdown(f"👥 Capacité groupe: {resto.get('capacite_groupe')} personnes")
+                        
+                        # Bouton pour voir plus de détails
+                        if st.button("Voir plus", key=f"pres_{idx}"):
+                            st.session_state.selected_restaurant = resto['id']
+                            user_data = track_restaurant_view(resto['id'], resto['nom'], user_data)
+                            save_user_data(user_data)
+                            st.rerun()
+
 
 if __name__ == "__main__":
     # Vérifie si les données utilisateur existent, sinon les initialiser
@@ -1609,10 +1506,30 @@ if __name__ == "__main__":
                         "prix_fourchette": ["20-30"],
                         "jours_ouverture": ["Samedi", "Dimanche"]
                     }
+                },
+                {
+                    "id": 3,
+                    "name": "Repas d'affaires important",
+                    "conditions": {
+                        "adapte_repas_affaires": True,
+                        "niveau_bruit": "Calme",
+                        "espace_prive": True,
+                        "note_moyenne": 4.5,
+                        "prix_fourchette": ["50-100"]
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "Réunion d'équipe",
+                    "conditions": {
+                        "adapte_repas_affaires": True,
+                        "wifi": True,
+                        "capacite_groupe": 10,
+                        "prix_fourchette": ["20-30", "30-50"]
+                    }
                 }
             ]
         }
         with open("user_data.json", "w") as f:
             json.dump(default_user_data, f)
-    
     main()
