@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "deep-learning"
+version = "0.1.0"
+description = ""
+authors = ["soleneD05 <solene.degrutere@orange.fr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
