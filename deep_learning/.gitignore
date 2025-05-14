@@ -1,0 +1,6 @@
+deep_learning/lib/
+*.pyc
+__pycache__/
+.venv/
+.env/
+*.dylib
