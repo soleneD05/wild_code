@@ -1,7 +1,7 @@
 import requests
 
 # Ta clé API Google Places (remplace 'YOUR_API_KEY' par ta clé API)
-API_KEY = 'AIzaSyCA_2Zgov3Mjkwl85tNfCL8QoivKABXdq0'
+API_KEY = 'xx'
 
 # Coordonnées de Paris (latitude, longitude)
 location = '48.8566,2.3522'  # Paris
