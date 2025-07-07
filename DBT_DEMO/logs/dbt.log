@@ -1,0 +1,59 @@
+[0m16:04:18.500462 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93836ca3a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93852fd910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93852fd490>]}
+
+
+============================== 16:04:18.511001 | a9a8a6cf-2e3e-4ec8-9fed-74173b8c07ba ==============================
+[0m16:04:18.511001 [info ] [MainThread]: Running with dbt=1.7.19
+[0m16:04:18.512682 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/Users/solenedegrutere/.dbt', 'debug': 'False', 'version_check': 'True', 'log_path': 'logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'invocation_command': 'dbt init', 'static_parser': 'True', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m16:04:18.514077 [warn ] [MainThread]: [ConfigFolderDirectory]: Unable to parse dict {'dir': PosixPath('/Users/solenedegrutere/.dbt')}
+[0m16:04:18.515834 [info ] [MainThread]: Creating dbt configuration folder at 
+[0m16:04:27.543875 [debug] [MainThread]: Starter project path: /Users/solenedegrutere/opt/anaconda3/lib/python3.9/site-packages/dbt/include/starter_project
+[0m16:04:27.587124 [info ] [MainThread]: 
+Your new dbt project "dbt_quete" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m16:04:27.590021 [info ] [MainThread]: Setting up your profile.
+[0m16:04:42.639558 [info ] [MainThread]: Profile dbt_quete written to /Users/solenedegrutere/.dbt/profiles.yml using target's sample configuration. Once updated, you'll be able to start developing with dbt.
+[0m16:04:42.652668 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 24.31497, "process_user_time": 4.637229, "process_kernel_time": 0.726735, "process_mem_max_rss": "88817664", "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:04:42.655717 [debug] [MainThread]: Command `dbt init` succeeded at 16:04:42.654832 after 24.32 seconds
+[0m16:04:42.657665 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93836ca3a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9385306490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f938532d5b0>]}
+[0m16:04:42.659175 [debug] [MainThread]: Flushing usage events
+[0m16:05:44.643259 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c2dca160>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c49d8e50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c4a2beb0>]}
+
+
+============================== 16:05:44.651628 | 0bbd4537-30d0-4361-afd9-945201091895 ==============================
+[0m16:05:44.651628 [info ] [MainThread]: Running with dbt=1.7.19
+[0m16:05:44.652849 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'debug': 'False', 'profiles_dir': '/Users/solenedegrutere/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt init', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m16:05:50.511395 [debug] [MainThread]: Starter project path: /Users/solenedegrutere/opt/anaconda3/lib/python3.9/site-packages/dbt/include/starter_project
+[0m16:05:50.529962 [info ] [MainThread]: 
+Your new dbt project "dbt_quete" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m16:05:50.531082 [info ] [MainThread]: Setting up your profile.
+[0m16:06:00.620111 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 16.128048, "process_user_time": 7.301649, "process_kernel_time": 0.891535, "process_mem_max_rss": "93626368", "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m16:06:00.621783 [debug] [MainThread]: Command `dbt init` succeeded at 16:06:00.621417 after 16.13 seconds
+[0m16:06:00.622767 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c2dca160>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c4a1fb80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd8c4a2ba00>]}
+[0m16:06:00.623796 [debug] [MainThread]: Flushing usage events

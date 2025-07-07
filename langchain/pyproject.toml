@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "langchain1"
+version = "0.1.0"
+description = ""
+authors = ["soleneD05 <solene.degrutere@orange.fr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+streamlit = "^1.45.1"
+langchain = "^0.3.25"
+langchain-openai = "^0.3.21"
+langchain-community = "^0.3.24"
+python-dotenv = "^1.1.0"
+requests = "^2.32.4"
+notebook = "^7.4.3"
+ipykernel = "^6.29.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

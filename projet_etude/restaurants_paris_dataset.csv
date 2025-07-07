@@ -1,0 +1,501 @@
+nom,adresse,arrondissement,latitude,longitude,type_cuisine,specialite,prix_fourchette,categorie_prix,note_moyenne,nb_avis,ambiance,telephone,vegetarien_friendly,reservation_recommandee
+Les Vidal,"133 Place Vendôme, 75001 Paris",75001,48.854929,2.384132,Français,Bistrot,20-30,Moyenne gamme,3.7,150,Convivial,0153999015,True,False
+Aux Hernandez,"25 Boulevard Haussmann, 75012 Paris",75012,48.831962,2.352124,Chinois,Cantonais,30-50,Moyenne gamme +,3.8,913,"Branché, Modern",0164730589,False,True
+La Fille,"105 Rue du Faubourg Saint-Honoré, 75016 Paris",75016,48.850214,2.325181,Thaïlandais,Traditionnel,20-30,Moyenne gamme,3.9,405,"Traditionnel, Élégant, Business",0125689163,False,True
+Maison Digne,"142 Rue de Rennes, 75014 Paris",75014,48.884557,2.339023,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.3,283,"Élégant, Business, Romantique",0172867320,False,True
+Le Bernier,"144 Rue Oberkampf, 75012 Paris",75012,48.851333,2.375182,Italien,Trattoria,30-50,Moyenne gamme +,4.4,60,"Romantique, Décontracté",0193560624,True,True
+La Saveurs Durand,"37 Boulevard Haussmann, 75006 Paris",75006,48.841161,2.357339,Thaïlandais,Street food,20-30,Moyenne gamme,4.6,60,"Élégant, Familial",0126420934,True,True
+Chez Table Dupré,"88 Avenue Montaigne, 75019 Paris",75019,48.843185,2.392567,Thaïlandais,Street food,50+,Haut de gamme,3.8,18,Traditionnel,0178282346,False,True
+Chez Clair,"46 Rue du Faubourg Saint-Honoré, 75005 Paris",5005,48.82161,2.31586,Indien,Sud-Indien,50+,Haut de gamme,5.0,429,"Cosy, Familial",0127103444,True,False
+Le Guillon,"105 Avenue Montaigne, 75002 Paris",75002,48.892736,2.329346,Indien,Sud-Indien,20-30,Moyenne gamme,4.4,285,"Branché, Décontracté",0199929872,False,False
+La Masson,"50 Rue de Passy, 75016 Paris",5016,48.858222,2.307094,Japonais,Ramen,10-20,Bon marché,4.5,379,"Familial, Décontracté, Cosy",0169178146,False,False
+Aux Côté,"150 Avenue Victor Hugo, 75012 Paris",5012,48.852751,2.389684,Indien,Sud-Indien,20-30,Moyenne gamme,4.3,16,"Traditionnel, Business, Romantique",0160528883,True,True
+La Legros,"98 Avenue Victor Hugo, 75014 Paris",5014,48.830179,2.364168,Végétarien,Végétarien,20-30,Moyenne gamme,4.9,1061,"Modern, Branché",0199854107,False,True
+Au Simon,"1 Avenue des Champs-Élysées, 75011 Paris",5011,48.853835,2.321623,Français,Bistrot,20-30,Moyenne gamme,4.9,545,"Familial, Élégant, Convivial",0104630673,True,True
+Le Bouvet,"109 Rue du Faubourg Saint-Honoré, 75007 Paris",5007,48.866084,2.324215,Français,Gastronomique,20-30,Moyenne gamme,3.6,81,"Cosy, Décontracté",0103981548,False,False
+L' Hamel,"113 Avenue Victor Hugo, 75010 Paris",5010,48.857162,2.341289,Italien,Trattoria,20-30,Moyenne gamme,3.9,70,"Convivial, Traditionnel, Cosy",0124666169,True,True
+Le Turpin,"115 Rue de Rivoli, 75002 Paris",5002,48.880857,2.33006,Thaïlandais,Traditionnel,10-20,Bon marché,4.8,70,Convivial,0136132882,False,False
+Le Camus,"80 Boulevard Voltaire, 75011 Paris",5011,48.902545,2.386257,Fusion,Modern Fusion,50+,Haut de gamme,4.5,82,"Modern, Décontracté",0143679880,True,True
+Au Pruvost,"66 Boulevard Haussmann, 75017 Paris",5017,48.890225,2.339265,Chinois,Dim Sum,10-20,Bon marché,4.7,233,"Romantique, Branché, Décontracté",0155600327,True,False
+Les Restaurant Dubois,"125 Boulevard Saint-Germain, 75020 Paris",5020,48.838559,2.353991,Italien,Trattoria,20-30,Moyenne gamme,4.2,179,"Convivial, Décontracté, Traditionnel",0115805452,False,False
+Aux Leroux,"49 Boulevard Voltaire, 75002 Paris",5002,48.832456,2.342006,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.1,113,"Familial, Branché, Business",0106613139,False,False
+L' Cuisine Bernier,"69 Rue du Faubourg Saint-Honoré, 75005 Paris",5005,48.844069,2.321367,Français,Traditionnel,20-30,Moyenne gamme,3.9,293,"Cosy, Branché",0190485186,False,True
+Le Garnier,"7 Rue de la Paix, 75004 Paris",5004,48.813892,2.335103,Méditerranéen,Grec,20-30,Moyenne gamme,4.3,55,"Romantique, Convivial",0176814817,False,True
+Maison Saveurs Tessier,"12 Rue de Rennes, 75020 Paris",5020,48.810825,2.370648,Thaïlandais,Street food,30-50,Moyenne gamme +,3.7,113,"Romantique, Business",0139920471,False,False
+La Relation,"18 Rue de Passy, 75016 Paris",5016,48.841343,2.322743,Libanais,Mezze,30-50,Moyenne gamme +,4.3,146,"Décontracté, Cosy, Traditionnel",0177602518,True,True
+Au Table Navarro,"19 Avenue Montaigne, 75002 Paris",5002,48.857878,2.328982,Chinois,Dim Sum,50+,Haut de gamme,4.6,134,Branché,0162732147,True,True
+Au Table Sauvage,"65 Rue de la Roquette, 75003 Paris",5003,48.808456,2.38793,Japonais,Ramen,20-30,Moyenne gamme,4.6,471,"Modern, Décontracté",0166807404,False,False
+Maison Imposer,"117 Rue de la Paix, 75001 Paris",5001,48.83912,2.368721,Végétarien,Vegan,20-30,Moyenne gamme,4.2,76,"Branché, Convivial",0169289805,False,True
+Chez Lourd,"92 Place Vendôme, 75008 Paris",5008,48.829873,2.396654,Fusion,Asian Fusion,20-30,Moyenne gamme,4.5,226,"Cosy, Convivial",0165848816,True,True
+Au Schneider,"61 Rue de Belleville, 75017 Paris",5017,48.844324,2.380259,Italien,Trattoria,30-50,Moyenne gamme +,3.5,279,"Élégant, Traditionnel, Branché",0199875782,True,True
+Aux Absolument,"58 Rue Oberkampf, 75019 Paris",5019,48.90035,2.348582,Français,Brasserie,20-30,Moyenne gamme,3.8,24,"Décontracté, Convivial",0165653486,False,True
+Le Goncalves,"28 Rue de Rivoli, 75010 Paris",5010,48.826075,2.39319,Végétarien,Vegan,20-30,Moyenne gamme,4.5,290,Convivial,0184212100,False,True
+Aux Bailly,"41 Rue Saint-Antoine, 75020 Paris",5020,48.861647,2.341202,Chinois,Cantonais,10-20,Bon marché,4.6,66,"Branché, Modern",0153751204,True,False
+Le Couche,"52 Rue de Belleville, 75005 Paris",5005,48.81529,2.383571,Indien,Nord-Indien,10-20,Bon marché,4.0,30,Modern,0107995187,True,False
+Le Victime,"73 Rue du Faubourg Saint-Honoré, 75018 Paris",5018,48.840843,2.345303,Français,Traditionnel,10-20,Bon marché,3.6,902,Familial,0158127820,True,False
+Maison Marchand,"47 Boulevard Haussmann, 75014 Paris",5014,48.844516,2.362754,Méditerranéen,Grec,20-30,Moyenne gamme,4.3,1021,"Romantique, Élégant",0167544757,True,False
+Maison Cuisine Le Gall,"85 Rue de Passy, 75009 Paris",5009,48.867406,2.308744,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.6,505,"Branché, Décontracté",0127199704,False,False
+Chez Turpin,"100 Rue de Rennes, 75003 Paris",5003,48.870442,2.383521,Italien,Trattoria,30-50,Moyenne gamme +,4.0,118,Branché,0157800569,True,False
+Le Secours,"12 Boulevard Saint-Germain, 75004 Paris",5004,48.831228,2.393743,Italien,Pasta,20-30,Moyenne gamme,4.6,40,"Romantique, Business",0154145712,True,False
+Le De Oliveira,"134 Rue de la Paix, 75002 Paris",5002,48.887166,2.33735,Libanais,Mezze,30-50,Moyenne gamme +,4.4,355,"Familial, Décontracté, Business",0107813348,False,False
+L' Tour,"98 Boulevard Voltaire, 75015 Paris",5015,48.822357,2.387303,Indien,Nord-Indien,10-20,Bon marché,4.2,184,Business,0132055238,False,False
+Les Restaurant Merle,"103 Rue de la Paix, 75020 Paris",5020,48.859382,2.367805,Français,Bistrot,30-50,Moyenne gamme +,4.0,49,Business,0108500155,True,False
+L' Table Dufour,"109 Avenue Montaigne, 75017 Paris",5017,48.834232,2.360629,Fusion,Asian Fusion,50+,Haut de gamme,5.0,150,"Décontracté, Branché",0190241107,True,False
+Les Changement,"138 Rue Oberkampf, 75015 Paris",5015,48.84171,2.334537,Libanais,Mezze,30-50,Moyenne gamme +,3.7,20,Convivial,0105355392,False,False
+Au Le Goff,"14 Rue de Rennes, 75015 Paris",5015,48.879256,2.374684,Italien,Pizza,30-50,Moyenne gamme +,4.3,730,"Élégant, Familial",0162229010,False,True
+L' Même,"100 Rue de Rennes, 75004 Paris",5004,48.841401,2.328033,Indien,Nord-Indien,10-20,Bon marché,3.7,99,"Cosy, Familial, Élégant",0182730893,False,False
+Aux Inquiétude,"112 Rue Oberkampf, 75008 Paris",5008,48.808195,2.345201,Méditerranéen,Grec,50+,Haut de gamme,5.0,234,"Décontracté, Branché",0138800726,True,False
+Le Juge,"99 Rue de Rivoli, 75011 Paris",5011,48.892662,2.353775,Français,Bistrot,10-20,Bon marché,3.6,122,Convivial,0130928196,False,False
+Au Abri,"95 Boulevard Haussmann, 75010 Paris",5010,48.822471,2.316993,Italien,Pasta,20-30,Moyenne gamme,4.3,230,Modern,0129819939,True,False
+Au Humbert,"76 Rue de Belleville, 75011 Paris",5011,48.880404,2.397741,Chinois,Dim Sum,20-30,Moyenne gamme,4.3,247,Modern,0170412864,True,True
+Le Cuisine Lenoir,"116 Avenue des Champs-Élysées, 75001 Paris",5001,48.815407,2.354767,Fusion,Modern Fusion,50+,Haut de gamme,4.1,49,"Familial, Décontracté",0102673359,False,False
+Maison Quartier,"15 Rue de la Roquette, 75014 Paris",5014,48.890445,2.336043,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.8,1057,"Cosy, Modern, Décontracté",0111176269,True,False
+Au Bistrot Cohen,"87 Rue Oberkampf, 75010 Paris",5010,48.882853,2.360189,Chinois,Sichuan,30-50,Moyenne gamme +,4.4,457,"Traditionnel, Branché",0140294192,True,False
+La Retrouver,"70 Avenue Montaigne, 75015 Paris",5015,48.832356,2.370125,Végétarien,Végétarien,30-50,Moyenne gamme +,3.8,851,"Traditionnel, Familial",0141106193,True,False
+L' Cuisine Perrin,"30 Rue Mouffetard, 75015 Paris",5015,48.826857,2.347245,Libanais,Mezze,50+,Haut de gamme,5.0,479,Branché,0104145018,False,True
+L' Rocher,"6 Avenue de l'Opéra, 75015 Paris",5015,48.860499,2.400268,Chinois,Cantonais,50+,Haut de gamme,3.9,198,"Romantique, Familial, Cosy",0180040851,False,False
+Au Bertrand,"91 Rue de Rennes, 75011 Paris",5011,48.867665,2.387674,Chinois,Cantonais,10-20,Bon marché,4.6,774,Modern,0195986338,False,False
+Le Fin,"44 Rue de Passy, 75015 Paris",5015,48.856448,2.332212,Indien,Nord-Indien,10-20,Bon marché,4.6,37,"Traditionnel, Business, Décontracté",0114471326,False,False
+La Réveiller,"47 Rue de Passy, 75005 Paris",5005,48.850362,2.30676,Thaïlandais,Traditionnel,20-30,Moyenne gamme,3.7,75,Traditionnel,0107447481,True,False
+Au Vieux,"67 Boulevard Saint-Germain, 75008 Paris",5008,48.825323,2.323391,Indien,Nord-Indien,30-50,Moyenne gamme +,4.3,23,"Élégant, Branché, Convivial",0129340903,False,True
+Les Prévost,"147 Rue Saint-Honoré, 75008 Paris",5008,48.85213,2.395637,Japonais,Sushi,20-30,Moyenne gamme,4.1,128,"Business, Convivial",0102134025,True,False
+Le Restaurant Potier,"45 Rue des Martyrs, 75014 Paris",5014,48.901312,2.385719,Végétarien,Vegan,50+,Haut de gamme,5.0,109,"Cosy, Modern",0142285455,False,False
+Le Chercher,"122 Rue de Rivoli, 75005 Paris",5005,48.834516,2.319679,Français,Bistrot,10-20,Bon marché,3.7,104,"Convivial, Branché, Traditionnel",0169825418,False,False
+Aux Diallo,"14 Rue de la Paix, 75001 Paris",5001,48.903806,2.367516,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.4,539,"Convivial, Familial, Décontracté",0163821845,False,True
+Le Dos Santos,"105 Rue de Rennes, 75017 Paris",5017,48.841278,2.393032,Fusion,Modern Fusion,10-20,Bon marché,4.4,142,"Cosy, Familial, Convivial",0124622291,True,False
+Au Présent,"85 Boulevard Saint-Germain, 75015 Paris",5015,48.832836,2.377301,Libanais,Grillades,50+,Haut de gamme,4.0,75,"Cosy, Romantique, Décontracté",0178602431,False,False
+Le Guyon,"25 Avenue des Champs-Élysées, 75001 Paris",5001,48.867278,2.306936,Indien,Nord-Indien,30-50,Moyenne gamme +,3.6,244,"Convivial, Modern",0189032376,True,True
+Les Letellier,"38 Rue Oberkampf, 75019 Paris",5019,48.860853,2.338703,Japonais,Ramen,50+,Haut de gamme,4.7,38,Élégant,0148398682,True,False
+Au Énergie,"7 Avenue de l'Opéra, 75015 Paris",5015,48.849853,2.307386,Chinois,Dim Sum,30-50,Moyenne gamme +,4.8,496,Branché,0158936242,True,False
+Chez Tempête,"12 Rue Mouffetard, 75002 Paris",5002,48.854113,2.374933,Indien,Nord-Indien,20-30,Moyenne gamme,3.9,33,"Cosy, Convivial, Romantique",0195874299,True,False
+L' Navarro,"129 Rue Saint-Honoré, 75003 Paris",5003,48.833977,2.336128,Méditerranéen,Grec,30-50,Moyenne gamme +,4.5,1310,Familial,0161893219,True,True
+Maison Haïr,"127 Avenue Montaigne, 75012 Paris",5012,48.84482,2.325855,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,3.8,453,Élégant,0121057242,True,False
+Chez Bistrot Sauvage,"17 Rue de Rennes, 75019 Paris",5019,48.905152,2.362049,Thaïlandais,Street food,50+,Haut de gamme,4.5,53,Convivial,0125371021,False,True
+Au Restaurant Le Goff,"144 Rue Saint-Honoré, 75015 Paris",5015,48.824825,2.377649,Japonais,Izakaya,10-20,Bon marché,4.0,11,"Traditionnel, Cosy",0176936874,False,False
+La Jacquet,"128 Rue Saint-Antoine, 75004 Paris",5004,48.809612,2.391329,Japonais,Ramen,30-50,Moyenne gamme +,4.1,516,Modern,0189908012,False,False
+Les Lebreton,"98 Rue de la Paix, 75006 Paris",5006,48.829049,2.332895,Italien,Pizza,10-20,Bon marché,4.3,378,Décontracté,0184705889,True,False
+Le Étouffer,"56 Rue Mouffetard, 75011 Paris",5011,48.836044,2.379582,Chinois,Cantonais,30-50,Moyenne gamme +,4.7,401,Branché,0180705459,False,True
+La Saveurs Dijoux,"101 Rue Saint-Honoré, 75015 Paris",5015,48.847253,2.353265,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,3.9,452,Convivial,0180871715,False,False
+Chez Guillet,"126 Rue Saint-Honoré, 75010 Paris",5010,48.853252,2.357101,Italien,Pizza,50+,Haut de gamme,4.8,23,"Romantique, Décontracté",0135575449,True,True
+Maison Weiss,"10 Rue de Belleville, 75006 Paris",5006,48.895654,2.390672,Italien,Pizza,30-50,Moyenne gamme +,4.3,143,Décontracté,0131653500,True,True
+Chez Mahe,"140 Rue du Faubourg Saint-Honoré, 75004 Paris",5004,48.811259,2.315146,Thaïlandais,Traditionnel,10-20,Bon marché,4.9,46,"Convivial, Élégant, Business",0113725542,True,False
+La Vingt,"10 Rue des Martyrs, 75017 Paris",5017,48.895808,2.327566,Végétarien,Vegan,10-20,Bon marché,3.9,606,"Décontracté, Cosy",0145465627,True,False
+L' Launay,"105 Rue Saint-Honoré, 75020 Paris",5020,48.900839,2.338778,Italien,Pizza,20-30,Moyenne gamme,4.2,302,"Décontracté, Traditionnel",0127300083,False,False
+Aux Bon,"132 Boulevard Haussmann, 75010 Paris",5010,48.844154,2.347577,Italien,Trattoria,20-30,Moyenne gamme,4.1,130,"Romantique, Convivial, Cosy",0127334897,False,False
+Aux Moment,"29 Rue Saint-Antoine, 75014 Paris",5014,48.810102,2.349656,Libanais,Grillades,30-50,Moyenne gamme +,4.4,29,Familial,0138779884,False,True
+Chez Naturel,"86 Rue de la Paix, 75013 Paris",5013,48.88308,2.380323,Végétarien,Végétarien,10-20,Bon marché,4.7,121,"Décontracté, Familial, Traditionnel",0129381772,True,False
+Au Table Millet,"49 Boulevard Saint-Germain, 75004 Paris",5004,48.896294,2.324262,Méditerranéen,Grec,10-20,Bon marché,3.8,127,"Convivial, Romantique",0168851981,False,False
+L' Table Neveu,"149 Rue de la Paix, 75004 Paris",5004,48.862899,2.400169,Végétarien,Vegan,50+,Haut de gamme,4.1,281,Modern,0191892026,False,False
+Aux Soulever,"26 Avenue de l'Opéra, 75008 Paris",5008,48.871051,2.391022,Indien,Sud-Indien,10-20,Bon marché,3.8,314,"Business, Modern",0125206700,False,False
+Le Cuisine Leduc,"16 Avenue Victor Hugo, 75010 Paris",5010,48.88937,2.302731,Japonais,Izakaya,20-30,Moyenne gamme,3.9,664,"Familial, Modern",0135191167,True,False
+Le Enfoncer,"39 Rue du Faubourg Saint-Honoré, 75020 Paris",5020,48.835987,2.36764,Végétarien,Végétarien,50+,Haut de gamme,4.0,140,"Élégant, Décontracté",0195480466,False,False
+Maison Table Cousin,"34 Rue du Faubourg Saint-Honoré, 75019 Paris",5019,48.890066,2.398583,Fusion,Modern Fusion,50+,Haut de gamme,4.0,33,"Branché, Élégant, Modern",0162207330,False,False
+Au Sauter,"84 Rue de Belleville, 75007 Paris",5007,48.830476,2.321202,Français,Bistrot,30-50,Moyenne gamme +,4.5,384,"Branché, Traditionnel",0109072929,True,True
+Chez Pichon,"39 Rue Mouffetard, 75005 Paris",5005,48.904971,2.369298,Chinois,Sichuan,10-20,Bon marché,3.8,439,"Business, Convivial, Élégant",0194896106,False,False
+Aux Erreur,"16 Rue des Martyrs, 75020 Paris",5020,48.875949,2.345703,Végétarien,Vegan,50+,Haut de gamme,4.4,179,"Familial, Romantique",0104473096,False,False
+La Lefèvre,"9 Rue de Rennes, 75020 Paris",5020,48.869364,2.355253,Méditerranéen,Mezze,20-30,Moyenne gamme,3.8,452,Cosy,0165275747,False,False
+Maison Lopez,"115 Boulevard Haussmann, 75013 Paris",5013,48.883168,2.304309,Fusion,Asian Fusion,30-50,Moyenne gamme +,4.3,214,Romantique,0172818452,True,True
+Le Saveurs Salmon,"80 Rue des Martyrs, 75010 Paris",5010,48.906444,2.38002,Italien,Trattoria,50+,Haut de gamme,4.9,161,"Modern, Convivial",0144143261,False,False
+Chez Glisser,"71 Rue de la Roquette, 75005 Paris",5005,48.880013,2.329649,Indien,Sud-Indien,20-30,Moyenne gamme,4.5,177,"Branché, Traditionnel, Familial",0183047977,False,True
+La Durand,"78 Rue du Faubourg Saint-Honoré, 75015 Paris",5015,48.841361,2.395613,Méditerranéen,Espagnol,20-30,Moyenne gamme,4.0,17,Business,0134720383,False,False
+Les Curiosité,"126 Place Vendôme, 75009 Paris",5009,48.862868,2.351966,Italien,Trattoria,30-50,Moyenne gamme +,4.0,44,Romantique,0175203023,True,False
+Maison Cuisine Grégoire,"148 Rue Saint-Honoré, 75018 Paris",5018,48.815577,2.325254,Français,Bistrot,20-30,Moyenne gamme,4.4,19,"Business, Modern",0198497693,False,True
+Maison Lecomte,"110 Rue de Belleville, 75016 Paris",5016,48.905119,2.336152,Fusion,Asian Fusion,20-30,Moyenne gamme,3.5,313,"Décontracté, Romantique, Branché",0159032387,False,True
+Chez Foucher,"49 Rue de Passy, 75018 Paris",5018,48.82063,2.342548,Méditerranéen,Mezze,50+,Haut de gamme,4.4,86,"Convivial, Traditionnel",0164897061,False,True
+Maison Apprendre,"150 Rue de Belleville, 75010 Paris",5010,48.813962,2.319389,Français,Bistrot,30-50,Moyenne gamme +,4.5,223,"Traditionnel, Romantique, Convivial",0142933009,True,False
+Aux Flot,"33 Rue de Rivoli, 75015 Paris",5015,48.818944,2.382714,Français,Traditionnel,20-30,Moyenne gamme,4.2,724,"Branché, Décontracté, Traditionnel",0139356767,True,True
+L' Seguin,"26 Rue Saint-Honoré, 75004 Paris",5004,48.847598,2.394953,Italien,Pizza,20-30,Moyenne gamme,3.6,96,"Modern, Décontracté",0105124709,False,False
+Les Moreno,"46 Boulevard Saint-Germain, 75016 Paris",5016,48.858199,2.312578,Méditerranéen,Mezze,50+,Haut de gamme,4.4,117,"Business, Branché",0192604499,False,True
+Maison Fleury,"148 Rue Mouffetard, 75016 Paris",5016,48.867976,2.307853,Méditerranéen,Espagnol,10-20,Bon marché,4.1,432,"Familial, Modern, Convivial",0150934016,True,False
+Les Tempête,"45 Place Vendôme, 75001 Paris",5001,48.820194,2.352942,Français,Bistrot,10-20,Bon marché,4.2,87,"Traditionnel, Branché, Familial",0178149636,False,False
+Chez Brunet,"26 Avenue Montaigne, 75001 Paris",5001,48.86389,2.303073,Italien,Pizza,50+,Haut de gamme,4.5,23,"Cosy, Élégant",0169754842,True,True
+Les François,"120 Rue de Rivoli, 75012 Paris",5012,48.900407,2.31627,Méditerranéen,Mezze,50+,Haut de gamme,4.3,78,Business,0152648890,True,True
+L' Saveurs Lacombe,"5 Boulevard Voltaire, 75020 Paris",5020,48.829388,2.394662,Indien,Nord-Indien,10-20,Bon marché,4.1,62,Traditionnel,0155897269,False,False
+Aux Respect,"66 Boulevard Voltaire, 75020 Paris",5020,48.849426,2.350107,Libanais,Grillades,10-20,Bon marché,3.7,806,"Branché, Business",0142577018,True,False
+Aux Delahaye,"42 Place Vendôme, 75011 Paris",5011,48.816431,2.303485,Japonais,Ramen,50+,Haut de gamme,3.9,353,Romantique,0103951149,True,True
+Au Vallée,"4 Rue des Martyrs, 75017 Paris",5017,48.901548,2.387463,Indien,Sud-Indien,20-30,Moyenne gamme,3.8,311,"Convivial, Décontracté",0140370951,False,False
+Les Recevoir,"72 Rue du Faubourg Saint-Honoré, 75019 Paris",5019,48.823782,2.308329,Français,Gastronomique,10-20,Bon marché,3.8,625,"Traditionnel, Romantique, Modern",0171801202,False,False
+Le Sauvage,"108 Rue Mouffetard, 75020 Paris",5020,48.885925,2.305147,Indien,Nord-Indien,10-20,Bon marché,4.5,498,"Cosy, Branché, Traditionnel",0110458276,True,False
+La Restaurant Lucas,"57 Rue de Rennes, 75016 Paris",5016,48.892225,2.382883,Fusion,Asian Fusion,10-20,Bon marché,4.2,71,"Traditionnel, Familial, Décontracté",0123828806,False,False
+L' Je,"147 Rue de Rivoli, 75005 Paris",5005,48.901971,2.341998,Français,Gastronomique,20-30,Moyenne gamme,4.2,679,Décontracté,0123045949,True,False
+Chez Chute,"135 Boulevard Saint-Germain, 75007 Paris",5007,48.866506,2.357075,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.8,242,Romantique,0199551673,True,False
+Le Humain,"119 Avenue Victor Hugo, 75016 Paris",5016,48.883645,2.31544,Chinois,Dim Sum,30-50,Moyenne gamme +,4.0,504,Familial,0148110696,False,True
+Au Laroche,"24 Boulevard Haussmann, 75016 Paris",5016,48.905092,2.362378,Indien,Sud-Indien,30-50,Moyenne gamme +,4.5,689,"Modern, Romantique, Business",0164020933,True,True
+Aux Enfant,"29 Rue des Martyrs, 75001 Paris",5001,48.836725,2.318826,Chinois,Cantonais,50+,Haut de gamme,4.3,86,"Branché, Décontracté, Convivial",0183098950,True,False
+La Paix,"5 Rue Saint-Antoine, 75011 Paris",5011,48.892578,2.322966,Thaïlandais,Street food,30-50,Moyenne gamme +,4.0,44,"Business, Traditionnel",0121774185,False,True
+Le Table Barbe,"45 Rue Mouffetard, 75001 Paris",5001,48.831049,2.339326,Chinois,Sichuan,20-30,Moyenne gamme,3.7,87,"Familial, Branché",0116257741,True,False
+Maison Saveurs Turpin,"3 Boulevard Voltaire, 75005 Paris",5005,48.831307,2.303851,Chinois,Dim Sum,30-50,Moyenne gamme +,3.6,177,Business,0146326248,False,True
+Au Cuisine Schmitt,"92 Rue Mouffetard, 75008 Paris",5008,48.823298,2.375607,Libanais,Grillades,30-50,Moyenne gamme +,3.7,521,"Business, Traditionnel, Romantique",0105797890,True,False
+Le Mine,"146 Rue Oberkampf, 75013 Paris",5013,48.882162,2.351367,Chinois,Sichuan,50+,Haut de gamme,3.8,420,"Modern, Traditionnel",0117173511,False,True
+Maison Restaurant Le Gall,"87 Rue de la Paix, 75001 Paris",5001,48.875167,2.328224,Fusion,Asian Fusion,50+,Haut de gamme,5.0,8,"Cosy, Modern, Business",0132144343,True,False
+Les Bonnin,"112 Rue de Rivoli, 75019 Paris",5019,48.817142,2.383279,Thaïlandais,Traditionnel,20-30,Moyenne gamme,3.9,224,Business,0139911348,True,False
+Chez Pencher,"62 Rue Oberkampf, 75001 Paris",5001,48.83276,2.322598,Indien,Sud-Indien,10-20,Bon marché,4.0,172,Traditionnel,0148156850,True,False
+Au Profiter,"58 Rue Saint-Honoré, 75020 Paris",5020,48.900779,2.328783,Français,Traditionnel,30-50,Moyenne gamme +,3.9,85,"Modern, Romantique, Convivial",0124994341,True,True
+Maison Huet,"76 Rue de Belleville, 75002 Paris",5002,48.881157,2.315684,Végétarien,Vegan,30-50,Moyenne gamme +,4.8,48,Cosy,0199824992,True,True
+La Cuisine Sauvage,"35 Rue Mouffetard, 75002 Paris",5002,48.841665,2.337196,Japonais,Izakaya,50+,Haut de gamme,3.9,93,"Convivial, Romantique",0121254679,True,False
+Au Bernier,"88 Rue des Martyrs, 75008 Paris",5008,48.877559,2.329155,Italien,Trattoria,30-50,Moyenne gamme +,3.6,868,"Convivial, Modern",0180866788,True,False
+La Cuisine Pierre,"119 Rue de Passy, 75007 Paris",5007,48.850369,2.399847,Fusion,Asian Fusion,30-50,Moyenne gamme +,4.8,127,"Familial, Romantique",0154525725,True,True
+Au Maillard,"113 Avenue de l'Opéra, 75019 Paris",5019,48.828809,2.354819,Japonais,Izakaya,50+,Haut de gamme,5.0,160,"Modern, Convivial, Branché",0197387833,True,True
+Au Appartement,"144 Rue Mouffetard, 75016 Paris",5016,48.809262,2.384819,Français,Gastronomique,50+,Haut de gamme,4.8,261,"Élégant, Cosy",0150879178,False,True
+Le Position,"78 Rue de la Paix, 75013 Paris",5013,48.817923,2.3408,Italien,Pizza,10-20,Bon marché,3.9,145,"Cosy, Décontracté, Branché",0158493206,True,False
+Le Riou,"106 Rue de la Paix, 75006 Paris",5006,48.868843,2.330839,Italien,Trattoria,10-20,Bon marché,4.3,1080,Élégant,0116068646,False,False
+L' Hebert,"88 Avenue de l'Opéra, 75006 Paris",5006,48.883798,2.40075,Libanais,Mezze,10-20,Bon marché,4.0,994,"Business, Modern",0154865675,False,False
+Le Table Huet,"12 Rue de Rivoli, 75013 Paris",5013,48.84436,2.319308,Japonais,Sushi,30-50,Moyenne gamme +,4.1,97,"Branché, Convivial",0179122576,False,False
+Au Habiter,"97 Rue de Rivoli, 75007 Paris",5007,48.887127,2.34837,Libanais,Grillades,50+,Haut de gamme,4.0,151,"Modern, Branché",0179882806,False,True
+Au Restaurant Chartier,"75 Boulevard Haussmann, 75020 Paris",5020,48.81625,2.384491,Végétarien,Végétarien,30-50,Moyenne gamme +,4.6,117,"Élégant, Branché",0140063082,False,False
+Chez Nature,"87 Rue Oberkampf, 75009 Paris",5009,48.902701,2.388778,Chinois,Sichuan,50+,Haut de gamme,5.0,77,"Cosy, Traditionnel, Décontracté",0170406516,False,True
+Maison Table Petit,"47 Rue Mouffetard, 75004 Paris",5004,48.840888,2.325054,Thaïlandais,Street food,30-50,Moyenne gamme +,3.9,21,"Modern, Décontracté",0125985223,True,True
+L' Table Aubry,"67 Rue de la Paix, 75003 Paris",5003,48.843301,2.341721,Végétarien,Végétarien,20-30,Moyenne gamme,4.3,292,"Familial, Romantique, Cosy",0101589934,True,False
+Les Jacques,"15 Avenue de l'Opéra, 75009 Paris",5009,48.834486,2.320206,Fusion,Asian Fusion,20-30,Moyenne gamme,3.6,219,"Romantique, Décontracté, Modern",0149681924,False,True
+La Restaurant Guérin,"133 Rue de Belleville, 75007 Paris",5007,48.870894,2.354637,Méditerranéen,Mezze,30-50,Moyenne gamme +,3.7,25,"Élégant, Familial",0179603613,True,True
+Le Carte,"51 Place Vendôme, 75020 Paris",5020,48.861521,2.370103,Italien,Pasta,20-30,Moyenne gamme,4.1,107,Élégant,0113394470,True,False
+Au Juge,"135 Rue des Martyrs, 75018 Paris",5018,48.862056,2.379622,Indien,Sud-Indien,10-20,Bon marché,4.1,726,"Cosy, Business",0138871545,True,False
+L' Mine,"20 Boulevard Voltaire, 75002 Paris",5002,48.839738,2.360623,Fusion,Asian Fusion,30-50,Moyenne gamme +,3.8,92,"Branché, Élégant",0186838000,False,False
+L' Jacquet,"88 Rue de Rennes, 75010 Paris",5010,48.880989,2.339449,Indien,Nord-Indien,10-20,Bon marché,3.8,56,"Branché, Familial",0109619243,False,False
+Maison Bistrot Pichon,"13 Rue Mouffetard, 75019 Paris",5019,48.837401,2.398521,Libanais,Grillades,50+,Haut de gamme,4.9,147,"Élégant, Branché, Cosy",0162545381,False,True
+La Briller,"27 Rue de la Paix, 75011 Paris",5011,48.830032,2.314504,Italien,Pasta,30-50,Moyenne gamme +,4.6,1283,"Branché, Convivial, Traditionnel",0130532215,True,False
+Chez Restaurant Denis,"84 Avenue Victor Hugo, 75001 Paris",5001,48.847726,2.318457,Végétarien,Vegan,20-30,Moyenne gamme,4.1,93,"Cosy, Décontracté, Modern",0146671500,False,True
+Au Ce,"4 Rue de Passy, 75009 Paris",5009,48.855825,2.335812,Thaïlandais,Traditionnel,10-20,Bon marché,4.8,344,"Romantique, Modern",0188242064,True,False
+Les Lueur,"5 Avenue de l'Opéra, 75020 Paris",5020,48.809108,2.385672,Végétarien,Végétarien,10-20,Bon marché,4.3,440,"Traditionnel, Modern",0155740571,False,False
+Aux Étouffer,"134 Rue de la Roquette, 75005 Paris",5005,48.826441,2.312167,Fusion,Asian Fusion,30-50,Moyenne gamme +,4.1,91,Romantique,0109527706,True,False
+Au Accrocher,"93 Rue de la Roquette, 75009 Paris",5009,48.828229,2.392847,Libanais,Grillades,20-30,Moyenne gamme,4.2,400,Décontracté,0151115994,True,True
+Le Restaurant Laine,"84 Rue de Rivoli, 75003 Paris",5003,48.89796,2.349484,Végétarien,Végétarien,20-30,Moyenne gamme,3.7,147,Familial,0173224096,True,True
+Les Prévoir,"72 Rue de Belleville, 75006 Paris",5006,48.88644,2.305285,Méditerranéen,Mezze,30-50,Moyenne gamme +,4.4,310,"Branché, Familial",0115339129,False,False
+Aux Devenir,"121 Place Vendôme, 75010 Paris",5010,48.849999,2.334603,Chinois,Dim Sum,50+,Haut de gamme,4.3,217,"Décontracté, Branché",0173159840,True,True
+L' Gay,"76 Rue de la Paix, 75020 Paris",5020,48.814151,2.344614,Fusion,Modern Fusion,50+,Haut de gamme,5.0,168,Romantique,0196226506,False,False
+Aux Le,"41 Rue Saint-Antoine, 75013 Paris",5013,48.872731,2.360396,Italien,Trattoria,10-20,Bon marché,4.0,38,"Cosy, Traditionnel, Business",0144252154,True,False
+La Guère,"52 Rue de Rennes, 75008 Paris",5008,48.884755,2.340521,Italien,Pasta,30-50,Moyenne gamme +,4.5,551,Décontracté,0193536827,True,True
+Maison Empêcher,"112 Rue Mouffetard, 75001 Paris",5001,48.821846,2.326543,Français,Brasserie,20-30,Moyenne gamme,3.8,126,"Traditionnel, Cosy, Familial",0127290153,True,True
+La Saveurs Ollivier,"146 Avenue de l'Opéra, 75010 Paris",5010,48.872026,2.359743,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.1,71,Familial,0132609687,True,True
+L' Cuisine Michaud,"52 Rue Mouffetard, 75015 Paris",5015,48.856774,2.372576,Végétarien,Vegan,20-30,Moyenne gamme,4.6,22,"Romantique, Business, Branché",0162115317,False,True
+Les Que,"66 Rue de Passy, 75009 Paris",5009,48.806731,2.367411,Français,Bistrot,20-30,Moyenne gamme,4.4,278,"Décontracté, Business",0155707539,False,True
+Les Petit,"61 Rue de Belleville, 75018 Paris",5018,48.894619,2.379757,Chinois,Dim Sum,50+,Haut de gamme,3.9,244,Romantique,0154416930,True,False
+La Brusquement,"119 Boulevard Haussmann, 75011 Paris",5011,48.834488,2.385118,Méditerranéen,Grec,30-50,Moyenne gamme +,4.3,15,Romantique,0169300100,False,False
+Maison Quatre,"18 Avenue des Champs-Élysées, 75010 Paris",5010,48.866178,2.312814,Libanais,Grillades,30-50,Moyenne gamme +,4.4,225,"Traditionnel, Familial",0196802794,True,False
+Les Miser,"124 Avenue des Champs-Élysées, 75015 Paris",5015,48.809041,2.322512,Français,Brasserie,20-30,Moyenne gamme,4.1,87,"Traditionnel, Modern",0169240031,True,False
+Chez Figurer,"83 Place Vendôme, 75003 Paris",5003,48.899979,2.349057,Italien,Pasta,20-30,Moyenne gamme,3.7,320,"Familial, Branché",0167824435,False,True
+L' Appartement,"136 Rue de la Paix, 75017 Paris",5017,48.808751,2.318089,Indien,Nord-Indien,30-50,Moyenne gamme +,3.6,67,"Branché, Élégant",0136746039,False,True
+Le Cuisine Carre,"113 Boulevard Saint-Germain, 75014 Paris",5014,48.882836,2.390677,Italien,Trattoria,20-30,Moyenne gamme,4.5,362,"Modern, Romantique, Décontracté",0158419607,True,False
+L' Tête,"58 Avenue Victor Hugo, 75009 Paris",5009,48.851287,2.370185,Français,Brasserie,10-20,Bon marché,4.7,156,Élégant,0180832648,False,False
+La Tour,"110 Rue de la Roquette, 75019 Paris",5019,48.872089,2.364705,Italien,Trattoria,30-50,Moyenne gamme +,3.9,838,"Familial, Décontracté, Cosy",0163903827,True,True
+La Reynaud,"92 Rue Saint-Antoine, 75020 Paris",5020,48.884378,2.388834,Méditerranéen,Grec,10-20,Bon marché,4.2,54,"Décontracté, Modern",0117507978,False,False
+L' Voix,"92 Place Vendôme, 75001 Paris",5001,48.856981,2.307348,Chinois,Dim Sum,30-50,Moyenne gamme +,4.7,135,Branché,0161306002,True,False
+Aux Peuple,"28 Rue Oberkampf, 75004 Paris",5004,48.894005,2.393553,Indien,Sud-Indien,10-20,Bon marché,4.1,46,"Décontracté, Élégant, Romantique",0166109456,False,False
+Les Bistrot Descamps,"68 Avenue Montaigne, 75020 Paris",5020,48.83755,2.368907,Japonais,Sushi,30-50,Moyenne gamme +,4.2,785,Convivial,0118723407,False,True
+Le Bistrot Dumont,"91 Rue Saint-Antoine, 75008 Paris",5008,48.832889,2.326142,Libanais,Grillades,30-50,Moyenne gamme +,3.9,639,"Traditionnel, Modern, Branché",0159692005,False,False
+La Saveurs Roux,"20 Avenue Victor Hugo, 75009 Paris",5009,48.851039,2.36578,Fusion,Asian Fusion,10-20,Bon marché,3.6,99,"Convivial, Familial, Élégant",0118835703,True,False
+La Encore,"88 Rue Mouffetard, 75011 Paris",5011,48.866906,2.363645,Végétarien,Végétarien,10-20,Bon marché,4.9,333,"Familial, Modern",0151020469,False,False
+L' Parfaitement,"118 Rue de Passy, 75004 Paris",5004,48.905214,2.348263,Italien,Trattoria,20-30,Moyenne gamme,4.0,519,"Élégant, Familial",0158291710,False,True
+Les Observer,"103 Boulevard Voltaire, 75011 Paris",5011,48.90194,2.303073,Indien,Sud-Indien,20-30,Moyenne gamme,3.7,253,Modern,0182839369,False,True
+Aux Delannoy,"38 Rue de la Paix, 75013 Paris",5013,48.82576,2.385101,Chinois,Cantonais,50+,Haut de gamme,4.4,165,Décontracté,0104144203,True,False
+Chez Bistrot Lejeune,"62 Rue de la Roquette, 75004 Paris",5004,48.828221,2.343321,Chinois,Cantonais,20-30,Moyenne gamme,4.3,93,"Élégant, Romantique, Modern",0111986296,False,True
+L' Midi,"79 Rue Oberkampf, 75016 Paris",5016,48.825437,2.34868,Indien,Nord-Indien,10-20,Bon marché,4.5,39,"Traditionnel, Cosy",0182484784,False,False
+Au Mériter,"5 Rue de Rivoli, 75001 Paris",5001,48.899976,2.3364,Libanais,Grillades,20-30,Moyenne gamme,3.8,692,"Familial, Cosy",0163105730,False,True
+Aux Fixe,"35 Avenue Montaigne, 75006 Paris",5006,48.865161,2.322972,Méditerranéen,Grec,10-20,Bon marché,4.6,702,Branché,0119347062,False,False
+La Confiance,"59 Rue Oberkampf, 75010 Paris",5010,48.857199,2.337069,Méditerranéen,Grec,30-50,Moyenne gamme +,3.9,310,Familial,0193921827,False,True
+La Michel,"55 Rue des Martyrs, 75008 Paris",5008,48.818335,2.328171,Français,Gastronomique,30-50,Moyenne gamme +,4.7,134,Élégant,0100888738,False,True
+Maison Saison,"91 Rue Saint-Antoine, 75002 Paris",5002,48.812135,2.354863,Méditerranéen,Mezze,30-50,Moyenne gamme +,4.1,138,Romantique,0113295136,False,True
+Le Restaurant Michaud,"83 Rue de Belleville, 75012 Paris",5012,48.899444,2.385324,Végétarien,Vegan,20-30,Moyenne gamme,4.3,398,Romantique,0109385887,True,True
+Au Chat,"65 Rue Oberkampf, 75015 Paris",5015,48.877317,2.351734,Indien,Nord-Indien,10-20,Bon marché,3.7,692,Traditionnel,0179975747,True,False
+La Cuisine Hamel,"4 Boulevard Voltaire, 75005 Paris",5005,48.859719,2.380865,Français,Gastronomique,30-50,Moyenne gamme +,4.0,664,"Modern, Traditionnel",0117329158,True,False
+Aux Gallet,"24 Rue du Faubourg Saint-Honoré, 75006 Paris",5006,48.827197,2.388082,Français,Brasserie,20-30,Moyenne gamme,3.6,464,Traditionnel,0190251857,False,False
+Aux Rare,"107 Rue de Belleville, 75010 Paris",5010,48.836287,2.31516,Thaïlandais,Street food,30-50,Moyenne gamme +,4.6,318,Romantique,0163568023,False,True
+Les Coup,"51 Boulevard Haussmann, 75012 Paris",5012,48.864405,2.400615,Italien,Pizza,10-20,Bon marché,3.7,36,"Branché, Traditionnel",0111562591,False,False
+Maison Charpentier,"139 Rue Saint-Antoine, 75018 Paris",5018,48.85001,2.329438,Chinois,Cantonais,20-30,Moyenne gamme,4.4,62,Familial,0134425032,True,False
+Chez Delmas,"66 Boulevard Haussmann, 75008 Paris",5008,48.854837,2.335399,Chinois,Sichuan,30-50,Moyenne gamme +,4.9,696,Cosy,0129705271,True,True
+L' Social,"35 Avenue des Champs-Élysées, 75011 Paris",5011,48.873106,2.333673,Français,Brasserie,10-20,Bon marché,3.7,289,Élégant,0125264936,False,False
+La Bistrot Delaunay,"83 Rue des Martyrs, 75006 Paris",5006,48.823209,2.334974,Végétarien,Végétarien,20-30,Moyenne gamme,4.5,12,"Branché, Romantique, Familial",0169810751,False,True
+Au Cuisine Arnaud,"118 Avenue de l'Opéra, 75001 Paris",5001,48.893853,2.33753,Thaïlandais,Street food,30-50,Moyenne gamme +,4.4,42,"Romantique, Familial, Cosy",0144532885,False,True
+Aux Restaurant Courtois,"44 Rue de la Roquette, 75002 Paris",5002,48.877777,2.345928,Italien,Pasta,30-50,Moyenne gamme +,4.8,336,"Convivial, Traditionnel",0144621607,False,True
+La Aubry,"11 Place Vendôme, 75004 Paris",5004,48.888791,2.32072,Français,Traditionnel,30-50,Moyenne gamme +,4.1,11,"Convivial, Décontracté, Élégant",0169550078,False,False
+Le Table Lucas,"115 Rue de Passy, 75006 Paris",5006,48.885954,2.400326,Japonais,Izakaya,30-50,Moyenne gamme +,4.6,62,"Romantique, Élégant, Business",0195083548,True,True
+Maison Lecoq,"88 Boulevard Saint-Germain, 75018 Paris",5018,48.881749,2.385901,Japonais,Sushi,10-20,Bon marché,4.8,248,Branché,0108963590,False,False
+Chez Moyen,"76 Rue Saint-Antoine, 75005 Paris",5005,48.877971,2.337575,Indien,Sud-Indien,30-50,Moyenne gamme +,4.1,363,Familial,0187485635,False,False
+Chez Olivier,"89 Avenue de l'Opéra, 75009 Paris",5009,48.892354,2.364086,Chinois,Dim Sum,30-50,Moyenne gamme +,3.9,326,"Décontracté, Modern",0198848177,False,False
+Chez Prix,"6 Rue de la Roquette, 75007 Paris",5007,48.810284,2.310452,Chinois,Dim Sum,50+,Haut de gamme,4.4,60,Branché,0121070046,True,True
+Chez Leconte,"121 Avenue de l'Opéra, 75010 Paris",5010,48.82244,2.397205,Indien,Nord-Indien,20-30,Moyenne gamme,4.0,383,Business,0174438348,False,False
+Le Regretter,"63 Rue de la Roquette, 75011 Paris",5011,48.84076,2.341622,Indien,Sud-Indien,50+,Haut de gamme,4.4,63,Traditionnel,0151791169,False,False
+Au Saveurs Merle,"146 Rue de Rennes, 75001 Paris",5001,48.837461,2.396997,Italien,Pasta,30-50,Moyenne gamme +,3.7,128,"Traditionnel, Romantique, Convivial",0103606199,True,False
+Chez Descamps,"72 Avenue Victor Hugo, 75020 Paris",5020,48.813191,2.355004,Libanais,Grillades,50+,Haut de gamme,5.0,294,Modern,0139222255,True,True
+Les Saveurs Bertrand,"6 Rue de Belleville, 75009 Paris",5009,48.882544,2.333992,Japonais,Izakaya,30-50,Moyenne gamme +,3.6,324,Business,0103148497,False,True
+La Techer,"33 Rue du Faubourg Saint-Honoré, 75019 Paris",5019,48.88301,2.377723,Italien,Trattoria,20-30,Moyenne gamme,4.9,577,Romantique,0154735564,False,True
+L' Cheveu,"147 Rue du Faubourg Saint-Honoré, 75016 Paris",5016,48.883253,2.326186,Français,Bistrot,20-30,Moyenne gamme,4.0,331,"Branché, Convivial, Modern",0114820163,False,False
+L' Restaurant Faure,"7 Avenue Victor Hugo, 75012 Paris",5012,48.903776,2.344018,Libanais,Grillades,50+,Haut de gamme,3.9,183,"Romantique, Modern",0105642642,False,False
+L' Bistrot Samson,"134 Rue Oberkampf, 75020 Paris",5020,48.855157,2.388561,Libanais,Mezze,50+,Haut de gamme,5.0,27,Business,0137595953,False,False
+Aux Table Michaud,"136 Rue Saint-Honoré, 75020 Paris",5020,48.880383,2.366843,Japonais,Sushi,50+,Haut de gamme,4.6,102,"Romantique, Branché, Décontracté",0122783723,True,False
+Le Jeunesse,"31 Avenue de l'Opéra, 75009 Paris",5009,48.865659,2.401742,Français,Bistrot,10-20,Bon marché,3.9,102,Branché,0188854662,False,False
+Chez Attaquer,"112 Rue Oberkampf, 75011 Paris",5011,48.867861,2.380583,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.1,93,"Familial, Modern",0189087248,True,True
+Chez Jusque,"74 Boulevard Voltaire, 75016 Paris",5016,48.815195,2.341484,Thaïlandais,Traditionnel,50+,Haut de gamme,4.5,765,"Décontracté, Branché, Convivial",0146907182,True,False
+Maison Tandis que,"13 Rue Saint-Antoine, 75008 Paris",5008,48.884109,2.321181,Fusion,Modern Fusion,10-20,Bon marché,3.7,159,"Convivial, Familial",0136763007,False,False
+La Morvan,"54 Rue Mouffetard, 75011 Paris",5011,48.844441,2.370548,Italien,Pasta,20-30,Moyenne gamme,3.7,677,Décontracté,0101476888,True,True
+Maison Vidal,"4 Rue Mouffetard, 75016 Paris",5016,48.833421,2.372507,Italien,Pasta,10-20,Bon marché,4.6,309,Romantique,0143059943,True,False
+Les Restaurant Pottier,"71 Avenue Montaigne, 75014 Paris",5014,48.836576,2.342085,Indien,Nord-Indien,50+,Haut de gamme,5.0,339,Traditionnel,0127733086,False,False
+Aux Masson,"65 Rue Oberkampf, 75016 Paris",5016,48.846031,2.303206,Chinois,Sichuan,30-50,Moyenne gamme +,4.1,219,"Business, Modern",0171815047,True,True
+La Expliquer,"123 Rue Mouffetard, 75011 Paris",5011,48.833344,2.37686,Indien,Nord-Indien,30-50,Moyenne gamme +,4.8,268,"Traditionnel, Familial, Romantique",0142435880,True,False
+Chez Saveurs Monnier,"120 Avenue des Champs-Élysées, 75001 Paris",5001,48.862302,2.36609,Chinois,Dim Sum,30-50,Moyenne gamme +,3.6,213,"Familial, Modern",0181261696,True,True
+La Rossi,"129 Rue Mouffetard, 75018 Paris",5018,48.904895,2.345257,Méditerranéen,Mezze,30-50,Moyenne gamme +,4.4,75,"Élégant, Cosy, Romantique",0148056119,True,False
+Le Malade,"82 Place Vendôme, 75018 Paris",5018,48.856193,2.331426,Thaïlandais,Street food,20-30,Moyenne gamme,4.3,394,"Traditionnel, Modern, Élégant",0108711289,False,True
+Au Meyer,"19 Rue Saint-Antoine, 75002 Paris",5002,48.821936,2.340561,Français,Traditionnel,50+,Haut de gamme,5.0,75,"Romantique, Traditionnel",0150250966,False,False
+Aux Bistrot Monnier,"33 Rue Saint-Antoine, 75009 Paris",5009,48.824242,2.35817,Indien,Nord-Indien,20-30,Moyenne gamme,4.0,17,Branché,0197272954,True,False
+Chez Complet,"41 Rue Saint-Honoré, 75014 Paris",5014,48.896852,2.391331,Fusion,Modern Fusion,50+,Haut de gamme,4.8,224,"Décontracté, Cosy, Business",0199504916,False,False
+Les Lisser,"91 Avenue de l'Opéra, 75001 Paris",5001,48.867436,2.341355,Fusion,Modern Fusion,30-50,Moyenne gamme +,3.7,68,"Convivial, Familial",0130748167,False,True
+L' Autorité,"106 Avenue des Champs-Élysées, 75016 Paris",5016,48.885546,2.357316,Chinois,Cantonais,50+,Haut de gamme,4.0,599,Modern,0135727517,False,False
+Les Ouvrir,"93 Rue de la Paix, 75007 Paris",5007,48.871895,2.314832,Japonais,Ramen,30-50,Moyenne gamme +,3.8,933,"Business, Romantique, Modern",0149194824,False,True
+Les Nommer,"68 Rue de Rivoli, 75014 Paris",5014,48.905638,2.388562,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,3.7,749,Convivial,0127587266,False,True
+La Saveurs Valentin,"119 Rue de Passy, 75004 Paris",5004,48.876198,2.362494,Libanais,Grillades,20-30,Moyenne gamme,4.5,148,Élégant,0180427456,False,False
+L' Exprimer,"103 Avenue de l'Opéra, 75011 Paris",5011,48.824335,2.398913,Japonais,Sushi,50+,Haut de gamme,4.1,9,Cosy,0179333962,True,False
+Le Cuisine Navarro,"35 Rue de Passy, 75013 Paris",5013,48.848442,2.332283,Italien,Trattoria,10-20,Bon marché,4.7,800,"Romantique, Décontracté, Cosy",0141321483,False,False
+L' Anglais,"148 Boulevard Saint-Germain, 75003 Paris",5003,48.904301,2.361726,Libanais,Grillades,30-50,Moyenne gamme +,4.7,177,Romantique,0143180437,True,True
+Les Discussion,"64 Rue de Rivoli, 75020 Paris",5020,48.843314,2.330336,Japonais,Sushi,30-50,Moyenne gamme +,4.5,1030,Convivial,0194939222,False,True
+Les Sûr,"88 Boulevard Saint-Germain, 75008 Paris",5008,48.860625,2.376867,Japonais,Sushi,10-20,Bon marché,4.8,1004,Familial,0160508317,False,False
+Au Ollivier,"14 Rue de Rivoli, 75017 Paris",5017,48.872522,2.345894,Fusion,Asian Fusion,30-50,Moyenne gamme +,3.8,585,Cosy,0101542327,True,False
+L' Bon,"115 Avenue Victor Hugo, 75011 Paris",5011,48.813499,2.339043,Italien,Pizza,50+,Haut de gamme,4.5,79,Modern,0188028075,True,False
+L' David,"25 Avenue Montaigne, 75002 Paris",5002,48.869805,2.31966,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.1,155,"Familial, Modern, Décontracté",0186469386,True,True
+Chez Lebreton,"46 Rue Mouffetard, 75018 Paris",5018,48.885559,2.352843,Italien,Pasta,50+,Haut de gamme,5.0,406,"Branché, Décontracté, Traditionnel",0104091203,False,False
+Au Andre,"119 Boulevard Voltaire, 75019 Paris",5019,48.811581,2.336711,Italien,Pizza,30-50,Moyenne gamme +,4.1,124,"Business, Élégant",0155555403,True,False
+Les Guillon,"55 Place Vendôme, 75004 Paris",5004,48.810581,2.313559,Fusion,Asian Fusion,50+,Haut de gamme,5.0,45,"Business, Décontracté, Convivial",0151614039,False,True
+Maison Michaud,"81 Boulevard Voltaire, 75010 Paris",5010,48.807303,2.390329,Chinois,Sichuan,30-50,Moyenne gamme +,3.6,254,"Branché, Romantique, Convivial",0195794967,True,False
+Les Désespoir,"19 Avenue Montaigne, 75018 Paris",5018,48.822123,2.369547,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.4,835,Business,0174635818,False,False
+Maison Faux,"26 Rue du Faubourg Saint-Honoré, 75020 Paris",5020,48.848737,2.348849,Indien,Nord-Indien,30-50,Moyenne gamme +,4.1,367,Traditionnel,0184929208,True,True
+Maison Bistrot Antoine,"88 Avenue des Champs-Élysées, 75006 Paris",5006,48.863438,2.31215,Libanais,Mezze,10-20,Bon marché,4.3,263,"Familial, Modern",0186920837,False,False
+La Souvent,"22 Boulevard Haussmann, 75004 Paris",5004,48.811384,2.379954,Fusion,Modern Fusion,50+,Haut de gamme,4.9,28,Familial,0161847661,True,True
+Aux Toile,"134 Place Vendôme, 75010 Paris",5010,48.831734,2.390029,Français,Gastronomique,10-20,Bon marché,4.3,296,Cosy,0161535974,False,False
+Au Bistrot Courtois,"93 Avenue de l'Opéra, 75005 Paris",5005,48.845253,2.386415,Végétarien,Végétarien,30-50,Moyenne gamme +,4.9,1393,"Romantique, Familial",0158019118,True,True
+Au Roger,"6 Rue de la Roquette, 75008 Paris",5008,48.879123,2.306292,Végétarien,Végétarien,30-50,Moyenne gamme +,4.6,55,"Modern, Décontracté",0138493726,False,False
+Au Lemaire,"82 Boulevard Haussmann, 75004 Paris",5004,48.820527,2.388036,Méditerranéen,Mezze,20-30,Moyenne gamme,4.0,229,"Décontracté, Cosy, Convivial",0148920214,False,True
+Les Saveurs Gallet,"68 Rue de la Roquette, 75001 Paris",5001,48.871188,2.337751,Libanais,Mezze,10-20,Bon marché,3.8,639,Cosy,0100637660,True,False
+Le Bistrot Millet,"44 Rue de Passy, 75011 Paris",5011,48.857517,2.32259,Italien,Pasta,50+,Haut de gamme,5.0,290,"Branché, Convivial, Business",0184198265,True,True
+Aux Restaurant Verdier,"51 Avenue Montaigne, 75012 Paris",5012,48.84112,2.370988,Végétarien,Vegan,30-50,Moyenne gamme +,4.0,368,Élégant,0117917917,False,False
+Au Cuisine Adam,"71 Avenue Montaigne, 75013 Paris",5013,48.88016,2.310102,Végétarien,Vegan,10-20,Bon marché,4.4,373,"Branché, Modern, Décontracté",0193041615,True,False
+Au Cuisine Marie,"26 Rue du Faubourg Saint-Honoré, 75011 Paris",5011,48.832425,2.317176,Thaïlandais,Street food,20-30,Moyenne gamme,4.6,143,"Familial, Romantique, Modern",0130408546,False,True
+Aux Maurice,"136 Rue Saint-Antoine, 75011 Paris",5011,48.842996,2.33181,Chinois,Sichuan,50+,Haut de gamme,3.9,79,"Cosy, Branché",0172130671,False,True
+Les Saveurs Bigot,"98 Rue de Belleville, 75011 Paris",5011,48.811238,2.311274,Japonais,Izakaya,50+,Haut de gamme,4.5,354,"Traditionnel, Décontracté",0147165773,True,False
+Les Face,"101 Avenue de l'Opéra, 75009 Paris",5009,48.823489,2.333138,Végétarien,Végétarien,20-30,Moyenne gamme,4.6,508,Décontracté,0168343343,False,True
+Aux Germain,"46 Boulevard Haussmann, 75013 Paris",5013,48.864157,2.345946,Japonais,Izakaya,50+,Haut de gamme,4.2,430,Modern,0154443246,False,True
+Les Chauveau,"68 Rue de Belleville, 75012 Paris",5012,48.830569,2.372688,Fusion,Modern Fusion,20-30,Moyenne gamme,4.3,743,Cosy,0136099762,False,False
+Au Saveurs Meyer,"79 Rue de Passy, 75004 Paris",5004,48.829701,2.379018,Fusion,Modern Fusion,50+,Haut de gamme,5.0,156,"Business, Branché, Familial",0131438661,True,True
+Le Blot,"59 Place Vendôme, 75013 Paris",5013,48.825424,2.365497,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.2,218,Romantique,0172580517,False,False
+La Étendue,"146 Rue de Belleville, 75010 Paris",5010,48.897257,2.379463,Végétarien,Vegan,20-30,Moyenne gamme,3.5,490,"Cosy, Convivial, Décontracté",0116179304,False,True
+Maison Garcia,"40 Rue de la Roquette, 75010 Paris",5010,48.827908,2.330967,Japonais,Ramen,30-50,Moyenne gamme +,4.9,324,Romantique,0185680560,True,True
+Les Comme,"80 Rue de Passy, 75004 Paris",5004,48.897014,2.330201,Thaïlandais,Street food,20-30,Moyenne gamme,3.7,373,Branché,0197319635,True,True
+Chez Rapport,"60 Rue de Belleville, 75002 Paris",5002,48.812847,2.374642,Japonais,Izakaya,20-30,Moyenne gamme,4.6,486,"Romantique, Branché",0128174260,False,True
+Maison Merle,"22 Rue de Rennes, 75009 Paris",5009,48.856475,2.334644,Fusion,Modern Fusion,50+,Haut de gamme,5.0,470,"Élégant, Branché",0156775607,False,False
+Chez Propos,"118 Rue de Belleville, 75020 Paris",5020,48.877651,2.327304,Japonais,Ramen,20-30,Moyenne gamme,4.0,133,"Cosy, Modern, Décontracté",0127395779,True,True
+Le Nez,"16 Rue de la Roquette, 75017 Paris",5017,48.87925,2.392677,Thaïlandais,Street food,20-30,Moyenne gamme,4.4,151,"Familial, Traditionnel, Romantique",0104796118,False,False
+Chez Perez,"4 Avenue Montaigne, 75009 Paris",5009,48.856123,2.324283,Italien,Pasta,10-20,Bon marché,4.6,39,"Cosy, Élégant, Romantique",0181076110,False,False
+Chez Bistrot Dufour,"116 Rue Saint-Honoré, 75013 Paris",5013,48.904518,2.327471,Thaïlandais,Traditionnel,50+,Haut de gamme,4.6,188,"Cosy, Branché",0141834171,True,False
+L' Visite,"106 Rue du Faubourg Saint-Honoré, 75018 Paris",5018,48.85528,2.36398,Chinois,Sichuan,20-30,Moyenne gamme,4.0,20,Décontracté,0105469187,True,True
+L' Jacob,"138 Boulevard Saint-Germain, 75005 Paris",5005,48.897272,2.358357,Italien,Pasta,50+,Haut de gamme,4.6,137,"Romantique, Élégant",0192068240,True,False
+L' Cuisine Mace,"32 Rue Oberkampf, 75011 Paris",5011,48.877121,2.335215,Libanais,Mezze,50+,Haut de gamme,5.0,170,"Convivial, Modern, Traditionnel",0110875400,True,True
+Chez Lemaître,"82 Rue de Rennes, 75005 Paris",5005,48.825678,2.304466,Japonais,Sushi,20-30,Moyenne gamme,4.3,111,"Modern, Branché, Cosy",0153129239,True,True
+Chez Joubert,"78 Rue Saint-Antoine, 75009 Paris",5009,48.900171,2.324715,Libanais,Grillades,30-50,Moyenne gamme +,4.8,278,Branché,0152625962,False,False
+Les Carpentier,"121 Avenue de l'Opéra, 75010 Paris",5010,48.878304,2.353267,Français,Gastronomique,50+,Haut de gamme,4.0,13,Branché,0112555970,True,True
+Les Cacher,"48 Boulevard Voltaire, 75007 Paris",5007,48.906084,2.333071,Japonais,Izakaya,20-30,Moyenne gamme,3.9,21,Romantique,0160497750,False,True
+Chez Saveurs Parent,"34 Rue de la Roquette, 75011 Paris",5011,48.868355,2.400834,Japonais,Ramen,30-50,Moyenne gamme +,4.6,528,"Modern, Branché, Cosy",0170145530,True,True
+Maison Président,"70 Avenue des Champs-Élysées, 75002 Paris",5002,48.88517,2.390471,Chinois,Cantonais,20-30,Moyenne gamme,3.8,143,"Business, Modern, Cosy",0187309230,True,False
+Le Machine,"78 Avenue Victor Hugo, 75001 Paris",5001,48.901725,2.376346,Italien,Trattoria,30-50,Moyenne gamme +,4.3,50,"Romantique, Convivial, Cosy",0190510977,True,False
+Le Cuisine Bodin,"76 Rue de la Roquette, 75011 Paris",5011,48.898816,2.341001,Libanais,Grillades,50+,Haut de gamme,4.7,161,Traditionnel,0187427317,True,False
+Maison Royer,"1 Rue des Martyrs, 75009 Paris",5009,48.85673,2.373332,Thaïlandais,Street food,10-20,Bon marché,4.5,450,Élégant,0182838755,False,False
+Le Mace,"94 Avenue des Champs-Élysées, 75016 Paris",5016,48.826211,2.318953,Italien,Pizza,20-30,Moyenne gamme,4.7,82,Business,0137637808,True,False
+La Restaurant Dufour,"91 Rue de Belleville, 75003 Paris",5003,48.818708,2.387734,Français,Bistrot,30-50,Moyenne gamme +,3.5,302,"Cosy, Business",0112131933,False,True
+L' Marie,"87 Place Vendôme, 75005 Paris",5005,48.846938,2.340346,Chinois,Cantonais,50+,Haut de gamme,3.9,25,"Romantique, Modern, Familial",0131608240,False,True
+La Marchand,"105 Place Vendôme, 75014 Paris",5014,48.831418,2.370331,Français,Gastronomique,20-30,Moyenne gamme,4.1,25,Branché,0120361588,False,False
+Les Lévêque,"8 Boulevard Saint-Germain, 75005 Paris",5005,48.80997,2.396494,Libanais,Grillades,20-30,Moyenne gamme,4.9,237,"Modern, Convivial",0175819369,True,True
+Maison Vous,"124 Rue de Rennes, 75001 Paris",5001,48.844312,2.337918,Méditerranéen,Espagnol,50+,Haut de gamme,4.2,170,"Élégant, Cosy",0130971898,False,False
+Au Bistrot Berger,"119 Rue Saint-Antoine, 75016 Paris",5016,48.827299,2.352942,Italien,Pasta,50+,Haut de gamme,4.0,219,"Business, Convivial",0172357320,False,True
+L' Collin,"107 Boulevard Saint-Germain, 75016 Paris",5016,48.896046,2.368122,Italien,Pasta,10-20,Bon marché,3.8,398,"Familial, Élégant",0163097741,True,False
+L' Louis,"36 Rue Saint-Honoré, 75015 Paris",5015,48.878598,2.310339,Chinois,Dim Sum,30-50,Moyenne gamme +,4.8,1127,"Branché, Cosy",0161062194,False,False
+Aux Regard,"113 Rue des Martyrs, 75003 Paris",5003,48.857315,2.344156,Japonais,Sushi,50+,Haut de gamme,4.5,158,"Décontracté, Cosy, Branché",0125962207,False,True
+La Moins,"81 Rue du Faubourg Saint-Honoré, 75009 Paris",5009,48.900582,2.393093,Japonais,Izakaya,30-50,Moyenne gamme +,3.9,127,"Décontracté, Convivial",0111933172,False,False
+Le Chair,"65 Avenue Victor Hugo, 75010 Paris",5010,48.897079,2.371207,Libanais,Mezze,20-30,Moyenne gamme,3.5,485,Modern,0149644203,False,False
+Maison Regarder,"92 Rue de la Paix, 75005 Paris",5005,48.831475,2.401818,Chinois,Dim Sum,20-30,Moyenne gamme,4.1,104,"Décontracté, Cosy, Branché",0166410055,True,True
+Le Saveurs Delmas,"47 Rue des Martyrs, 75020 Paris",5020,48.821133,2.308015,Thaïlandais,Traditionnel,10-20,Bon marché,4.1,183,"Traditionnel, Modern, Élégant",0126063944,False,False
+Les Seul,"27 Rue des Martyrs, 75020 Paris",5020,48.828791,2.334128,Français,Bistrot,20-30,Moyenne gamme,4.3,34,Cosy,0148477267,True,False
+Aux Valette,"136 Rue Mouffetard, 75008 Paris",5008,48.806924,2.372399,Français,Gastronomique,50+,Haut de gamme,5.0,11,Convivial,0183919913,False,False
+Chez Sauvage,"60 Avenue Victor Hugo, 75020 Paris",5020,48.809884,2.315384,Indien,Nord-Indien,20-30,Moyenne gamme,4.6,996,"Élégant, Modern, Branché",0150343668,False,False
+Aux Genou,"6 Boulevard Voltaire, 75017 Paris",5017,48.889568,2.385205,Japonais,Ramen,50+,Haut de gamme,5.0,386,"Élégant, Modern, Cosy",0175238357,False,False
+Les Bouvet,"54 Rue du Faubourg Saint-Honoré, 75011 Paris",5011,48.87944,2.355539,Fusion,Modern Fusion,30-50,Moyenne gamme +,3.6,367,"Business, Romantique",0178608632,True,True
+L' Perret,"17 Rue de Belleville, 75016 Paris",5016,48.886283,2.340525,Italien,Pasta,30-50,Moyenne gamme +,4.8,167,"Traditionnel, Décontracté",0199994849,True,True
+Les Girard,"19 Avenue des Champs-Élysées, 75007 Paris",5007,48.846653,2.311627,Méditerranéen,Mezze,10-20,Bon marché,4.3,67,"Familial, Traditionnel, Romantique",0112987486,True,False
+Au Restaurant Letellier,"10 Rue de la Paix, 75001 Paris",5001,48.853452,2.324993,Italien,Pasta,10-20,Bon marché,4.7,61,"Convivial, Modern",0193776861,False,False
+L' Loiseau,"41 Rue de Rennes, 75002 Paris",5002,48.843343,2.387619,Fusion,Modern Fusion,10-20,Bon marché,4.5,96,Modern,0130722760,True,False
+Chez Restaurant Simon,"24 Rue Oberkampf, 75007 Paris",5007,48.879544,2.365394,Végétarien,Végétarien,20-30,Moyenne gamme,4.9,249,Traditionnel,0126672639,False,False
+L' Abandonner,"140 Rue de Belleville, 75005 Paris",5005,48.844289,2.303597,Chinois,Dim Sum,20-30,Moyenne gamme,3.8,386,Traditionnel,0157525563,True,True
+Maison Laporte,"27 Avenue Victor Hugo, 75014 Paris",5014,48.904377,2.376961,Thaïlandais,Street food,30-50,Moyenne gamme +,3.6,333,"Élégant, Traditionnel, Familial",0152609813,True,False
+Aux Restaurant Lemaire,"115 Rue des Martyrs, 75001 Paris",5001,48.818358,2.36807,Japonais,Ramen,50+,Haut de gamme,3.8,75,"Romantique, Familial, Cosy",0127141585,False,True
+Maison Cousin,"13 Avenue Victor Hugo, 75016 Paris",5016,48.895756,2.312473,Italien,Trattoria,10-20,Bon marché,4.4,939,Romantique,0197330699,True,False
+Le Attacher,"42 Avenue de l'Opéra, 75013 Paris",5013,48.86989,2.358116,Méditerranéen,Mezze,30-50,Moyenne gamme +,3.5,411,"Élégant, Cosy, Business",0115578160,False,True
+Aux Refuser,"28 Avenue Montaigne, 75014 Paris",5014,48.90387,2.345175,Japonais,Izakaya,20-30,Moyenne gamme,3.9,252,"Familial, Branché",0155049497,True,True
+Maison Saveurs Morin,"148 Rue de Belleville, 75001 Paris",5001,48.901782,2.315093,Libanais,Grillades,20-30,Moyenne gamme,3.7,293,"Business, Convivial, Branché",0103250079,True,False
+Au Boucher,"97 Rue Saint-Antoine, 75010 Paris",5010,48.861287,2.30753,Italien,Pizza,50+,Haut de gamme,4.3,121,Traditionnel,0169080615,False,False
+Chez Tout,"27 Rue de Belleville, 75017 Paris",5017,48.888785,2.303333,Libanais,Grillades,10-20,Bon marché,4.6,95,Romantique,0154123525,False,False
+Aux Voici,"149 Avenue Victor Hugo, 75012 Paris",5012,48.892545,2.313198,Libanais,Mezze,50+,Haut de gamme,4.1,99,"Modern, Branché, Romantique",0111037032,True,True
+Au Billet,"50 Rue Saint-Honoré, 75009 Paris",5009,48.843658,2.304937,Méditerranéen,Mezze,10-20,Bon marché,4.6,435,Traditionnel,0195530978,False,False
+Aux Vérité,"138 Rue de Rivoli, 75002 Paris",5002,48.833815,2.355659,Indien,Nord-Indien,10-20,Bon marché,4.9,14,"Élégant, Modern",0102902998,True,False
+Chez Salut,"130 Avenue Montaigne, 75011 Paris",5011,48.903502,2.355721,Thaïlandais,Street food,10-20,Bon marché,4.6,47,"Décontracté, Branché",0125621999,True,False
+Les Rocher,"16 Avenue de l'Opéra, 75019 Paris",5019,48.883842,2.331714,Français,Gastronomique,50+,Haut de gamme,4.4,16,"Familial, Traditionnel",0195836491,True,True
+Les Premier,"72 Rue de Belleville, 75003 Paris",5003,48.834246,2.303664,Thaïlandais,Traditionnel,10-20,Bon marché,3.7,22,"Cosy, Modern, Élégant",0109671956,False,False
+Au Triste,"93 Place Vendôme, 75018 Paris",5018,48.862629,2.305397,Fusion,Asian Fusion,20-30,Moyenne gamme,4.7,590,Modern,0173810423,True,False
+Aux Maintenir,"22 Rue du Faubourg Saint-Honoré, 75002 Paris",5002,48.887303,2.395397,Italien,Trattoria,20-30,Moyenne gamme,3.7,374,Traditionnel,0153808629,True,True
+La Germain,"17 Avenue Victor Hugo, 75015 Paris",5015,48.841959,2.378596,Fusion,Asian Fusion,10-20,Bon marché,3.9,202,"Traditionnel, Modern, Branché",0125699975,True,False
+L' Noir,"9 Avenue des Champs-Élysées, 75004 Paris",5004,48.812516,2.396162,Japonais,Izakaya,20-30,Moyenne gamme,3.7,40,Décontracté,0133166272,True,True
+Le Couper,"119 Rue de Belleville, 75017 Paris",5017,48.853933,2.366352,Méditerranéen,Espagnol,50+,Haut de gamme,3.9,148,"Décontracté, Traditionnel",0187128945,True,True
+Maison Saveurs Humbert,"83 Avenue Victor Hugo, 75006 Paris",5006,48.861211,2.327666,Chinois,Cantonais,50+,Haut de gamme,4.4,141,"Romantique, Décontracté, Familial",0119762670,False,True
+Maison Cuisine Simon,"127 Rue Saint-Honoré, 75004 Paris",5004,48.823291,2.312821,Français,Traditionnel,50+,Haut de gamme,5.0,46,Convivial,0107705831,False,False
+Aux Bertrand,"119 Rue Saint-Honoré, 75006 Paris",5006,48.816767,2.317901,Japonais,Sushi,20-30,Moyenne gamme,3.6,180,"Convivial, Modern, Business",0118545081,True,True
+L' Restaurant Hamel,"56 Rue Saint-Antoine, 75015 Paris",5015,48.839326,2.396279,Méditerranéen,Grec,30-50,Moyenne gamme +,3.6,162,Branché,0186023785,False,False
+L' Plaire,"36 Boulevard Haussmann, 75006 Paris",5006,48.818181,2.384095,Italien,Trattoria,30-50,Moyenne gamme +,3.9,297,"Modern, Familial, Business",0135666847,False,False
+Les Vallet,"108 Rue de la Paix, 75011 Paris",5011,48.837282,2.353073,Végétarien,Végétarien,30-50,Moyenne gamme +,4.4,312,"Familial, Business",0108475651,True,True
+Au Table Gimenez,"102 Place Vendôme, 75009 Paris",5009,48.818862,2.313732,Végétarien,Végétarien,20-30,Moyenne gamme,3.6,23,"Décontracté, Romantique, Modern",0158240742,False,True
+Maison Langlois,"79 Rue Saint-Antoine, 75019 Paris",5019,48.86804,2.316811,Libanais,Grillades,50+,Haut de gamme,4.8,105,"Cosy, Branché",0181726208,False,True
+Chez Bistrot Fleury,"57 Avenue Montaigne, 75020 Paris",5020,48.87615,2.314797,Français,Brasserie,30-50,Moyenne gamme +,4.2,304,Familial,0176934811,True,True
+Chez État,"119 Avenue des Champs-Élysées, 75014 Paris",5014,48.896824,2.385552,Indien,Sud-Indien,50+,Haut de gamme,3.9,153,"Branché, Traditionnel, Cosy",0113767263,False,False
+Chez Bistrot Marchand,"60 Avenue des Champs-Élysées, 75015 Paris",5015,48.884125,2.400024,Végétarien,Vegan,10-20,Bon marché,3.9,592,"Romantique, Élégant",0113009536,False,False
+L' Roger,"65 Rue de la Roquette, 75002 Paris",5002,48.824979,2.320248,Indien,Nord-Indien,50+,Haut de gamme,4.3,232,"Romantique, Modern",0189930704,False,True
+Aux Veiller,"94 Rue de la Roquette, 75001 Paris",5001,48.838328,2.330042,Thaïlandais,Traditionnel,50+,Haut de gamme,5.0,44,"Modern, Élégant",0143570029,True,False
+Au Produire,"63 Rue de Belleville, 75010 Paris",5010,48.872953,2.3861,Méditerranéen,Mezze,10-20,Bon marché,3.9,31,Modern,0125946296,True,False
+La Saluer,"87 Rue de la Roquette, 75014 Paris",5014,48.846545,2.399755,Italien,Trattoria,30-50,Moyenne gamme +,4.4,318,"Romantique, Business, Décontracté",0118848107,False,False
+La Table Gay,"15 Avenue de l'Opéra, 75018 Paris",5018,48.807003,2.346642,Libanais,Grillades,30-50,Moyenne gamme +,3.8,18,"Décontracté, Familial, Branché",0141071804,True,False
+Au Cependant,"49 Rue de Rennes, 75011 Paris",5011,48.90536,2.319093,Végétarien,Végétarien,30-50,Moyenne gamme +,3.6,274,Familial,0141008902,False,False
+Le Vieil,"38 Rue de Passy, 75007 Paris",5007,48.853394,2.392972,Japonais,Sushi,20-30,Moyenne gamme,4.6,855,Élégant,0129277677,False,True
+Aux Entrer,"27 Rue de Passy, 75001 Paris",5001,48.88997,2.373862,Italien,Pizza,20-30,Moyenne gamme,4.7,267,Familial,0159994739,False,False
+Maison Table Prévost,"32 Rue du Faubourg Saint-Honoré, 75011 Paris",5011,48.818859,2.386319,Japonais,Izakaya,50+,Haut de gamme,5.0,109,"Modern, Business",0132345843,True,False
+Les Consentir,"69 Avenue Victor Hugo, 75005 Paris",5005,48.832545,2.37792,Indien,Sud-Indien,20-30,Moyenne gamme,4.2,319,"Familial, Cosy",0189539156,False,False
+La Blot,"21 Rue de Rennes, 75007 Paris",5007,48.878413,2.336072,Méditerranéen,Grec,30-50,Moyenne gamme +,4.8,193,Branché,0107219954,False,False
+Les Goût,"88 Avenue Montaigne, 75007 Paris",5007,48.832244,2.376758,Français,Gastronomique,20-30,Moyenne gamme,4.3,246,Branché,0189991298,True,False
+Maison Avancer,"77 Rue de Rennes, 75008 Paris",5008,48.856494,2.336484,Indien,Nord-Indien,30-50,Moyenne gamme +,4.5,861,Romantique,0197035364,False,False
+Les Bistrot Collet,"29 Rue Saint-Antoine, 75019 Paris",5019,48.900687,2.357905,Indien,Sud-Indien,30-50,Moyenne gamme +,4.4,156,Traditionnel,0135592300,True,False
+L' Cuisine Lefèvre,"69 Rue Mouffetard, 75020 Paris",5020,48.886055,2.368148,Thaïlandais,Traditionnel,20-30,Moyenne gamme,3.8,984,Business,0159896354,False,False
+Aux Plan,"28 Rue du Faubourg Saint-Honoré, 75002 Paris",5002,48.869947,2.351331,Japonais,Sushi,50+,Haut de gamme,4.2,501,"Élégant, Convivial",0191313976,True,True
+La Restaurant Durand,"33 Rue des Martyrs, 75015 Paris",5015,48.840647,2.366244,Japonais,Ramen,20-30,Moyenne gamme,3.5,75,Modern,0135652918,True,False
+Le Saveurs Lombard,"35 Rue du Faubourg Saint-Honoré, 75002 Paris",5002,48.827066,2.380578,Japonais,Ramen,10-20,Bon marché,4.7,31,Cosy,0133413567,False,False
+La Hôtel,"144 Rue Saint-Honoré, 75016 Paris",5016,48.824231,2.387203,Chinois,Cantonais,30-50,Moyenne gamme +,3.9,41,"Familial, Décontracté, Élégant",0188276847,True,False
+Les Fier,"116 Place Vendôme, 75019 Paris",5019,48.86005,2.385633,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.8,15,Branché,0121540900,False,True
+L' Reynaud,"106 Rue de la Paix, 75015 Paris",5015,48.855628,2.357039,Fusion,Modern Fusion,10-20,Bon marché,4.3,39,"Élégant, Cosy, Convivial",0129098674,False,False
+Aux Chaud,"132 Boulevard Voltaire, 75008 Paris",5008,48.83488,2.400154,Thaïlandais,Traditionnel,50+,Haut de gamme,4.1,247,Business,0103110159,True,True
+Chez Saveurs Aubry,"1 Rue de la Paix, 75004 Paris",5004,48.867296,2.330492,Japonais,Izakaya,30-50,Moyenne gamme +,4.5,32,"Traditionnel, Modern, Branché",0135739860,True,True
+Au Ici,"32 Rue des Martyrs, 75013 Paris",5013,48.866617,2.390925,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,4.1,125,Branché,0145636166,False,False
+Maison Cuisine Morin,"48 Boulevard Voltaire, 75006 Paris",5006,48.855907,2.346923,Français,Brasserie,50+,Haut de gamme,5.0,398,"Business, Décontracté, Élégant",0178516652,False,False
+Maison Saveurs Fabre,"21 Rue de Rivoli, 75017 Paris",5017,48.866389,2.395746,Végétarien,Végétarien,30-50,Moyenne gamme +,4.2,17,"Business, Cosy, Modern",0175513906,True,True
+Chez Note,"86 Place Vendôme, 75018 Paris",5018,48.810385,2.379419,Japonais,Izakaya,20-30,Moyenne gamme,3.5,515,"Traditionnel, Familial, Cosy",0124124926,False,False
+Le Fabre,"68 Rue de Rennes, 75012 Paris",5012,48.808929,2.345531,Chinois,Cantonais,20-30,Moyenne gamme,4.5,109,"Décontracté, Élégant, Convivial",0101274904,True,True
+Chez Rester,"124 Avenue Montaigne, 75012 Paris",5012,48.876843,2.355764,Indien,Nord-Indien,30-50,Moyenne gamme +,3.9,47,Décontracté,0147051774,False,True
+Le Lelièvre,"90 Place Vendôme, 75012 Paris",5012,48.821626,2.322693,Français,Traditionnel,30-50,Moyenne gamme +,4.0,367,Branché,0148566101,False,False
+Le Royer,"5 Rue Oberkampf, 75003 Paris",5003,48.815718,2.31301,Français,Traditionnel,30-50,Moyenne gamme +,4.5,307,"Branché, Romantique",0191619735,True,True
+La Collin,"9 Rue des Martyrs, 75012 Paris",5012,48.891318,2.32675,Japonais,Ramen,30-50,Moyenne gamme +,4.3,639,Cosy,0101503479,True,False
+La Peuple,"41 Boulevard Haussmann, 75005 Paris",5005,48.839021,2.319994,Japonais,Sushi,50+,Haut de gamme,4.1,285,"Décontracté, Romantique, Élégant",0145704701,True,True
+La Buisson,"6 Rue de la Roquette, 75009 Paris",5009,48.862184,2.368,Libanais,Grillades,20-30,Moyenne gamme,3.9,498,"Traditionnel, Élégant",0195820753,True,False
+Aux Restaurant Perrin,"86 Rue de la Paix, 75016 Paris",5016,48.871077,2.326947,Indien,Sud-Indien,30-50,Moyenne gamme +,3.8,109,Élégant,0160812016,False,True
+Maison Saveurs Joly,"14 Avenue Montaigne, 75005 Paris",5005,48.823895,2.388493,Chinois,Cantonais,30-50,Moyenne gamme +,4.1,68,Élégant,0119416792,True,False
+Au Cuisine Bigot,"99 Rue des Martyrs, 75003 Paris",5003,48.901734,2.393976,Japonais,Izakaya,50+,Haut de gamme,4.4,298,Cosy,0164208293,True,False
+Aux Lisser,"57 Rue de Rennes, 75019 Paris",5019,48.865712,2.399275,Indien,Nord-Indien,20-30,Moyenne gamme,3.5,503,"Romantique, Décontracté",0147492669,True,True
+Chez Saveurs Marchand,"109 Boulevard Saint-Germain, 75020 Paris",5020,48.882888,2.369608,Italien,Trattoria,10-20,Bon marché,4.8,1407,Décontracté,0177602911,False,False
+Le Jourdan,"22 Boulevard Voltaire, 75008 Paris",5008,48.839059,2.345125,Indien,Nord-Indien,10-20,Bon marché,4.8,169,Cosy,0104886534,False,False
+Au Saveurs Guillon,"143 Avenue des Champs-Élysées, 75004 Paris",5004,48.853131,2.357067,Thaïlandais,Street food,50+,Haut de gamme,5.0,104,"Décontracté, Familial",0193009083,False,True
+La Riou,"17 Rue Saint-Honoré, 75013 Paris",5013,48.870644,2.340607,Italien,Trattoria,30-50,Moyenne gamme +,4.5,459,Familial,0126129311,True,True
+Maison Dos Santos,"46 Avenue de l'Opéra, 75014 Paris",5014,48.830887,2.332991,Méditerranéen,Espagnol,10-20,Bon marché,3.7,135,"Élégant, Décontracté, Branché",0198386017,False,False
+Aux Lejeune,"77 Rue Saint-Antoine, 75017 Paris",5017,48.89921,2.357717,Végétarien,Vegan,20-30,Moyenne gamme,4.4,811,"Décontracté, Cosy, Romantique",0154938485,True,False
+Maison Entretenir,"116 Avenue Victor Hugo, 75001 Paris",5001,48.871418,2.315046,Italien,Pizza,10-20,Bon marché,4.8,596,"Romantique, Traditionnel, Branché",0143445362,False,False
+Au Verre,"1 Rue de Belleville, 75015 Paris",5015,48.84825,2.332679,Méditerranéen,Mezze,50+,Haut de gamme,4.3,124,Familial,0154860240,True,False
+L' Table Seguin,"69 Avenue Montaigne, 75015 Paris",5015,48.886464,2.397253,Français,Traditionnel,10-20,Bon marché,4.7,426,"Cosy, Romantique",0128701785,False,False
+Chez Geste,"79 Rue des Martyrs, 75016 Paris",5016,48.818728,2.369936,Japonais,Ramen,50+,Haut de gamme,4.4,301,Convivial,0199270541,True,False
+L' Table Jacques,"99 Boulevard Haussmann, 75008 Paris",5008,48.856046,2.370723,Italien,Pasta,20-30,Moyenne gamme,4.1,42,"Élégant, Romantique, Business",0135278065,False,True
+Chez Importance,"109 Rue de Belleville, 75020 Paris",5020,48.813222,2.379519,Chinois,Dim Sum,10-20,Bon marché,4.3,708,"Cosy, Business, Élégant",0193811050,True,False
+Maison Bistrot Delorme,"116 Avenue des Champs-Élysées, 75020 Paris",5020,48.889442,2.386368,Chinois,Sichuan,20-30,Moyenne gamme,4.4,221,"Romantique, Business",0164628987,True,False
+Le Simon,"7 Place Vendôme, 75013 Paris",5013,48.838405,2.307097,Japonais,Ramen,30-50,Moyenne gamme +,4.1,535,Business,0141436034,True,False
+Maison Cuisine Wagner,"113 Rue Saint-Honoré, 75003 Paris",5003,48.871503,2.341087,Méditerranéen,Espagnol,50+,Haut de gamme,4.2,87,"Modern, Cosy",0117310790,True,True
+Le Cuisine Bernier,"25 Boulevard Haussmann, 75008 Paris",5008,48.868624,2.353344,Méditerranéen,Espagnol,10-20,Bon marché,4.4,687,"Décontracté, Modern, Élégant",0112297365,False,False
+Maison Bistrot Clément,"111 Rue des Martyrs, 75013 Paris",5013,48.905583,2.314993,Végétarien,Vegan,30-50,Moyenne gamme +,3.9,157,"Branché, Élégant",0193612980,True,False
+Chez Ah,"92 Rue de la Paix, 75018 Paris",5018,48.86693,2.359697,Méditerranéen,Mezze,30-50,Moyenne gamme +,4.3,13,"Traditionnel, Convivial",0167766926,False,True
+Au Force,"55 Boulevard Haussmann, 75008 Paris",5008,48.837337,2.397262,Chinois,Dim Sum,50+,Haut de gamme,4.4,501,Décontracté,0173547915,False,False
+Les Saveurs Alexandre,"15 Avenue Victor Hugo, 75006 Paris",5006,48.891587,2.303562,Fusion,Modern Fusion,10-20,Bon marché,4.1,38,Traditionnel,0152026105,True,False
+Le Brunel,"116 Rue du Faubourg Saint-Honoré, 75015 Paris",5015,48.817787,2.352817,Méditerranéen,Espagnol,30-50,Moyenne gamme +,4.3,125,"Décontracté, Élégant, Convivial",0149485842,True,False
+L' Cuisine Gonzalez,"41 Rue de la Paix, 75005 Paris",5005,48.816454,2.321377,Indien,Sud-Indien,30-50,Moyenne gamme +,4.6,909,"Familial, Cosy, Business",0140565833,True,False
+Maison Cuisine Renault,"12 Rue de Rennes, 75002 Paris",5002,48.841869,2.367466,Indien,Sud-Indien,10-20,Bon marché,4.5,912,Élégant,0164738089,True,False
+Aux Science,"27 Rue Mouffetard, 75003 Paris",5003,48.858631,2.349184,Italien,Trattoria,10-20,Bon marché,4.8,265,"Romantique, Business",0194738612,True,False
+L' Saveurs Hardy,"123 Avenue des Champs-Élysées, 75008 Paris",5008,48.813458,2.346603,Indien,Nord-Indien,30-50,Moyenne gamme +,4.0,309,Modern,0109076384,True,True
+L' Table Bousquet,"91 Rue de la Roquette, 75019 Paris",5019,48.89716,2.316982,Chinois,Dim Sum,20-30,Moyenne gamme,4.4,188,"Business, Romantique, Élégant",0108868031,False,True
+Aux Sentiment,"136 Rue du Faubourg Saint-Honoré, 75018 Paris",5018,48.885021,2.382543,Indien,Sud-Indien,20-30,Moyenne gamme,4.0,114,"Modern, Décontracté, Convivial",0129547601,True,False
+La Klein,"55 Rue de la Roquette, 75013 Paris",5013,48.897829,2.32304,Français,Brasserie,20-30,Moyenne gamme,4.7,129,"Familial, Décontracté",0186580007,False,True
+Au Or,"103 Boulevard Saint-Germain, 75010 Paris",5010,48.894206,2.345044,Français,Bistrot,10-20,Bon marché,4.3,344,"Branché, Modern",0109896170,False,False
+Le Martinez,"125 Boulevard Haussmann, 75010 Paris",5010,48.843755,2.350314,Japonais,Ramen,30-50,Moyenne gamme +,4.6,428,"Traditionnel, Décontracté, Familial",0133096356,True,False
+Au Bistrot Thierry,"142 Rue des Martyrs, 75011 Paris",5011,48.835118,2.36702,Italien,Trattoria,30-50,Moyenne gamme +,3.8,480,Romantique,0139008502,False,True
+Maison Morvan,"143 Boulevard Saint-Germain, 75012 Paris",5012,48.886236,2.340546,Méditerranéen,Espagnol,50+,Haut de gamme,4.1,333,Décontracté,0120738940,True,False
+Maison Petit,"24 Rue Oberkampf, 75017 Paris",5017,48.871519,2.342688,Méditerranéen,Mezze,20-30,Moyenne gamme,3.8,38,"Branché, Business",0134018794,True,False
+Au Cuisine Joubert,"83 Boulevard Haussmann, 75006 Paris",5006,48.85406,2.306457,Japonais,Ramen,30-50,Moyenne gamme +,4.4,214,"Décontracté, Modern",0108605834,True,False
+Le Bailly,"85 Rue de la Paix, 75012 Paris",5012,48.824289,2.330934,Chinois,Sichuan,10-20,Bon marché,4.7,27,Décontracté,0179357908,True,False
+L' Restaurant Munoz,"119 Boulevard Saint-Germain, 75010 Paris",5010,48.846944,2.393788,Français,Traditionnel,20-30,Moyenne gamme,4.2,249,"Modern, Traditionnel, Branché",0151186886,False,False
+Aux Y,"69 Avenue de l'Opéra, 75009 Paris",5009,48.858825,2.329605,Indien,Sud-Indien,50+,Haut de gamme,4.4,128,Business,0136954255,True,True
+Au Occuper,"110 Rue Mouffetard, 75012 Paris",5012,48.848246,2.385641,Japonais,Izakaya,20-30,Moyenne gamme,4.0,665,"Business, Convivial",0124613886,True,True
+Aux Fuir,"23 Boulevard Haussmann, 75017 Paris",5017,48.890514,2.323223,Italien,Trattoria,30-50,Moyenne gamme +,4.4,139,"Romantique, Convivial, Modern",0127917787,False,False
+Au Comme,"3 Rue Oberkampf, 75005 Paris",5005,48.811599,2.329208,Végétarien,Végétarien,10-20,Bon marché,4.3,47,Branché,0162505653,True,False
+Chez Bistrot Rolland,"49 Boulevard Voltaire, 75003 Paris",5003,48.906281,2.365686,Français,Traditionnel,50+,Haut de gamme,4.6,39,"Décontracté, Traditionnel",0174401071,False,True
+Maison Noire,"49 Boulevard Saint-Germain, 75017 Paris",5017,48.865659,2.396507,Végétarien,Végétarien,10-20,Bon marché,3.7,440,"Décontracté, Branché, Business",0138183358,True,False
+Le Ton,"114 Rue Mouffetard, 75015 Paris",5015,48.861965,2.323516,Thaïlandais,Traditionnel,30-50,Moyenne gamme +,3.6,298,"Décontracté, Modern, Traditionnel",0199964019,False,True
+Au Devoir,"99 Boulevard Voltaire, 75010 Paris",5010,48.844819,2.320726,Français,Gastronomique,50+,Haut de gamme,4.8,28,Familial,0125689387,True,False
+Les Didier,"74 Rue de Rennes, 75012 Paris",5012,48.870838,2.343286,Français,Bistrot,30-50,Moyenne gamme +,3.9,36,Familial,0155535796,True,True
+Au Michaud,"12 Rue de Rennes, 75006 Paris",5006,48.818598,2.365809,Français,Traditionnel,50+,Haut de gamme,4.0,260,"Branché, Romantique, Élégant",0143971078,False,True
+Au Exécuter,"51 Rue de Rivoli, 75012 Paris",5012,48.834857,2.35282,Chinois,Sichuan,20-30,Moyenne gamme,3.9,32,Modern,0118084113,True,False
+Au Bistrot Dumont,"30 Rue de la Paix, 75008 Paris",5008,48.855052,2.382308,Thaïlandais,Traditionnel,20-30,Moyenne gamme,4.9,527,Branché,0103097334,True,False
+Maison Hernandez,"123 Boulevard Saint-Germain, 75017 Paris",5017,48.895763,2.315588,Chinois,Cantonais,10-20,Bon marché,3.7,377,"Élégant, Branché, Familial",0118921405,True,False
+Maison Lenoir,"4 Boulevard Saint-Germain, 75016 Paris",5016,48.896462,2.344611,Français,Gastronomique,30-50,Moyenne gamme +,4.0,35,"Romantique, Décontracté",0117939099,True,True
+Maison Baudry,"67 Rue Saint-Honoré, 75009 Paris",5009,48.838981,2.348528,Végétarien,Végétarien,20-30,Moyenne gamme,3.8,36,"Branché, Business",0126313279,False,True
+Chez Table Hamel,"108 Rue de Rivoli, 75009 Paris",5009,48.813667,2.313827,Japonais,Ramen,30-50,Moyenne gamme +,4.9,1304,"Convivial, Romantique, Décontracté",0129479475,False,False
+Aux Bouchet,"66 Avenue des Champs-Élysées, 75005 Paris",5005,48.885661,2.365872,Libanais,Mezze,20-30,Moyenne gamme,3.7,150,"Décontracté, Familial",0100050657,False,False
+L' Saveurs Ruiz,"103 Avenue Montaigne, 75019 Paris",5019,48.878226,2.37483,Fusion,Asian Fusion,10-20,Bon marché,4.3,148,Familial,0165287441,True,False
+Aux Événement,"78 Boulevard Haussmann, 75016 Paris",5016,48.904233,2.369128,Japonais,Izakaya,30-50,Moyenne gamme +,3.8,512,"Modern, Décontracté",0172885225,True,True
+Le Pascal,"98 Rue de la Roquette, 75019 Paris",5019,48.83775,2.303592,Français,Bistrot,30-50,Moyenne gamme +,4.0,892,"Traditionnel, Modern",0149245402,True,False
+Maison Delorme,"61 Rue de Rennes, 75019 Paris",5019,48.808483,2.32287,Italien,Pasta,10-20,Bon marché,4.5,1290,"Convivial, Traditionnel",0172175231,False,False
+L' Vidal,"10 Rue Oberkampf, 75018 Paris",5018,48.901738,2.338614,Italien,Trattoria,10-20,Bon marché,4.7,429,"Cosy, Familial, Romantique",0147464037,True,False
+Chez Partager,"133 Rue de Passy, 75004 Paris",5004,48.890805,2.322782,Thaïlandais,Traditionnel,20-30,Moyenne gamme,3.8,151,Élégant,0159355426,True,True
+Aux Collet,"75 Avenue des Champs-Élysées, 75019 Paris",5019,48.830663,2.314319,Chinois,Dim Sum,10-20,Bon marché,4.3,36,Business,0111806914,False,False
+Maison Plan,"146 Rue de Belleville, 75007 Paris",5007,48.872641,2.320657,Indien,Nord-Indien,30-50,Moyenne gamme +,3.7,460,"Convivial, Élégant",0111554491,False,True
+Aux Bord,"70 Rue de la Roquette, 75010 Paris",5010,48.818759,2.317658,Japonais,Izakaya,10-20,Bon marché,4.2,255,Business,0102218953,True,False
+Au Gauche,"89 Place Vendôme, 75019 Paris",5019,48.904968,2.392501,Végétarien,Vegan,10-20,Bon marché,3.5,175,"Convivial, Traditionnel",0138049877,False,False
+Au Barbe,"104 Rue de Rennes, 75009 Paris",5009,48.879047,2.333698,Indien,Sud-Indien,50+,Haut de gamme,4.9,503,Familial,0171811848,True,False
+L' Bistrot Le Roux,"40 Rue de Rivoli, 75006 Paris",5006,48.898129,2.389443,Végétarien,Végétarien,20-30,Moyenne gamme,4.2,45,Traditionnel,0138224265,True,True
+Au Entrée,"89 Avenue Victor Hugo, 75004 Paris",5004,48.82548,2.379834,Libanais,Mezze,10-20,Bon marché,4.5,213,"Business, Traditionnel, Familial",0137169451,True,False
+Aux Vieux,"62 Rue Saint-Antoine, 75003 Paris",5003,48.860046,2.345396,Fusion,Asian Fusion,20-30,Moyenne gamme,4.2,13,"Modern, Romantique, Décontracté",0160297470,True,False
+Chez Accorder,"43 Rue Saint-Honoré, 75006 Paris",5006,48.844069,2.359231,Français,Bistrot,10-20,Bon marché,3.9,199,"Modern, Business, Familial",0103691552,False,False
+Aux Auger,"55 Rue des Martyrs, 75005 Paris",5005,48.866462,2.34025,Méditerranéen,Espagnol,10-20,Bon marché,4.4,27,Familial,0141719718,True,False
+L' Lévêque,"69 Rue de la Paix, 75010 Paris",5010,48.847942,2.365916,Végétarien,Vegan,10-20,Bon marché,4.6,47,"Cosy, Romantique, Branché",0112297875,True,False
+L' Delattre,"106 Rue Oberkampf, 75014 Paris",5014,48.834967,2.384827,Français,Gastronomique,20-30,Moyenne gamme,4.1,47,"Convivial, Cosy",0194284955,False,False
+Maison Cuisine Becker,"42 Avenue de l'Opéra, 75017 Paris",5017,48.832066,2.336403,Végétarien,Vegan,50+,Haut de gamme,4.8,226,"Décontracté, Traditionnel, Modern",0126096647,False,True
+Le Service,"15 Avenue des Champs-Élysées, 75010 Paris",5010,48.867043,2.30669,Indien,Sud-Indien,50+,Haut de gamme,4.5,294,"Décontracté, Cosy, Traditionnel",0153011325,True,True
+Maison Problème,"41 Avenue Victor Hugo, 75001 Paris",5001,48.840829,2.37168,Chinois,Cantonais,20-30,Moyenne gamme,3.8,272,Cosy,0174229211,False,True
+Maison Honte,"41 Avenue Victor Hugo, 75007 Paris",5007,48.815364,2.342784,Japonais,Ramen,20-30,Moyenne gamme,4.5,992,"Élégant, Décontracté",0139833214,True,False
+Aux Cher,"89 Rue des Martyrs, 75001 Paris",5001,48.858589,2.36179,Libanais,Mezze,20-30,Moyenne gamme,3.6,150,"Branché, Business, Élégant",0177272690,True,True
+Le Moitié,"72 Rue de Passy, 75019 Paris",5019,48.868952,2.357917,Français,Traditionnel,50+,Haut de gamme,4.4,77,"Familial, Cosy",0142719996,True,False
+Les Avouer,"27 Rue du Faubourg Saint-Honoré, 75015 Paris",5015,48.845016,2.378041,Fusion,Modern Fusion,20-30,Moyenne gamme,4.5,618,"Romantique, Familial",0198854350,True,False
+Au Blanchet,"61 Boulevard Saint-Germain, 75008 Paris",5008,48.873625,2.339797,Chinois,Cantonais,10-20,Bon marché,4.1,85,"Familial, Romantique, Décontracté",0189858418,True,False
+Le Renaud,"14 Boulevard Haussmann, 75015 Paris",5015,48.905407,2.367947,Végétarien,Vegan,30-50,Moyenne gamme +,4.1,1000,"Cosy, Romantique",0159380672,False,False
+Aux Oeuvre,"21 Avenue des Champs-Élysées, 75006 Paris",5006,48.814517,2.330959,Indien,Nord-Indien,10-20,Bon marché,4.7,13,"Familial, Traditionnel, Élégant",0134588189,False,False
+Les Mendès,"114 Rue Saint-Antoine, 75005 Paris",5005,48.887978,2.371184,Japonais,Ramen,20-30,Moyenne gamme,4.0,1060,"Élégant, Familial",0100386427,False,True
+Les Table Merle,"141 Boulevard Voltaire, 75005 Paris",5005,48.879582,2.305351,Méditerranéen,Grec,20-30,Moyenne gamme,4.6,23,Décontracté,0149293624,True,False
+Le Bertrand,"107 Boulevard Voltaire, 75015 Paris",5015,48.886325,2.367911,Français,Bistrot,10-20,Bon marché,4.4,675,Élégant,0172570901,False,False
+La Moreno,"136 Rue du Faubourg Saint-Honoré, 75009 Paris",5009,48.849209,2.354948,Italien,Pizza,30-50,Moyenne gamme +,4.5,235,Branché,0133947605,True,False
+Maison Saveurs Hervé,"45 Rue de Passy, 75012 Paris",5012,48.816995,2.31826,Thaïlandais,Street food,20-30,Moyenne gamme,3.5,1497,Traditionnel,0165762992,True,True
+Au Entretenir,"146 Boulevard Haussmann, 75001 Paris",5001,48.834884,2.358741,Italien,Pizza,20-30,Moyenne gamme,3.7,32,"Romantique, Branché, Business",0131982603,False,False
+La Laine,"30 Rue Saint-Antoine, 75018 Paris",5018,48.905936,2.381689,Fusion,Asian Fusion,50+,Haut de gamme,4.8,176,Cosy,0175342747,False,True
+L' Curieux,"137 Rue de Belleville, 75013 Paris",5013,48.807672,2.347212,Végétarien,Végétarien,30-50,Moyenne gamme +,4.3,1055,"Traditionnel, Branché, Décontracté",0187979344,True,False
+Au Centre,"140 Avenue Victor Hugo, 75015 Paris",5015,48.854311,2.310624,Libanais,Grillades,10-20,Bon marché,3.7,232,"Décontracté, Romantique, Convivial",0199917014,True,False
+Le Cuisine Maurice,"140 Avenue Victor Hugo, 75018 Paris",5018,48.883454,2.396598,Méditerranéen,Grec,10-20,Bon marché,4.6,307,Élégant,0171760856,True,False
+L' Souffrir,"7 Boulevard Voltaire, 75014 Paris",5014,48.86425,2.355045,Méditerranéen,Grec,10-20,Bon marché,4.5,366,"Traditionnel, Business, Convivial",0170371274,True,False
+Au Marie,"2 Place Vendôme, 75002 Paris",5002,48.861321,2.336956,Méditerranéen,Mezze,30-50,Moyenne gamme +,4.8,191,Familial,0125306120,False,True
+Chez Noire,"32 Avenue Montaigne, 75014 Paris",5014,48.893302,2.343201,Japonais,Izakaya,50+,Haut de gamme,4.2,214,Modern,0197147073,True,False
+Le Nu,"67 Rue de Belleville, 75008 Paris",5008,48.807786,2.389252,Fusion,Asian Fusion,30-50,Moyenne gamme +,4.3,273,Familial,0119183442,False,False
+Maison Paris,"35 Rue de Passy, 75007 Paris",5007,48.827495,2.30448,Fusion,Modern Fusion,30-50,Moyenne gamme +,4.4,704,"Branché, Traditionnel",0162651204,False,False
+Au Mercier,"82 Rue de la Paix, 75020 Paris",5020,48.845611,2.334326,Italien,Pizza,30-50,Moyenne gamme +,4.0,23,"Cosy, Romantique",0195854339,False,False
+Au Saveurs Jacques,"92 Avenue de l'Opéra, 75017 Paris",5017,48.895557,2.331248,Indien,Nord-Indien,10-20,Bon marché,4.9,108,Branché,0115455327,True,False
+Maison Cuisine Vallet,"117 Avenue de l'Opéra, 75008 Paris",5008,48.87025,2.350301,Français,Brasserie,20-30,Moyenne gamme,3.5,911,Modern,0129152071,True,False
+L' Guillet,"33 Rue Saint-Honoré, 75005 Paris",5005,48.842746,2.33189,Libanais,Mezze,10-20,Bon marché,4.7,672,"Familial, Business",0195013138,False,False
+Aux Dupuy,"12 Rue Saint-Honoré, 75016 Paris",5016,48.861287,2.327921,Thaïlandais,Street food,50+,Haut de gamme,4.3,134,"Romantique, Business, Convivial",0158566010,True,False
+Le Restaurant Salmon,"134 Rue de Passy, 75020 Paris",5020,48.905518,2.363119,Italien,Pasta,20-30,Moyenne gamme,4.6,300,"Business, Modern",0170019303,True,True
+Chez Table Maillet,"104 Rue Saint-Honoré, 75013 Paris",5013,48.814683,2.349278,Chinois,Cantonais,50+,Haut de gamme,5.0,74,"Romantique, Business",0165720443,True,True
+Aux Visible,"73 Boulevard Voltaire, 75002 Paris",5002,48.861,2.346017,Japonais,Ramen,10-20,Bon marché,3.6,72,"Branché, Cosy, Modern",0114204263,False,False
+Maison Cuisine Bruneau,"54 Avenue Victor Hugo, 75020 Paris",5020,48.844193,2.357053,Indien,Nord-Indien,50+,Haut de gamme,4.9,137,"Romantique, Familial",0131720532,True,True
+Au Restaurant Barbier,"42 Boulevard Haussmann, 75005 Paris",5005,48.881088,2.330872,Végétarien,Vegan,30-50,Moyenne gamme +,4.7,140,"Branché, Business",0106605923,True,True
+Chez Restaurant Texier,"98 Rue des Martyrs, 75003 Paris",5003,48.894233,2.317075,Italien,Trattoria,20-30,Moyenne gamme,3.9,272,Élégant,0177364872,False,True
+Maison Cuisine Maréchal,"78 Boulevard Voltaire, 75011 Paris",5011,48.859161,2.303141,Végétarien,Végétarien,20-30,Moyenne gamme,4.4,34,"Cosy, Business",0147742747,False,True
+Au Arbre,"55 Boulevard Saint-Germain, 75006 Paris",5006,48.898556,2.3352,Méditerranéen,Grec,20-30,Moyenne gamme,3.7,1109,"Élégant, Modern",0165029433,True,False
+Maison Choix,"144 Boulevard Haussmann, 75005 Paris",5005,48.807339,2.322625,Libanais,Mezze,50+,Haut de gamme,4.1,906,Familial,0105544812,False,True

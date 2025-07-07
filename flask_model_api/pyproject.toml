@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "aws"
+version = "0.1.0"
+description = ""
+authors = ["soleneD05 <solene.degrutere@orange.fr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+flask = "^3.1.0"
+pandas = "^2.2.3"
+scikit-learn = "^1.6.1"
+xgboost = "2.1.1"
+numpy = "^2.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
